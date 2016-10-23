@@ -1,2 +1,2 @@
 # car-assistant
-It helps keep track of information about your car and help you prepare for the road
+It helps keep track of your car information and help you to prepare for the road
