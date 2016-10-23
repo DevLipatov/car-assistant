@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/row1"
+        android:layout_marginTop="@dimen/main_app_margin">
+
+        <TextView
+            android:text="Current mileage"
+            android:layout_weight="1"
+            style="@style/app_inscriptio_style" />
+
+        <TextView
+            android:text="Fueling"
+            android:layout_weight="1"
+            style="@style/app_inscriptio_style" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/row1">
+
+        <EditText
+            android:layout_weight="1"
+            android:id="@+id/editMileage"
+            style="@style/app_edit_text_style" />
+
+        <EditText
+            android:layout_weight="1"
+            android:id="@+id/editFueling"
+            style="@style/app_edit_text_style" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="Oil filled"
+            android:layout_weight="1"
+            style="@style/app_inscriptio_style" />
+
+        <TextView
+            android:text=""
+            android:layout_weight="1"
+            style="@style/app_inscriptio_style"
+            android:id="@+id/txtRes"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:layout_weight="1"
+            android:id="@+id/editOilFilled"
+            style="@style/app_edit_text_style"
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="@dimen/main_app_margin"
+            android:layout_weight="1"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="@dimen/main_app_margin">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add new stats"
+            android:textSize="18sp"
+            android:layout_margin="@dimen/main_app_margin"
+            android:onClick="onAddNewStats"/>
+
+    </LinearLayout>
+
+</LinearLayout>
