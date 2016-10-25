@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CarAssistant</string>
+    <string name="connection_error">Connect to Internet</string>
 </resources>

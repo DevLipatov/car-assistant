@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
-def weatherEnUrl = "http://api.openweathermap.org/data/2.5/weather?q="
-def weatherRuUrl = "http://gismeteo.by/weather-grodno-4243/"
+//def weatherEnUrl = "http://api.openweathermap.org/data/2.5/weather?q="
+//def weatherRuUrl = "http://gismeteo.by/weather-grodno-4243/"
 
 android {
     compileSdkVersion 24
@@ -16,38 +16,38 @@ android {
     }
 
     buildTypes {
-        debug {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
+//        debug {
+//            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//        }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
-    flavorDimensions "cost", "language"
-
-    productFlavors {
-        free {
-            applicationId "com.main.carassistant.free"
-            dimension "cost"
-        }
-        payed {
-            applicationId "com.main.carassistant.payed"
-            dimension "cost"
-        }
-        en {
-            buildConfigField("String", "WEATHER_URL", weatherEnUrl)
-            applicationId "com.main.carassistant.en"
-            dimension "language"
-        }
-        ru {
-            buildConfigField("String", "WEATHER_URL", weatherRuUrl)
-            applicationId "com.main.carassistant.ru"
-            dimension "language"
-        }
-    }
+//    flavorDimensions "cost", "language"
+//
+//    productFlavors {
+//        free {
+//            applicationId "com.main.carassistant.free"
+//            dimension "cost"
+//        }
+//        payed {
+//            applicationId "com.main.carassistant.payed"
+//            dimension "cost"
+//        }
+//        en {
+//            buildConfigField("String", "WEATHER_URL", weatherEnUrl)
+//            applicationId "com.main.carassistant.en"
+//            dimension "language"
+//        }
+//        ru {
+//            buildConfigField("String", "WEATHER_URL", weatherRuUrl)
+//            applicationId "com.main.carassistant.ru"
+//            dimension "language"
+//        }
+//    }
 }
 
 dependencies {

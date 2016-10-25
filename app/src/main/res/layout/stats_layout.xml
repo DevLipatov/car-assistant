@@ -64,15 +64,13 @@
         <EditText
             android:layout_weight="1"
             android:id="@+id/editOilFilled"
-            style="@style/app_edit_text_style"
-            />
+            style="@style/app_edit_text_style"/>
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_margin="@dimen/main_app_margin"
-            android:layout_weight="1"
-            />
+            android:layout_weight="1"/>
 
     </LinearLayout>
 
@@ -91,5 +89,10 @@
             android:onClick="onAddNewStats"/>
 
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageIcon"
+        android:layout_width="150dp"
+        android:layout_height="150dp"/>
 
 </LinearLayout>
