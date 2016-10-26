@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity{
     public void onCreateNewStats(View view) {
         Intent intent = new Intent(getApplicationContext(), StatsActivity.class);
         startActivity(intent);
+
     }
 
     private class JsonWeatherTask extends AsyncTask<String, Void, Weather> {
