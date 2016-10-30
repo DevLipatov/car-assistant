@@ -26,14 +26,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Weather now"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="@color/mainAppTextColor"
                 android:gravity="center_horizontal"/>
 
             <RelativeLayout
-                android:layout_width="60dp"
-                android:layout_height="60dp">
+                android:layout_width="80dp"
+                android:layout_height="80dp">
 
                 <ImageView
                     android:id="@+id/imgWeather"
@@ -88,5 +88,13 @@
         android:textSize="18sp"
         android:layout_margin="@dimen/main_app_margin"
         android:onClick="onCreateNewStats"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add to DB"
+        android:textSize="18sp"
+        android:layout_margin="@dimen/main_app_margin"
+        android:onClick="onNewDatabase"/>
 
 </LinearLayout>

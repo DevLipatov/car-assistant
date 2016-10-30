@@ -57,7 +57,7 @@ public class WeatherHttpClient {
             httpURLConnection.connect();
 
             InputStream inputStream = httpURLConnection.getInputStream();
-            byte[] buffer = new byte[1024];
+            byte[] buffer = new byte[inputStream.available()];
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
             while ( inputStream.read(buffer) != -1) {
