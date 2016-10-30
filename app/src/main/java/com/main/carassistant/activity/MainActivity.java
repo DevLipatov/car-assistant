@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.main.carassistant.R;
 import com.main.carassistant.db.DbHelper;
 import com.main.carassistant.db.IDbOperations;
@@ -21,7 +20,6 @@ import com.main.carassistant.http.WeatherHttpClient;
 import com.main.carassistant.model.Stats;
 import com.main.carassistant.model.Weather;
 import com.main.carassistant.parsing.weather.JsonWeatherParser;
-
 import org.json.JSONException;
 
 public class MainActivity extends AppCompatActivity{
@@ -49,7 +47,6 @@ public class MainActivity extends AppCompatActivity{
     public void onCreateNewStats(View view) {
         Intent intent = new Intent(getApplicationContext(), StatsActivity.class);
         startActivity(intent);
-
     }
 
     private class JsonWeatherTask extends AsyncTask<String, Void, Weather> {
@@ -118,4 +115,5 @@ public class MainActivity extends AppCompatActivity{
 //
 //        cursor.close();
     }
+
 }
