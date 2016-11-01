@@ -1,16 +1,16 @@
 package com.main.carassistant.threads;
 
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import com.main.carassistant.http.WeatherHttpClient;
 import com.main.carassistant.model.Weather;
 import com.main.carassistant.parsing.weather.JsonWeatherParser;
+
 import org.json.JSONException;
 
-public class WeatherThread {
+public class WeatherThread implements Runnable{
 
-    public static Runnable runnable = new Runnable() {
         @Override
         public void run() {
 
@@ -29,15 +29,18 @@ public class WeatherThread {
             }
 
             String temp = Integer.toString(weather.getTemp()) + "°C";
+            Bitmap image = BitmapFactory.decodeByteArray(weather.iconData, 0, weather.iconData.length);
 
-            Handler handler = null;
-            Message msg = handler.obtainMessage();
-            Bundle bundle = new Bundle();
-            bundle.putString("weather", temp);
-            bundle.putByteArray("icon", weather.iconData);
-            bundle.putBoolean("success", true);
-            msg.setData(bundle);
-            handler.sendMessage(msg);
+
+
+//            Handler handler;
+//            Message msg = handler.obtainMessage();
+//            Bundle bundle = new Bundle();
+//            bundle.putString("weather", temp);
+//            bundle.putByteArray("icon", weather.iconData);
+//            bundle.putBoolean("success", true);
+//            msg.setData(bundle);
+//            handler.sendMessage(msg);
         }
-    };
 }
+

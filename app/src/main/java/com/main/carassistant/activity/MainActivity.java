@@ -14,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.main.carassistant.R;
 import com.main.carassistant.db.DbHelper;
-import com.main.carassistant.db.IDbOperations;
 import com.main.carassistant.http.ConnectionChecker;
 import com.main.carassistant.http.WeatherHttpClient;
 import com.main.carassistant.model.Stats;
@@ -26,6 +25,7 @@ public class MainActivity extends AppCompatActivity{
 
     TextView txtTemperature;
     ImageView imgWeather;
+    JsonWeatherTask jsonWeatherTask;
 
     @Override
     protected void onCreate( Bundle savedInstanceState) {
@@ -34,9 +34,9 @@ public class MainActivity extends AppCompatActivity{
         txtTemperature = (TextView) findViewById(R.id.txtTemperature);
         imgWeather = (ImageView) findViewById(R.id.imgWeather);
 
-        if (ConnectionChecker.checkConnection((getApplicationContext()))){
+        if (ConnectionChecker.checkConnection((getApplicationContext()))) {
             String city = "Hrodna";
-            JsonWeatherTask jsonWeatherTask = new JsonWeatherTask();
+            jsonWeatherTask = new JsonWeatherTask();
             jsonWeatherTask.execute(city);
         } else {
             txtTemperature.setTextSize(16);
@@ -44,9 +44,20 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
+    @Override
+    protected void onStop() {
+        jsonWeatherTask.cancel(true);
+        super.onStop();
+    }
+
     public void onCreateNewStats(View view) {
         Intent intent = new Intent(getApplicationContext(), StatsActivity.class);
         startActivity(intent);
+    }
+
+    public void onPhotoLayout(View view) {
+        Intent intent2 = new Intent(getApplicationContext(), PhotosActivity.class);
+        startActivity(intent2);
     }
 
     private class JsonWeatherTask extends AsyncTask<String, Void, Weather> {
@@ -101,7 +112,9 @@ public class MainActivity extends AppCompatActivity{
         values.put(Stats.DATE, System.currentTimeMillis());
         values.put(Stats.COMMENT, "Comment");
 
-        final IDbOperations operations = new DbHelper(MainActivity.this, "test.db", 1);
+//        final IDbOperations operations = new DbHelper(MainActivity.this, "test.db", 1);
+
+        final DbHelper operations = new DbHelper(MainActivity.this, "test.db", 1);
 
         final long id = operations.insert(Stats.class, values);
 
@@ -115,5 +128,4 @@ public class MainActivity extends AppCompatActivity{
 //
 //        cursor.close();
     }
-
 }

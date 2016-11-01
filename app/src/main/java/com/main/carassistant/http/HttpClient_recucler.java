@@ -7,7 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
 
-public class HttpClient {
+public class HttpClient_recucler {
 
     public String get(String url) throws Exception {
         return doRequest(url, "GET", null, null);
