@@ -9,14 +9,14 @@ import android.support.annotation.Nullable;
 import com.main.carassistant.db.annotations.Table;
 import com.main.carassistant.db.annotations.type.dbInteger;
 import com.main.carassistant.db.annotations.type.dbLong;
+import com.main.carassistant.db.annotations.type.dbString;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Locale;
-import static java.sql.Types.NULL;
 
-public class DbHelper extends SQLiteOpenHelper implements IDbOperations{
+public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
 
     private static final String SQL_TABLE_CREATE_TEMPLATE = "CREATE TABLE IF NOT EXISTS %s (%s);";
     private static final String SQL_TABLE_CREATE_FIELD_TEMPLATE = "%s %s";
@@ -29,7 +29,7 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations{
     public static String getTableName(final AnnotatedElement clazz) {
         final Table table = clazz.getAnnotation(Table.class);
 
-        if (table != null){
+        if (table != null) {
             return table.name();
         } else {
             return null;
@@ -59,6 +59,8 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations{
                             type = ((dbInteger) annotation).value();
                         } else if (annotation instanceof dbLong) {
                             type = ((dbLong) annotation).value();
+                        } else if (annotation instanceof dbString) {
+                            type = ((dbString) annotation).value();
                         }
                     }
 
@@ -66,12 +68,12 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations{
                         return null;
                     }
 
-                        final String value = (String) field.get(NULL);
+                    final String value = (String) field.get(null);
 
-                    builder.append(String.format(Locale.US, SQL_TABLE_CREATE_FIELD_TEMPLATE, value, type));
+                    builder.append(String.format(Locale.US ,SQL_TABLE_CREATE_FIELD_TEMPLATE, value, type));
 
                     if (i < fields.length-1) {
-                        builder.append(",");
+                        builder.append(", ");
                     }
                 }
 
@@ -86,8 +88,7 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations{
     }
 
     @Override
-    public void onCreate(final SQLiteDatabase sqLiteDatabase) {
-
+    public void onCreate(SQLiteDatabase sqLiteDatabase) {
         for (final Class<?> clazz : Contract.MODELS) {
             final String sql = getTableCreateQuery(clazz);
 

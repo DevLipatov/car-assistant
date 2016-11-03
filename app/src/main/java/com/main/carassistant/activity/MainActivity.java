@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.main.carassistant.R;
 import com.main.carassistant.db.DbHelper;
 import com.main.carassistant.http.ConnectionChecker;
@@ -19,6 +20,7 @@ import com.main.carassistant.http.WeatherHttpClient;
 import com.main.carassistant.model.Stats;
 import com.main.carassistant.model.Weather;
 import com.main.carassistant.parsing.weather.JsonWeatherParser;
+
 import org.json.JSONException;
 
 public class MainActivity extends AppCompatActivity{
@@ -103,7 +105,8 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
-    public void onNewDatabase (View view){
+    public void onNewDatabase (View view) {
+
         final ContentValues values = new ContentValues();
 
         values.put(Stats.MILEAGE, 10);
@@ -112,14 +115,12 @@ public class MainActivity extends AppCompatActivity{
         values.put(Stats.DATE, System.currentTimeMillis());
         values.put(Stats.COMMENT, "Comment");
 
-//        final IDbOperations operations = new DbHelper(MainActivity.this, "test.db", 1);
+        final DbHelper dbHelper = new DbHelper(MainActivity.this, "test.db", 1);
 
-        final DbHelper operations = new DbHelper(MainActivity.this, "test.db", 1);
-
-        final long id = operations.insert(Stats.class, values);
+        final long id = dbHelper.insert(Stats.class, values);
 
         if (id != 0) {
-            Toast.makeText(MainActivity.this, "Successful operation INSERT  " + String.valueOf(id), Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, String.valueOf(id), Toast.LENGTH_SHORT).show();
         }
 
 //        final Cursor cursor = operations.query("SELECT * FROM " + DbHelper.getTableName(Stats.class));
