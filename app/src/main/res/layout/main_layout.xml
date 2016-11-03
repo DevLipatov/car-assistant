@@ -100,9 +100,11 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add to DB"
+        android:text="To photo layout"
         android:textSize="18sp"
         android:layout_margin="@dimen/main_app_margin"
         android:onClick="onNewDatabase"/>
+
+
 
 </LinearLayout>
