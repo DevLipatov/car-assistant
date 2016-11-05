@@ -89,13 +89,14 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        for (final Class<?> clazz : Contract.MODELS) {
-            final String sql = getTableCreateQuery(clazz);
+//        for (final Class<?> clazz : Contract.MODELS) {
+//            final String sql = getTableCreateQuery(clazz);
 
-            if (sql != null) {
-                sqLiteDatabase.execSQL(sql);
-            }
-        }
+//            if (sql != null) {
+//                sqLiteDatabase.execSQL(sql);
+                sqLiteDatabase.execSQL("CREATE TABLE Stats (mileage INTEGER)");
+//            }
+//        }
     }
 
     @Override

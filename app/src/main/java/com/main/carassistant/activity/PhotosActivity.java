@@ -24,7 +24,6 @@ public class PhotosActivity extends AppCompatActivity {
                     "https://www.android.com/static/img/home/more-from-2.png",
                     "http://www.howtablet.ru/wp-content/uploads/2016/04/%D0%9E%D0%B1%D0%BD%D0%BE%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-Android-6.0.1-Marshmallow.jpg",
                     "http://keddr.com/wp-content/uploads/2015/12/iOS-vs-Android.jpg",
-                    "http://shushi168.com/data/out/8/37224223-android-wallpaper.jpg",
                     "https://www.android.com/static/img/history/features/feature_icecream_3.png",
                     "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRfZ5OiAt7GIz57jyvjK8ca82pIvgd7pvD-3JyPG73ppN8FbqpbUA",
                     "http://androidwallpape.rs/content/02-wallpapers/131-night-sky/wallpaper-2707591.jpg"
@@ -36,14 +35,14 @@ public class PhotosActivity extends AppCompatActivity {
         setContentView(R.layout.photos_layout);
 
         listView = (ListView) findViewById(R.id.list);
+        final Pollock pollock = Pollock.getInstance();
 
         ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(this, R.layout.adapter_photo, android.R.id.text1, IMAGE_URLS) {
             @NonNull
             @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
+            public View getView(final int position, final View convertView, final ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
                 ImageView imageView = (ImageView) view.findViewById(R.id.image);
-                Pollock pollock = new Pollock();
                 pollock.drawImage(imageView, IMAGE_URLS[position]);
                 return view;
             }

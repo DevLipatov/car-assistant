@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.main.carassistant.R;
 import com.main.carassistant.db.DbHelper;
 import com.main.carassistant.http.ConnectionChecker;
@@ -20,14 +19,17 @@ import com.main.carassistant.http.WeatherHttpClient;
 import com.main.carassistant.model.Stats;
 import com.main.carassistant.model.Weather;
 import com.main.carassistant.parsing.weather.JsonWeatherParser;
-
+import com.main.carassistant.threads.ThreadManager;
 import org.json.JSONException;
+import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity{
 
     TextView txtTemperature;
     ImageView imgWeather;
     JsonWeatherTask jsonWeatherTask;
+    DbHelper dbHelper;
+    private ThreadManager threadManager = new ThreadManager(Executors.newFixedThreadPool(ThreadManager.COUNT_CORE));
 
     @Override
     protected void onCreate( Bundle savedInstanceState) {
@@ -44,6 +46,8 @@ public class MainActivity extends AppCompatActivity{
             txtTemperature.setTextSize(16);
             txtTemperature.setText(R.string.connection_error);
         }
+
+        dbHelper = new DbHelper(MainActivity.this, "test.db", 1);
     }
 
     @Override
@@ -110,14 +114,13 @@ public class MainActivity extends AppCompatActivity{
         final ContentValues values = new ContentValues();
 
         values.put(Stats.MILEAGE, 10);
-        values.put(Stats.FUEL, 20);
-        values.put(Stats.OIL, 30);
-        values.put(Stats.DATE, System.currentTimeMillis());
-        values.put(Stats.COMMENT, "Comment");
+//        values.put(Stats.FUEL, 20);
+//        values.put(Stats.OIL, 30);
+//        values.put(Stats.DATE, System.currentTimeMillis());
+//        values.put(Stats.COMMENT, "Comment");
 
-        final DbHelper dbHelper = new DbHelper(MainActivity.this, "test.db", 1);
 
-        final long id = dbHelper.insert(Stats.class, values);
+        long id = dbHelper.insert(Stats.class, values);
 
         if (id != 0) {
             Toast.makeText(MainActivity.this, String.valueOf(id), Toast.LENGTH_SHORT).show();

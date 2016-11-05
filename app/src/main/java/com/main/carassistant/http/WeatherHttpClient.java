@@ -46,7 +46,7 @@ public class WeatherHttpClient {
         return response;
     }
 
-    public byte[] getImage (String imgCode){
+    public byte[] getImage (String imgCode) {
 
         HttpURLConnection httpURLConnection = null ;
 
