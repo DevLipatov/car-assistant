@@ -2,6 +2,7 @@ package com.main.carassistant.activity;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity{
             txtTemperature.setText(R.string.connection_error);
         }
 
-        dbHelper = new DbHelper(MainActivity.this, "test.db", 1);
+        dbHelper = DbHelper.getHelper(getApplicationContext(), "test.db", 1);
     }
 
     @Override
@@ -114,11 +115,10 @@ public class MainActivity extends AppCompatActivity{
         final ContentValues values = new ContentValues();
 
         values.put(Stats.MILEAGE, 10);
-//        values.put(Stats.FUEL, 20);
-//        values.put(Stats.OIL, 30);
-//        values.put(Stats.DATE, System.currentTimeMillis());
-//        values.put(Stats.COMMENT, "Comment");
-
+        values.put(Stats.FUEL, 20);
+        values.put(Stats.OIL, 30);
+        values.put(Stats.DATE, System.currentTimeMillis());
+        values.put(Stats.COMMENT, "Comment");
 
         long id = dbHelper.insert(Stats.class, values);
 
@@ -126,10 +126,10 @@ public class MainActivity extends AppCompatActivity{
             Toast.makeText(MainActivity.this, String.valueOf(id), Toast.LENGTH_SHORT).show();
         }
 
-//        final Cursor cursor = operations.query("SELECT * FROM " + DbHelper.getTableName(Stats.class));
-//
-//        Toast.makeText(MainActivity.this, String.valueOf(cursor.getColumnCount()), Toast.LENGTH_SHORT).show();
-//
-//        cursor.close();
+        final Cursor cursor = dbHelper.query("SELECT * FROM " + DbHelper.getTableName(Stats.class));
+
+        Toast.makeText(MainActivity.this, String.valueOf(cursor.getColumnCount()), Toast.LENGTH_SHORT).show();
+
+        cursor.close();
     }
 }

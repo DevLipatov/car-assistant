@@ -18,11 +18,19 @@ import java.util.Locale;
 
 public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
 
-    private static final String SQL_TABLE_CREATE_TEMPLATE = "CREATE TABLE IF NOT EXISTS %s (%s);";
+    private static final String SQL_TABLE_CREATE_TEMPLATE = "CREATE TABLE IF NOT EXISTS %s (%s)";
     private static final String SQL_TABLE_CREATE_FIELD_TEMPLATE = "%s %s";
+    private static DbHelper instance = null;
 
-    public DbHelper(final Context context, final String name, final int version) {
+    private DbHelper(final Context context, final String name, final int version) {
         super(context, name, null, version);
+    }
+
+    public static DbHelper getHelper(final Context cont, final String nm, final int ver){
+        if (instance == null) {
+            instance = new DbHelper(cont, nm, ver);
+        }
+        return instance;
     }
 
     @Nullable
@@ -37,8 +45,9 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
     }
 
     @Nullable
-    public static String getTableCreateQuery (final Class<?> clazz) {
+    private static String getTableCreateQuery (final Class<?> clazz) {
         final Table table = clazz.getAnnotation(Table.class);
+        String ptype = null;
 
         if (table != null) {
             try {
@@ -64,20 +73,20 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
                         }
                     }
 
-                    if (type == null) {
-                        return null;
-                    }
-
-                    final String value = (String) field.get(null);
-
-                    builder.append(String.format(Locale.US ,SQL_TABLE_CREATE_FIELD_TEMPLATE, value, type));
-
-                    if (i < fields.length-1) {
+                    if (ptype != null && type != null) {
                         builder.append(", ");
                     }
+
+                    if (i < fields.length && type!= null) {
+                        final String value = (String) field.get(null);
+                        builder.append(String.format(Locale.US ,SQL_TABLE_CREATE_FIELD_TEMPLATE, value, type));
+                    }
+
+                    ptype = type;
                 }
 
-                return String.format(Locale.US, SQL_TABLE_CREATE_TEMPLATE, name, builder);
+                return String.format(Locale.US ,SQL_TABLE_CREATE_TEMPLATE, name, builder.toString());
+
             } catch (final Exception e) {
                 return null;
             }
@@ -89,14 +98,13 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-//        for (final Class<?> clazz : Contract.MODELS) {
-//            final String sql = getTableCreateQuery(clazz);
+        for (final Class<?> clazz : Contract.MODELS) {
+            final String sql = getTableCreateQuery(clazz);
 
-//            if (sql != null) {
-//                sqLiteDatabase.execSQL(sql);
-                sqLiteDatabase.execSQL("CREATE TABLE Stats (mileage INTEGER)");
-//            }
-//        }
+            if (sql != null) {
+                sqLiteDatabase.execSQL(sql);
+            }
+        }
     }
 
     @Override
