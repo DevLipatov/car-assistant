@@ -1,7 +1,6 @@
 package com.main.carassistant.model;
 
 import android.provider.BaseColumns;
-
 import com.main.carassistant.db.annotations.Table;
 import com.main.carassistant.db.annotations.type.dbInteger;
 import com.main.carassistant.db.annotations.type.dbLong;
@@ -14,10 +13,13 @@ public class Stats implements BaseColumns{
     public static final String MILEAGE = "mileage";
 
     @dbInteger
-    public static final String FUEL = "fuel";
+    public static final String FUELING = "fueling";
 
     @dbInteger
-    public static final String OIL = "oil";
+    public static final String CURRENT_FUEL = "current_fuel";
+
+    @dbInteger
+    public static final String OIL_FILLED = "oil_filled";
 
     @dbLong
     public static final String DATE = "date";

@@ -9,59 +9,67 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/row1"
         android:layout_marginTop="@dimen/main_app_margin">
 
         <TextView
-            android:text="Current mileage"
+            android:text="@string/current_mileage"
             android:layout_weight="1"
-            style="@style/app_inscriptio_style" />
+            android:id="@+id/txtMileage"
+            style="@style/app_inscriptio_style"/>
 
         <TextView
-            android:text="Fueling"
+            android:text="@string/fueling"
             android:layout_weight="1"
-            style="@style/app_inscriptio_style" />
+            android:id="@+id/txtFueling"
+            style="@style/app_inscriptio_style"/>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/row1">
+        android:layout_height="wrap_content">
 
         <EditText
             android:layout_weight="1"
             android:inputType="number"
             android:id="@+id/editMileage"
-            style="@style/app_edit_text_style" />
+            style="@style/app_edit_text_style"/>
 
         <EditText
             android:layout_weight="1"
             android:inputType="number"
             android:id="@+id/editFueling"
-            style="@style/app_edit_text_style" />
+            style="@style/app_edit_text_style"/>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <TextView
-            android:text="Oil filled"
-            android:layout_weight="1"
-            style="@style/app_inscriptio_style" />
 
         <TextView
-            android:text=""
+            android:text="@string/current_fuel"
             android:layout_weight="1"
-            style="@style/app_inscriptio_style"
-            android:id="@+id/txtRes"/>
+            android:id="@+id/txtCurrentFuel"
+            style="@style/app_inscriptio_style"/>
+
+        <TextView
+            android:text="@string/oil_filled"
+            android:layout_weight="1"
+            android:id="@+id/txtOilFilled"
+            style="@style/app_inscriptio_style"/>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+        <EditText
+            android:layout_weight="1"
+            android:inputType="number"
+            android:id="@+id/editCurrentFuel"
+            style="@style/app_edit_text_style"/>
 
         <EditText
             android:layout_weight="1"
@@ -69,13 +77,18 @@
             android:id="@+id/editOilFilled"
             style="@style/app_edit_text_style"/>
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_margin="@dimen/main_app_margin"
-            android:layout_weight="1"/>
-
     </LinearLayout>
+
+    <TextView
+        android:text="@string/comment"
+        style="@style/app_inscriptio_style"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:id="@+id/editComment"
+        style="@style/app_edit_text_style"
+        android:lines="20"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -86,16 +99,10 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add new stats"
+            android:text="@string/add_new_stats"
             android:textSize="18sp"
             android:layout_margin="@dimen/main_app_margin"
             android:onClick="onAddNewStats"/>
 
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/imageIcon"
-        android:layout_width="150dp"
-        android:layout_height="150dp"/>
-
 </LinearLayout>

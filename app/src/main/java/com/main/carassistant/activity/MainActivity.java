@@ -1,8 +1,6 @@
 package com.main.carassistant.activity;
 
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -12,12 +10,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.main.carassistant.R;
 import com.main.carassistant.db.DbHelper;
 import com.main.carassistant.http.ConnectionChecker;
 import com.main.carassistant.http.WeatherHttpClient;
-import com.main.carassistant.model.Stats;
 import com.main.carassistant.model.Weather;
 import com.main.carassistant.parsing.weather.JsonWeatherParser;
 import com.main.carassistant.threads.ThreadManager;
@@ -48,7 +44,7 @@ public class MainActivity extends AppCompatActivity{
             txtTemperature.setText(R.string.connection_error);
         }
 
-        dbHelper = DbHelper.getHelper(getApplicationContext(), "test.db", 1);
+        dbHelper = DbHelper.getHelper(getApplicationContext(), "CarAssistant.db", 1);
     }
 
     @Override
@@ -110,26 +106,26 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
-    public void onNewDatabase (View view) {
-
-        final ContentValues values = new ContentValues();
-
-        values.put(Stats.MILEAGE, 10);
-        values.put(Stats.FUEL, 20);
-        values.put(Stats.OIL, 30);
-        values.put(Stats.DATE, System.currentTimeMillis());
-        values.put(Stats.COMMENT, "Comment");
-
-        long id = dbHelper.insert(Stats.class, values);
-
-        if (id != 0) {
-            Toast.makeText(MainActivity.this, String.valueOf(id), Toast.LENGTH_SHORT).show();
-        }
-
-        final Cursor cursor = dbHelper.query("SELECT * FROM " + DbHelper.getTableName(Stats.class));
-
-        Toast.makeText(MainActivity.this, String.valueOf(cursor.getColumnCount()), Toast.LENGTH_SHORT).show();
-
-        cursor.close();
-    }
+//    public void onNewDatabase (View view) {
+//
+//        final ContentValues values = new ContentValues();
+//
+//        values.put(Stats.MILEAGE, 10);
+//        values.put(Stats.FUELING, 20);
+//        values.put(Stats.OIL_FILLED, 30);
+//        values.put(Stats.DATE, System.currentTimeMillis());
+//        values.put(Stats.COMMENT, "Comment");
+//
+//        long id = dbHelper.insert(Stats.class, values);
+//
+//        if (id != 0) {
+//            Toast.makeText(MainActivity.this, String.valueOf(id), Toast.LENGTH_SHORT).show();
+//        }
+//
+//        final Cursor cursor = dbHelper.query("SELECT * FROM " + DbHelper.getTableName(Stats.class));
+//
+//        Toast.makeText(MainActivity.this, String.valueOf(cursor.getColumnCount()), Toast.LENGTH_SHORT).show();
+//
+//        cursor.close();
+//    }
 }
