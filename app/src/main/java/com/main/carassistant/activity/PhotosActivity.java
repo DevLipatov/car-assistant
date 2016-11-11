@@ -35,13 +35,19 @@ public class PhotosActivity extends AppCompatActivity {
         setContentView(R.layout.photos_layout);
 
         listView = (ListView) findViewById(R.id.list);
+
         final Pollock pollock = Pollock.getInstance();
 
         ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(this, R.layout.adapter_photo, android.R.id.text1, IMAGE_URLS) {
             @NonNull
             @Override
             public View getView(final int position, final View convertView, final ViewGroup parent) {
-                View view = super.getView(position, convertView, parent);
+                View view;
+                if (convertView == null) {
+                    view = super.getView(position, convertView, parent);
+                } else {
+                    view = convertView;
+                }
                 ImageView imageView = (ImageView) view.findViewById(R.id.image);
                 pollock.drawImage(imageView, IMAGE_URLS[position]);
                 return view;
