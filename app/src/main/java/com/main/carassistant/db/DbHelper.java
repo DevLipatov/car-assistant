@@ -30,6 +30,7 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
         if (instance == null) {
             instance = new DbHelper(cont, nm, ver);
         }
+//        cont.getSystemService("my_db");
         return instance;
     }
 

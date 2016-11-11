@@ -82,7 +82,7 @@ public class Pollock {
 
         public BitmapResultCallback(final String value, final ImageView imgView) {
             this.value = value;
-            this.imageViewReference = new WeakReference<ImageView>(imgView);
+            this.imageViewReference = new WeakReference<>(imgView);
             imgView.setTag(value);
         }
 

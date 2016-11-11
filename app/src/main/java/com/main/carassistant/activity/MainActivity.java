@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity{
     ImageView imgWeather;
     JsonWeatherTask jsonWeatherTask;
     DbHelper dbHelper;
+
     private ThreadManager threadManager = new ThreadManager(Executors.newFixedThreadPool(ThreadManager.COUNT_CORE));
 
     @Override
