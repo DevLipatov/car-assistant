@@ -27,4 +27,7 @@ public class Stats implements BaseColumns{
     @dbString
     public static final String COMMENT = "comment";
 
+    @dbInteger
+    public static final String TOTAL_FUELING = "total_fueling";
+
 }

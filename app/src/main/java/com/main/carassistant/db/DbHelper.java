@@ -22,6 +22,7 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
     private static final String SQL_TABLE_CREATE_FIELD_TEMPLATE = "%s %s";
     private static DbHelper instance = null;
 
+    //TODO move to App
     private DbHelper(final Context context, final String name, final int version) {
         super(context, name, null, version);
     }
@@ -109,7 +110,11 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
     }
 
     @Override
-    public void onUpgrade(final SQLiteDatabase sqLiteDatabase, final int i, final int i1) {}
+    public void onUpgrade(final SQLiteDatabase sqLiteDatabase, final int i, final int i1) {
+        if (i < 2) {
+            sqLiteDatabase.execSQL("ALTER TABLE Stats ADD COLUMN total_fueling INTEGER DEFAULT 0");
+        }
+    }
 
     @Override
     public Cursor query(String sql, String... args) {

@@ -9,7 +9,7 @@ public class App extends Application{
     @Override
     public void onCreate() {
         super.onCreate();
-//        dbHelper = new DbHelper();
+//        dbHelper = new DbHelper(getApplicationContext(), "CarAssistant.db", 1);
     }
 
 //    @Override
