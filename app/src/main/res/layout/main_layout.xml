@@ -105,4 +105,20 @@
         android:layout_margin="@dimen/main_app_margin"
         android:onClick="onQuery"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Map"
+        android:textSize="18sp"
+        android:layout_margin="@dimen/main_app_margin"
+        android:onClick="onClick"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Allstats"
+        android:textSize="18sp"
+        android:layout_margin="@dimen/main_app_margin"
+        android:onClick="onAllStatsActivity"/>
+
 </LinearLayout>

@@ -25,6 +25,11 @@
 
         <activity android:name=".activity.StatsActivity"/>
         <activity android:name=".activity.PhotosActivity"/>
+        <activity android:name=".activity.AllStatsActivity"/>
+        
+        <provider
+            android:authorities=".MyContentProvider"
+            android:name="com.main.carassistant.db.MyContentProvider"/>
 
     </application>
 

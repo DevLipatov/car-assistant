@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.main.carassistant.R;
 import com.main.carassistant.db.DbHelper;
 import com.main.carassistant.http.ConnectionChecker;
@@ -119,6 +121,19 @@ public class MainActivity extends AppCompatActivity{
         String totalFueling = String.valueOf(cursor.getInt(cursor.getColumnIndex("total_fueling")));
         Toast.makeText(MainActivity.this, mileageValStr + "  " + totalFueling, Toast.LENGTH_SHORT).show();
         cursor.close();
+    }
+
+
+    public void onClick(View view) {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("geo:55.754283,37.62002"));
+        startActivity(intent);
+    }
+
+    public void onAllStatsActivity (View view) {
+        Intent intent = new Intent(getApplicationContext(), AllStatsActivity.class);
+        startActivity(intent);
     }
 
     //TODO add stats view
