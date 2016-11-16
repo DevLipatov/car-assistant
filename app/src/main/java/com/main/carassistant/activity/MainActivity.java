@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.main.carassistant.R;
 import com.main.carassistant.db.DbHelper;
 import com.main.carassistant.http.ConnectionChecker;
@@ -21,7 +20,6 @@ import com.main.carassistant.http.WeatherHttpClient;
 import com.main.carassistant.model.Stats;
 import com.main.carassistant.model.Weather;
 import com.main.carassistant.parsing.weather.JsonWeatherParser;
-
 import org.json.JSONException;
 
 public class MainActivity extends AppCompatActivity{
@@ -51,7 +49,7 @@ public class MainActivity extends AppCompatActivity{
         }
 
         // TODO --to App
-        dbHelper = DbHelper.getHelper(getApplicationContext(), "CarAssistant.db", 2);
+        dbHelper = DbHelper.getHelper(getApplicationContext(), "CarAssistant.db", 4);
     }
 
     @Override
@@ -134,6 +132,10 @@ public class MainActivity extends AppCompatActivity{
     public void onAllStatsActivity (View view) {
         Intent intent = new Intent(getApplicationContext(), AllStatsActivity.class);
         startActivity(intent);
+    }
+
+    public void onResetStats (View view) {
+        dbHelper.delete(Stats.class, null, null);
     }
 
     //TODO add stats view

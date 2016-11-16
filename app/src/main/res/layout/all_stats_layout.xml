@@ -1,13 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <android.support.percent.PercentRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_style"
+        android:layout_margin="@dimen/main_app_margin">
+
+        <TextView
+            app:layout_widthPercent="30%"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtDateItem"
+            android:text="Date"
+            android:textAlignment="center"
+            android:layout_margin="@dimen/main_app_margin"
+            android:textColor="@color/mainAppTextColor"
+            android:textSize="24sp" />
+
+        <TextView
+            app:layout_widthPercent="30%"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtFuelingItem"
+            android:text="Fueling"
+            android:textAlignment="center"
+            android:layout_margin="@dimen/main_app_margin"
+            android:textSize="24sp"
+            android:textColor="@color/mainAppTextColor"
+            android:layout_toRightOf="@+id/txtDateItem"/>
+
+        <TextView
+            app:layout_widthPercent="40%"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtOilFilledItem"
+            android:text="OilFilled"
+            android:textAlignment="center"
+            android:layout_margin="@dimen/main_app_margin"
+            android:textColor="@color/mainAppTextColor"
+            android:textSize="24sp"
+            android:layout_toRightOf="@+id/txtFuelingItem"/>
+
+    </android.support.percent.PercentRelativeLayout>
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/statsList"/>
-
+        android:id="@+id/statsList"
+        android:layout_margin="@dimen/main_app_margin"/>
 </LinearLayout>

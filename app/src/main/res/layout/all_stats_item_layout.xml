@@ -1,18 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
 
     <TextView
-        android:layout_width="wrap_content"
+        app:layout_widthPercent="40%"
         android:layout_height="wrap_content"
-        android:id="@+id/txtMileageItem"/>
+        android:id="@+id/txtDateItem"
+        android:text="nvkscbvksdkb"
+        android:layout_margin="@dimen/main_app_margin"
+        android:textColor="@color/mainAppTextColor"
+        android:textSize="24sp"/>
 
     <TextView
-        android:layout_width="wrap_content"
+        app:layout_widthPercent="30%"
         android:layout_height="wrap_content"
-        android:id="@+id/txtDateItem"/>
+        android:id="@+id/txtFuelingItem"
+        android:text="vnjhvbs"
+        android:layout_margin="@dimen/main_app_margin"
+        android:textSize="24sp"
+        android:textColor="@color/mainAppTextColor"
+        android:layout_toRightOf="@+id/txtDateItem"/>
 
-</LinearLayout>
+    <TextView
+        app:layout_widthPercent="30%"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtOilFilledItem"
+        android:text="nvkscbvksdkb"
+        android:layout_margin="@dimen/main_app_margin"
+        android:textColor="@color/mainAppTextColor"
+        android:textSize="24sp"
+        android:layout_toRightOf="@+id/txtFuelingItem"/>
+
+</android.support.percent.PercentRelativeLayout>

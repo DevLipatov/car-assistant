@@ -13,6 +13,11 @@ import com.main.carassistant.R;
 import com.main.carassistant.db.DbHelper;
 import com.main.carassistant.model.Stats;
 import com.main.carassistant.threads.ResultCallback;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class StatsActivity extends AppCompatActivity {
 
@@ -37,7 +42,7 @@ public class StatsActivity extends AppCompatActivity {
         editCurrentFuel = (EditText) findViewById(R.id.editCurrentFuel);
         editComment = (EditText) findViewById(R.id.editComment);
 
-        dbHelper = DbHelper.getHelper(getApplicationContext(), "CarAssistant.db", 2);
+        dbHelper = DbHelper.getHelper(getApplicationContext(), "CarAssistant.db", 4);
     }
 
     public void onAddNewStats (View view) {
@@ -59,12 +64,16 @@ public class StatsActivity extends AppCompatActivity {
         //check for empty fields
         if (!m.equals("") && !f.equals("") && !c.equals("") && !o.equals("")) {
 
+            Date date = Calendar.getInstance().getTime();
+            DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy   HH:mm", Locale.US);
+            String today = formatter.format(date);
+
             contentValues.put(Stats.MILEAGE, Integer.valueOf(m));
             contentValues.put(Stats.FUELING, Integer.valueOf(f));
             contentValues.put(Stats.CURRENT_FUEL, Integer.valueOf(c));
             contentValues.put(Stats.OIL_FILLED, Integer.valueOf(o));
             contentValues.put(Stats.COMMENT, editComment.getText().toString());
-            contentValues.put(Stats.DATE, System.currentTimeMillis());
+            contentValues.put(Stats.DATE, today);
 
             insertOperation(new ResultCallback<Long>() {
                 @Override
@@ -108,7 +117,6 @@ public class StatsActivity extends AppCompatActivity {
             } else {
                 dialogMessage += "field.";
             }
-
             showErrorDialog(dialogMessage);
         }
     }
@@ -119,11 +127,16 @@ public class StatsActivity extends AppCompatActivity {
             public void run() {
                 //get total fueling for fuel consumption
                 final Cursor cursor = dbHelper.query("SELECT total_fueling FROM " + DbHelper.getTableName(Stats.class));
-                cursor.moveToLast();
-                //update total fuel consumption
-                Integer total = Integer.valueOf(editFueling.getText().toString()) + cursor.getInt(cursor.getColumnIndex("total_fueling"));
-                cursor.close();
-                contentValues.put(Stats.TOTAL_FUELING, total);
+                if (cursor.getCount()>0) {
+                    cursor.moveToLast();
+                    //update total fuel consumption
+                    Integer total = Integer.valueOf(editFueling.getText().toString()) + cursor.getInt(cursor.getColumnIndex("total_fueling"));
+                    cursor.close();
+                    contentValues.put(Stats.TOTAL_FUELING, total);
+                } else {
+                    contentValues.put(Stats.TOTAL_FUELING, 0);
+
+                }
                 long id = dbHelper.insert(Stats.class, contentValues);
                 callback.onSuccess(id);
             }

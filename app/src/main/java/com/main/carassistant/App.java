@@ -19,4 +19,11 @@ public class App extends Application{
 //        }
 //        return super.getSystemService(name);
 //    }
+//
+//    public DbHelper getDbHelper() {
+//        if (dbHelper == null) {
+//            dbHelper = new DbHelper(getApplicationContext(), "CarAssistant.db", 1);
+//        }
+//        return dbHelper;
+//    }
 }
