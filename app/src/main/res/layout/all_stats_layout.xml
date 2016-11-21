@@ -15,33 +15,24 @@
         <TextView
             app:layout_widthPercent="30%"
             android:layout_height="wrap_content"
+            style="@style/app_table_name_style"
             android:id="@+id/txtDateItem"
-            android:text="Date"
-            android:textAlignment="center"
-            android:layout_margin="@dimen/main_app_margin"
-            android:textColor="@color/mainAppTextColor"
-            android:textSize="24sp" />
+            android:text="Date"/>
 
         <TextView
             app:layout_widthPercent="30%"
             android:layout_height="wrap_content"
+            style="@style/app_table_name_style"
             android:id="@+id/txtFuelingItem"
             android:text="Fueling"
-            android:textAlignment="center"
-            android:layout_margin="@dimen/main_app_margin"
-            android:textSize="24sp"
-            android:textColor="@color/mainAppTextColor"
             android:layout_toRightOf="@+id/txtDateItem"/>
 
         <TextView
             app:layout_widthPercent="40%"
             android:layout_height="wrap_content"
+            style="@style/app_table_name_style"
             android:id="@+id/txtOilFilledItem"
             android:text="OilFilled"
-            android:textAlignment="center"
-            android:layout_margin="@dimen/main_app_margin"
-            android:textColor="@color/mainAppTextColor"
-            android:textSize="24sp"
             android:layout_toRightOf="@+id/txtFuelingItem"/>
 
     </android.support.percent.PercentRelativeLayout>

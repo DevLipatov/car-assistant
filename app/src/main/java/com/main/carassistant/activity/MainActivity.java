@@ -8,11 +8,14 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 import com.main.carassistant.R;
 import com.main.carassistant.db.DbHelper;
 import com.main.carassistant.http.ConnectionChecker;
@@ -28,6 +31,8 @@ public class MainActivity extends AppCompatActivity{
     ImageView imgWeather;
     JsonWeatherTask jsonWeatherTask;
     DbHelper dbHelper;
+    ViewFlipper viewFlipper;
+    private float initialX;
 
 //    private ThreadManager threadManager = new ThreadManager(Executors.newFixedThreadPool(ThreadManager.COUNT_CORE));
 
@@ -37,6 +42,10 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.main_layout);
         txtTemperature = (TextView) findViewById(R.id.txtTemperature);
         imgWeather = (ImageView) findViewById(R.id.imgWeather);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        viewFlipper = (ViewFlipper) findViewById(R.id.viewFlipper);
 
         if (ConnectionChecker.checkConnection((getApplicationContext()))) {
             //TODO add city selection
@@ -112,7 +121,6 @@ public class MainActivity extends AppCompatActivity{
     }
 
     public void onQuery (View view) {
-
         final Cursor cursor = dbHelper.query("SELECT mileage, total_fueling FROM " + DbHelper.getTableName(Stats.class));
         cursor.moveToLast();
         String mileageValStr = String.valueOf(cursor.getInt(cursor.getColumnIndex("mileage")));
@@ -120,7 +128,6 @@ public class MainActivity extends AppCompatActivity{
         Toast.makeText(MainActivity.this, mileageValStr + "  " + totalFueling, Toast.LENGTH_SHORT).show();
         cursor.close();
     }
-
 
     public void onClick(View view) {
         Intent intent = new Intent();
@@ -134,9 +141,35 @@ public class MainActivity extends AppCompatActivity{
         startActivity(intent);
     }
 
-    public void onResetStats (View view) {
-        dbHelper.delete(Stats.class, null, null);
+    public void onSettingsActivity (View view) {
+        Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+        startActivity(intent);
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                initialX = event.getX();
+                break;
+            case MotionEvent.ACTION_UP:
+                float finalX = event.getX();
+                if (initialX > finalX) {
+                    if (viewFlipper.getDisplayedChild() == 1)
+                        break;
+                    viewFlipper.setInAnimation(this, R.anim.flip_in_right);
+                    viewFlipper.setOutAnimation(this, R.anim.flip_out_left);
+                    viewFlipper.showNext();
+                } else {
+                    if (viewFlipper.getDisplayedChild() == 0)
+                        break;
+                    viewFlipper.setInAnimation(this, R.anim.flip_in_left);
+                    viewFlipper.setOutAnimation(this, R.anim.flip_out_right);
+                    viewFlipper.showPrevious();
+                }
+                break;
+        }
+        return false;
+    }
     //TODO add stats view
 }
