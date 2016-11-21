@@ -63,7 +63,6 @@
                 android:textColor="@color/mainAppTextColor"
                 android:textSize="20sp"
                 android:textStyle="bold"/>
-
         </LinearLayout>
 
         <LinearLayout
@@ -86,92 +85,14 @@
                 android:text="5 USD"
                 android:textColor="@color/mainAppTextColor"
                 android:textSize="18sp"/>
-
         </LinearLayout>
     </LinearLayout>
 
-    <ViewFlipper
+    <android.support.v4.view.ViewPager
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/viewFlipper"
-        android:background="@drawable/edit_text_style"
-        android:layout_margin="@dimen/main_app_margin">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:background="@drawable/edit_text_style"
-            android:gravity="center">
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="From last fueling"
-                style="@style/app_inscriptio_style"/>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@mipmap/ic_launcher"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Fuel"
-                    style="@style/app_inscriptio_style"
-                    android:textSize="20sp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="value"
-                    style="@style/app_inscriptio_style"
-                    android:textSize="24sp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@mipmap/ic_launcher"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Oil"
-                    style="@style/app_inscriptio_style"
-                    android:textSize="20sp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="value"
-                    style="@style/app_inscriptio_style"
-                    android:textSize="24sp"/>
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:background="@drawable/edit_text_style">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Second Screen"/>
-        </LinearLayout>
-    </ViewFlipper>
+        android:layout_height="200dp"
+        android:id="@+id/viewPager"
+        android:layout_margin="@dimen/main_app_margin"/>
 
     //TODO to Strings
     <Button
@@ -221,7 +142,4 @@
         android:textSize="18sp"
         android:layout_margin="@dimen/main_app_margin"
         android:onClick="onSettingsActivity"/>
-
-
-
 </LinearLayout>

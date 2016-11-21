@@ -130,7 +130,7 @@ public class StatsActivity extends AppCompatActivity {
                 if (cursor.getCount()>0) {
                     cursor.moveToLast();
                     //update total fuel consumption
-                    Integer total = Integer.valueOf(editFueling.getText().toString()) + cursor.getInt(cursor.getColumnIndex("total_fueling"));
+                    Integer total = Integer.valueOf(editFueling.getText().toString()) + cursor.getInt(cursor.getColumnIndex(Stats.TOTAL_FUELING));
                     cursor.close();
                     contentValues.put(Stats.TOTAL_FUELING, total);
                 } else {

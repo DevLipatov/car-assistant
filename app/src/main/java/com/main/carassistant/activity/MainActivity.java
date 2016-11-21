@@ -1,5 +1,6 @@
 package com.main.carassistant.activity;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -7,32 +8,39 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.MotionEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ViewFlipper;
 import com.main.carassistant.R;
+import com.main.carassistant.adapters.SamplePagerAdapter;
 import com.main.carassistant.db.DbHelper;
+import com.main.carassistant.design.ZoomOutPageTransformer;
 import com.main.carassistant.http.ConnectionChecker;
 import com.main.carassistant.http.WeatherHttpClient;
 import com.main.carassistant.model.Stats;
 import com.main.carassistant.model.Weather;
 import com.main.carassistant.parsing.weather.JsonWeatherParser;
+import com.main.carassistant.threads.ResultCallback;
 import org.json.JSONException;
+import java.util.ArrayList;
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     TextView txtTemperature;
     ImageView imgWeather;
     JsonWeatherTask jsonWeatherTask;
     DbHelper dbHelper;
-    ViewFlipper viewFlipper;
-    private float initialX;
+    ViewPager viewPager;
+    Toolbar toolbar;
+    SamplePagerAdapter samplePagerAdapter;
+    View page;
 
 //    private ThreadManager threadManager = new ThreadManager(Executors.newFixedThreadPool(ThreadManager.COUNT_CORE));
 
@@ -42,12 +50,11 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.main_layout);
         txtTemperature = (TextView) findViewById(R.id.txtTemperature);
         imgWeather = (ImageView) findViewById(R.id.imgWeather);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
 
-        viewFlipper = (ViewFlipper) findViewById(R.id.viewFlipper);
-
-        if (ConnectionChecker.checkConnection((getApplicationContext()))) {
+        if (ConnectionChecker.checkConnection(getApplicationContext())) {
             //TODO add city selection
             String city = "Hrodna";
             jsonWeatherTask = new JsonWeatherTask();
@@ -59,22 +66,26 @@ public class MainActivity extends AppCompatActivity{
 
         // TODO --to App
         dbHelper = DbHelper.getHelper(getApplicationContext(), "CarAssistant.db", 4);
-    }
 
-    @Override
-    protected void onStop() {
-        jsonWeatherTask.cancel(true);
-        super.onStop();
-    }
+        //TODO ask about inflater declaration there
+        LayoutInflater inflater = LayoutInflater.from(this);
+        List<View> pages = new ArrayList<>();
 
-    public void onCreateNewStats(View view) {
-        Intent intent = new Intent(getApplicationContext(), StatsActivity.class);
-        startActivity(intent);
-    }
+        page = inflater.inflate(R.layout.pager_adapter_page, null);
+        //TODO ask about TextView declaration there
+        TextView textView = (TextView) page.findViewById(R.id.text_view);
+        textView.setText("Страница 1");
+        pages.add(page);
 
-    public void onPhotoLayout(View view) {
-        Intent intent2 = new Intent(getApplicationContext(), PhotosActivity.class);
-        startActivity(intent2);
+        page = inflater.inflate(R.layout.pager_adapter_page, null);
+        textView = (TextView) page.findViewById(R.id.text_view);
+        textView.setText("Страница 2");
+        pages.add(page);
+
+        samplePagerAdapter = new SamplePagerAdapter(pages);
+        viewPager.setAdapter(samplePagerAdapter);
+        viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+        viewPager.setCurrentItem(0);
     }
 
     private class JsonWeatherTask extends AsyncTask<String, Void, Weather> {
@@ -121,12 +132,28 @@ public class MainActivity extends AppCompatActivity{
     }
 
     public void onQuery (View view) {
-        final Cursor cursor = dbHelper.query("SELECT mileage, total_fueling FROM " + DbHelper.getTableName(Stats.class));
-        cursor.moveToLast();
-        String mileageValStr = String.valueOf(cursor.getInt(cursor.getColumnIndex("mileage")));
-        String totalFueling = String.valueOf(cursor.getInt(cursor.getColumnIndex("total_fueling")));
-        Toast.makeText(MainActivity.this, mileageValStr + "  " + totalFueling, Toast.LENGTH_SHORT).show();
-        cursor.close();
+        statsQuery(new ResultCallback<ContentValues>() {
+            @Override
+            public void onSuccess(ContentValues result) {
+                if (result != null) {
+//                    txtFConsAfterLast.setText(result.getAsString("Fuel_consumption_after_last"));
+                    Toast.makeText(getApplicationContext(), result.getAsString("Fuel_consumption_after_last"), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "No data to calculate", Toast.LENGTH_SHORT).show();
+//                    txtFConsAfterLast.setText("No data to calculate");
+                }
+            }
+        });
+    }
+
+    public void onCreateNewStats(View view) {
+        Intent intent = new Intent(getApplicationContext(), StatsActivity.class);
+        startActivity(intent);
+    }
+
+    public void onPhotoLayout(View view) {
+        Intent intent2 = new Intent(getApplicationContext(), PhotosActivity.class);
+        startActivity(intent2);
     }
 
     public void onClick(View view) {
@@ -146,30 +173,41 @@ public class MainActivity extends AppCompatActivity{
         startActivity(intent);
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                initialX = event.getX();
-                break;
-            case MotionEvent.ACTION_UP:
-                float finalX = event.getX();
-                if (initialX > finalX) {
-                    if (viewFlipper.getDisplayedChild() == 1)
-                        break;
-                    viewFlipper.setInAnimation(this, R.anim.flip_in_right);
-                    viewFlipper.setOutAnimation(this, R.anim.flip_out_left);
-                    viewFlipper.showNext();
-                } else {
-                    if (viewFlipper.getDisplayedChild() == 0)
-                        break;
-                    viewFlipper.setInAnimation(this, R.anim.flip_in_left);
-                    viewFlipper.setOutAnimation(this, R.anim.flip_out_right);
-                    viewFlipper.showPrevious();
+    private void statsQuery(final ResultCallback<ContentValues> callback) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ContentValues lastRowValues = null;
+                ContentValues contentValues = null;
+                final Cursor cursor = dbHelper.query("SELECT mileage, fueling, current_fuel, oil_filled, total_fueling  FROM " + DbHelper.getTableName(Stats.class));
+                if (cursor.getCount()>1) {
+                    cursor.moveToLast();
+                    lastRowValues.put(Stats.MILEAGE, cursor.getInt(cursor.getColumnIndex(Stats.MILEAGE)));
+                    lastRowValues.put(Stats.FUELING, cursor.getInt(cursor.getColumnIndex(Stats.FUELING)));
+//                    lastRowValues.put(Stats.OIL_FILLED, cursor.getInt(cursor.getColumnIndex(Stats.OIL_FILLED)));
+                    lastRowValues.put(Stats.TOTAL_FUELING, cursor.getInt(cursor.getColumnIndex(Stats.TOTAL_FUELING)));
+                    lastRowValues.put(Stats.CURRENT_FUEL, cursor.getInt(cursor.getColumnIndex(Stats.CURRENT_FUEL)));
+                    cursor.moveToPrevious();
+
+                    //potracheno topliva posle posledney zapravki
+                    //TODO rename
+                    int fuel_stealed = cursor.getInt(cursor.getColumnIndex(Stats.CURRENT_FUEL)) - (lastRowValues.getAsInteger(Stats.CURRENT_FUEL)-lastRowValues.getAsInteger(Stats.FUELING));
+                    //probeg posle posledney zapravki
+                    int last_run = lastRowValues.getAsInteger(Stats.MILEAGE) - cursor.getInt(cursor.getColumnIndex(Stats.MILEAGE));
+                    //rashod posle posledney zapravki
+                    contentValues.put("Fuel_consumption_after_last", fuel_stealed*100/last_run);
+
+                    //TODO add oil consumption
+//                    int oil_stealed = cursor.getInt(cursor.getColumnIndex(Stats.OIL_FILLED)) - (lastRowValues.getAsInteger(Stats.OIL_FILLED)-lastRowValues.getAsInteger(Stats.OIL_FILLED));
+
+                    cursor.moveToFirst();
+                    int total_run = lastRowValues.getAsInteger(Stats.MILEAGE) - cursor.getInt(cursor.getColumnIndex(Stats.MILEAGE));
+                    contentValues.put("Total_consumption", lastRowValues.getAsInteger(Stats.TOTAL_FUELING)*100/total_run);
+                    cursor.close();
+                    lastRowValues.clear();
                 }
-                break;
-        }
-        return false;
+                callback.onSuccess(contentValues);
+            }
+        }).run();
     }
-    //TODO add stats view
 }

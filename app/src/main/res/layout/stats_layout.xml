@@ -12,12 +12,16 @@
         android:layout_marginTop="@dimen/main_app_margin">
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="@string/current_mileage"
             android:layout_weight="1"
             android:id="@+id/txtMileage"
             style="@style/app_inscriptio_style"/>
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="@string/fueling"
             android:layout_weight="1"
             android:id="@+id/txtFueling"
@@ -35,7 +39,7 @@
             android:id="@+id/editMileage"
             style="@style/app_edit_text_style"
             android:imeOptions="actionNext"
-            android:nextFocusRight="@+id/editFueling" />
+            android:nextFocusRight="@+id/editFueling"/>
 
         <EditText
             android:layout_weight="1"
@@ -52,12 +56,16 @@
         android:layout_height="wrap_content">
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="@string/current_fuel"
             android:layout_weight="1"
             android:id="@+id/txtCurrentFuel"
             style="@style/app_inscriptio_style"/>
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="@string/oil_filled"
             android:layout_weight="1"
             android:id="@+id/txtOilFilled"
@@ -87,6 +95,8 @@
     </LinearLayout>
 
     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="@string/comment"
         style="@style/app_inscriptio_style"/>
 
