@@ -8,10 +8,15 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -31,7 +36,7 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     TextView txtTemperature;
     ImageView imgWeather;
@@ -41,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     SamplePagerAdapter samplePagerAdapter;
     View page;
+    DrawerLayout drawerLayout;
 
 //    private ThreadManager threadManager = new ThreadManager(Executors.newFixedThreadPool(ThreadManager.COUNT_CORE));
 
@@ -48,11 +54,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
+
         txtTemperature = (TextView) findViewById(R.id.txtTemperature);
         imgWeather = (ImageView) findViewById(R.id.imgWeather);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         viewPager = (ViewPager) findViewById(R.id.viewPager);
+
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,0,0);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
         if (ConnectionChecker.checkConnection(getApplicationContext())) {
             //TODO add city selection
@@ -69,8 +84,9 @@ public class MainActivity extends AppCompatActivity {
 
         //TODO ask about inflater declaration there
         LayoutInflater inflater = LayoutInflater.from(this);
+        //pages for ViewPager
         List<View> pages = new ArrayList<>();
-
+        
         page = inflater.inflate(R.layout.pager_adapter_page, null);
         //TODO ask about TextView declaration there
         TextView textView = (TextView) page.findViewById(R.id.text_view);
@@ -86,6 +102,29 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(samplePagerAdapter);
         viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
         viewPager.setCurrentItem(0);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        Intent intent;
+
+        if (id == R.id.nav_add_stats) {
+            intent = new Intent(getApplicationContext(), StatsActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_photos) {
+            intent = new Intent(getApplicationContext(), PhotosActivity.class);
+            startActivity(intent);
+        }else if (id == R.id.nav_search_stats) {
+            intent = new Intent(getApplicationContext(), AllStatsActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_settings) {
+            intent = new Intent(getApplicationContext(), SettingsActivity.class);
+            startActivity(intent);
+        }
+
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     private class JsonWeatherTask extends AsyncTask<String, Void, Weather> {
@@ -136,24 +175,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(ContentValues result) {
                 if (result != null) {
-//                    txtFConsAfterLast.setText(result.getAsString("Fuel_consumption_after_last"));
                     Toast.makeText(getApplicationContext(), result.getAsString("Fuel_consumption_after_last"), Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getApplicationContext(), "No data to calculate", Toast.LENGTH_SHORT).show();
-//                    txtFConsAfterLast.setText("No data to calculate");
                 }
             }
         });
-    }
-
-    public void onCreateNewStats(View view) {
-        Intent intent = new Intent(getApplicationContext(), StatsActivity.class);
-        startActivity(intent);
-    }
-
-    public void onPhotoLayout(View view) {
-        Intent intent2 = new Intent(getApplicationContext(), PhotosActivity.class);
-        startActivity(intent2);
     }
 
     public void onClick(View view) {
@@ -163,23 +190,13 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void onAllStatsActivity (View view) {
-        Intent intent = new Intent(getApplicationContext(), AllStatsActivity.class);
-        startActivity(intent);
-    }
-
-    public void onSettingsActivity (View view) {
-        Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
-        startActivity(intent);
-    }
-
     private void statsQuery(final ResultCallback<ContentValues> callback) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 ContentValues lastRowValues = null;
                 ContentValues contentValues = null;
-                final Cursor cursor = dbHelper.query("SELECT mileage, fueling, current_fuel, oil_filled, total_fueling  FROM " + DbHelper.getTableName(Stats.class));
+                Cursor cursor = dbHelper.query("SELECT mileage, fueling, current_fuel, oil_filled, total_fueling  FROM " + DbHelper.getTableName(Stats.class));
                 if (cursor.getCount()>1) {
                     cursor.moveToLast();
                     lastRowValues.put(Stats.MILEAGE, cursor.getInt(cursor.getColumnIndex(Stats.MILEAGE)));

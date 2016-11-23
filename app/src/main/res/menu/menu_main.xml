@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_add_stats"
+            android:icon="@mipmap/ic_launcher"
+            android:title="Add car stats" />
+        <item
+            android:id="@+id/nav_search_stats"
+            android:icon="@mipmap/ic_launcher"
+            android:title="Search car stats" />
+        <item
+            android:id="@+id/nav_photos"
+            android:icon="@mipmap/ic_launcher"
+            android:title="Search photo"/>
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_settings"
+                android:icon="@mipmap/ic_launcher"
+                android:title="Settings"/>
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@mipmap/ic_launcher"
+                android:title="Send"/>
+        </menu>
+    </item>
+</menu>

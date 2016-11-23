@@ -1,145 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/colorPrimary"
-        android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+    android:fitsSystemWindows="true">
 
     <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/main_app_margin">
+        android:layout_height="match_parent"
+        android:background="#FFFFFF">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:background="@drawable/edit_text_style"
-            android:orientation="vertical"
-            android:layout_weight="1"
-            android:layout_marginRight="4dp"
-            android:gravity="center">
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/main_app_margin">
 
-            <TextView
-                android:id="@+id/txtWeather"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Weather now"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="@color/mainAppTextColor"
-                android:gravity="center_horizontal"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="@drawable/edit_text_style"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_marginRight="4dp"
+                android:gravity="center">
 
-            <RelativeLayout
-                android:layout_width="80dp"
-                android:layout_height="80dp">
+                <TextView
+                    android:id="@+id/txtWeather"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Weather now"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/mainAppTextColor"
+                    android:gravity="center_horizontal"/>
+
+                <RelativeLayout
+                    android:layout_width="80dp"
+                    android:layout_height="80dp">
+
+                    <ImageView
+                        android:id="@+id/imgWeather"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+
+                    <ProgressBar
+                        android:id="@+id/pbWeather"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="invisible"/>
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/txtTemperature"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/mainAppTextColor"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_weight="1"
+                android:background="@drawable/edit_text_style"
+                android:layout_marginLeft="4dp"
+                android:orientation="vertical"
+                android:gravity="center">
 
                 <ImageView
-                    android:id="@+id/imgWeather"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@android:drawable/btn_star_big_on" />
 
-                <ProgressBar
-                    android:id="@+id/pbWeather"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="invisible"/>
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/txtTemperature"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/mainAppTextColor"
-                android:textSize="20sp"
-                android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5 USD"
+                    android:textColor="@color/mainAppTextColor"
+                    android:textSize="18sp"/>
+            </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
+        <android.support.v4.view.ViewPager
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_weight="1"
-            android:background="@drawable/edit_text_style"
-            android:layout_marginLeft="4dp"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:layout_height="200dp"
+            android:id="@+id/viewPager"
+            android:layout_margin="@dimen/main_app_margin"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@android:drawable/btn_star_big_on" />
+        //TODO to Strings
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Query"
+            android:textSize="18sp"
+            android:layout_margin="@dimen/main_app_margin"
+            android:onClick="onQuery"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="5 USD"
-                android:textColor="@color/mainAppTextColor"
-                android:textSize="18sp"/>
-        </LinearLayout>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Map"
+            android:textSize="18sp"
+            android:layout_margin="@dimen/main_app_margin"
+            android:onClick="onClick"/>
     </LinearLayout>
 
-    <android.support.v4.view.ViewPager
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:id="@+id/viewPager"
-        android:layout_margin="@dimen/main_app_margin"/>
-
-    //TODO to Strings
-    <Button
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add your car stats"
-        android:textSize="18sp"
-        android:layout_margin="@dimen/main_app_margin"
-        android:onClick="onCreateNewStats"/>
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/nav_header_main"
+        app:menu="@menu/menu_main"
+        android:background="#C8C8C8"
+        app:itemTextColor="@color/mainAppTextColor"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="To photo layout"
-        android:textSize="18sp"
-        android:layout_margin="@dimen/main_app_margin"
-        android:onClick="onPhotoLayout"/>
+</android.support.v4.widget.DrawerLayout>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Query"
-        android:textSize="18sp"
-        android:layout_margin="@dimen/main_app_margin"
-        android:onClick="onQuery"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Map"
-        android:textSize="18sp"
-        android:layout_margin="@dimen/main_app_margin"
-        android:onClick="onClick"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Allstats"
-        android:textSize="18sp"
-        android:layout_margin="@dimen/main_app_margin"
-        android:onClick="onAllStatsActivity"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Settings"
-        android:textSize="18sp"
-        android:layout_margin="@dimen/main_app_margin"
-        android:onClick="onSettingsActivity"/>
-</LinearLayout>

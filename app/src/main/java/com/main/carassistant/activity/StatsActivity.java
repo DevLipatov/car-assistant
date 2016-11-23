@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -26,7 +28,6 @@ public class StatsActivity extends AppCompatActivity {
     EditText editOilFilled;
     EditText editCurrentFuel;
     EditText editComment;
-
     DbHelper dbHelper;
 
     ContentValues contentValues = new ContentValues();
@@ -42,7 +43,23 @@ public class StatsActivity extends AppCompatActivity {
         editCurrentFuel = (EditText) findViewById(R.id.editCurrentFuel);
         editComment = (EditText) findViewById(R.id.editComment);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
         dbHelper = DbHelper.getHelper(getApplicationContext(), "CarAssistant.db", 4);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     public void onAddNewStats (View view) {
