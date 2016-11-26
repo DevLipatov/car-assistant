@@ -9,12 +9,9 @@ public class ConnectionChecker {
     public static boolean checkConnection(Context context) {
         final ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-
-        if (activeNetworkInfo != null) {
-            return true;
-        } else {
-            return false;
-        }
+        NetworkInfo con = connectivityManager.getActiveNetworkInfo();
+        if (con!=null) {
+            return connectivityManager.getActiveNetworkInfo().isConnected();
+        } else return false;
     }
 }

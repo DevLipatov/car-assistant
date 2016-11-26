@@ -1,19 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="none">
         <item
             android:id="@+id/nav_add_stats"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/ic_maps_local_gas_station"
             android:title="Add car stats" />
         <item
             android:id="@+id/nav_search_stats"
             android:icon="@mipmap/ic_launcher"
-            android:title="Search car stats" />
+            android:title="Search car stats"/>
         <item
             android:id="@+id/nav_photos"
             android:icon="@mipmap/ic_launcher"
             android:title="Search photo"/>
+        <item
+            android:id="@+id/nav_business_card"
+            android:icon="@drawable/ic_image_photo_camera"
+            android:title="Take business card"/>
+
+        <item
+            android:id="@+id/nav_test_layout"
+            android:icon="@drawable/ic_action_android"
+            android:title="Test layout"/>
     </group>
 
     <item android:title="Communicate">

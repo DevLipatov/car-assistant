@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     DbHelper dbHelper;
     ViewPager viewPager;
     Toolbar toolbar;
+    NavigationView navigationView;
     SamplePagerAdapter samplePagerAdapter;
     View page;
     DrawerLayout drawerLayout;
@@ -66,18 +67,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setItemIconTintList(null);
 
-        if (ConnectionChecker.checkConnection(getApplicationContext())) {
-            //TODO add city selection
-            String city = "Hrodna";
-            jsonWeatherTask = new JsonWeatherTask();
-            jsonWeatherTask.execute(city);
-        } else {
-            txtTemperature.setTextSize(16);
-            txtTemperature.setText(R.string.connection_error);
-        }
+        //TODO add city selection
+        String city = "Hrodna";
+        jsonWeatherTask = new JsonWeatherTask();
+        jsonWeatherTask.execute(city);
 
         // TODO --to App
         dbHelper = DbHelper.getHelper(getApplicationContext(), "CarAssistant.db", 4);
@@ -121,6 +118,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_settings) {
             intent = new Intent(getApplicationContext(), SettingsActivity.class);
             startActivity(intent);
+        } else if (id == R.id.nav_business_card) {
+            intent = new Intent(getApplicationContext(), BusinessCardActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_test_layout) {
+            intent = new Intent(getApplicationContext(), TestActivity.class);
+            startActivity(intent);
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
@@ -140,17 +143,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         @Override
         protected Weather doInBackground(String... params) {
             Weather weather = new Weather();
-            WeatherHttpClient weatherHttpClient = new WeatherHttpClient();
-            String stringWeatherJson = weatherHttpClient.getWeatherData(params[0]);
+            if (ConnectionChecker.checkConnection(getApplicationContext())) {
+                WeatherHttpClient weatherHttpClient = new WeatherHttpClient();
+                String stringWeatherJson = weatherHttpClient.getWeatherData(params[0]);
 
-            try {
-                //parse weather data
-                weather = JsonWeatherParser.getWeather(stringWeatherJson);
+                try {
+                    //parse weather data
+                    weather = JsonWeatherParser.getWeather(stringWeatherJson);
 
-                //parse icon data
-                weather.iconData = weatherHttpClient.getImage(weather.getIconCode());
-            } catch (JSONException e) {
-                e.printStackTrace();
+                    //parse icon data
+                    weather.iconData = weatherHttpClient.getImage(weather.getIconCode());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
             return weather;
         }
@@ -158,14 +163,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         @Override
         protected void onPostExecute(Weather weather) {
             super.onPostExecute(weather);
-            String temp = Integer.toString(weather.getTemp()) + "°C";
-            txtTemperature.setText(temp);
-
-            //set image if exists
-            if (weather.iconData != null && weather.iconData.length > 0) {
-                Bitmap image = BitmapFactory.decodeByteArray(weather.iconData, 0, weather.iconData.length);
+            if (weather.getTemp()!=null) {
+                String temp = Integer.toString(weather.getTemp()) + "°C";
+                txtTemperature.setText(temp);
+                //set image if exists
+                if (weather.iconData != null && weather.iconData.length > 0) {
+                    Bitmap image = BitmapFactory.decodeByteArray(weather.iconData, 0, weather.iconData.length);
+                    pb.setVisibility(View.GONE);
+                    imgWeather.setImageBitmap(image);
+                }
+            } else {
                 pb.setVisibility(View.GONE);
-                imgWeather.setImageBitmap(image);
+                txtTemperature.setTextSize(16);
+                txtTemperature.setText(R.string.connection_error);
             }
         }
     }
@@ -194,8 +204,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         new Thread(new Runnable() {
             @Override
             public void run() {
-                ContentValues lastRowValues = null;
-                ContentValues contentValues = null;
+                ContentValues lastRowValues = new ContentValues();
+                ContentValues contentValues = new ContentValues();
                 Cursor cursor = dbHelper.query("SELECT mileage, fueling, current_fuel, oil_filled, total_fueling  FROM " + DbHelper.getTableName(Stats.class));
                 if (cursor.getCount()>1) {
                     cursor.moveToLast();

@@ -13,7 +13,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFFFFF">
+        android:background="#6E7B8A">
 
         <include
             android:id="@+id/toolbar"
@@ -95,7 +95,8 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:id="@+id/viewPager"
-            android:layout_margin="@dimen/main_app_margin"/>
+            android:layout_marginLeft="@dimen/main_app_margin"
+            android:layout_marginRight="@dimen/main_app_margin"/>
 
         //TODO to Strings
         <Button
@@ -120,10 +121,9 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/menu_main"
-        android:background="#C8C8C8"
-        app:itemTextColor="@color/mainAppTextColor"/>
+        android:background="#6E7B8A"
+        app:theme="@style/menu_text_appearance"/>
 
 </android.support.v4.widget.DrawerLayout>
 

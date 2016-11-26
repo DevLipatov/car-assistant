@@ -29,6 +29,7 @@ public class StatsActivity extends AppCompatActivity {
     EditText editCurrentFuel;
     EditText editComment;
     DbHelper dbHelper;
+    Toolbar toolbar;
 
     ContentValues contentValues = new ContentValues();
 
@@ -43,7 +44,7 @@ public class StatsActivity extends AppCompatActivity {
         editCurrentFuel = (EditText) findViewById(R.id.editCurrentFuel);
         editComment = (EditText) findViewById(R.id.editComment);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -79,7 +80,7 @@ public class StatsActivity extends AppCompatActivity {
 //        }
 
         //check for empty fields
-        if (!m.equals("") && !f.equals("") && !c.equals("") && !o.equals("")) {
+        if (!m.isEmpty() && !f.isEmpty() && !c.isEmpty() && !o.isEmpty()) {
 
             Date date = Calendar.getInstance().getTime();
             DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy   HH:mm", Locale.US);
