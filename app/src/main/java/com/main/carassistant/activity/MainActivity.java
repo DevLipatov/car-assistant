@@ -23,6 +23,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.main.carassistant.App;
+import com.main.carassistant.JsonWeatherTask;
 import com.main.carassistant.R;
 import com.main.carassistant.adapters.SamplePagerAdapter;
 import com.main.carassistant.db.DbHelper;
@@ -72,10 +73,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
 
-        //TODO add city selection
-        String city = "Hrodna";
-        jsonWeatherTask = new JsonWeatherTask();
-        jsonWeatherTask.execute(city);
+        prefetchWeather();
 
         // TODO --to App
         dbHelper = DbHelper.getHelper(getApplicationContext(), "CarAssistant.db", 4);
@@ -83,6 +81,38 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         dbHelper = ((App) getApplication()).getDbHelper();
 
         setStats();
+    }
+
+    private void prefetchWeather() {
+        //TODO add city selection
+        String city = "Hrodna";
+        final ProgressBar pb = (ProgressBar) findViewById(R.id.pbWeather);
+        jsonWeatherTask = new JsonWeatherTask(this, new JsonWeatherTask.ICallback<Weather>() {
+
+            @Override
+            public void onStartRequest() {
+                pb.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onSuccess(Weather weather) {
+                if (weather.getTemp() != null) {
+                    String temp = Integer.toString(weather.getTemp()) + "°C";
+                    txtTemperature.setText(temp);
+                    //set image if exists
+                    if (weather.iconData != null && weather.iconData.length > 0) {
+                        Bitmap image = BitmapFactory.decodeByteArray(weather.iconData, 0, weather.iconData.length);
+                        pb.setVisibility(View.GONE);
+                        imgWeather.setImageBitmap(image);
+                    }
+                } else {
+                    pb.setVisibility(View.GONE);
+                    txtTemperature.setTextSize(16);
+                    txtTemperature.setText(R.string.connection_error);
+                }
+            }
+        });
+        jsonWeatherTask.execute(city);
     }
 
     @Override
@@ -117,56 +147,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
-        }
-    }
-
-    private class JsonWeatherTask extends AsyncTask<String, Void, Weather> {
-
-        ProgressBar pb = (ProgressBar) findViewById(R.id.pbWeather);
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pb.setVisibility(View.VISIBLE);
-        }
-
-        @Override
-        protected Weather doInBackground(String... params) {
-            Weather weather = new Weather();
-            if (ConnectionChecker.checkConnection(getApplicationContext())) {
-                WeatherHttpClient weatherHttpClient = new WeatherHttpClient();
-                String stringWeatherJson = weatherHttpClient.getWeatherData(params[0]);
-
-                try {
-                    //parse weather data
-                    weather = JsonWeatherParser.getWeather(stringWeatherJson);
-
-                    //parse icon data
-                    weather.iconData = weatherHttpClient.getImage(weather.getIconCode());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-            return weather;
-        }
-
-        @Override
-        protected void onPostExecute(Weather weather) {
-            super.onPostExecute(weather);
-            if (weather.getTemp()!=null) {
-                String temp = Integer.toString(weather.getTemp()) + "°C";
-                txtTemperature.setText(temp);
-                //set image if exists
-                if (weather.iconData != null && weather.iconData.length > 0) {
-                    Bitmap image = BitmapFactory.decodeByteArray(weather.iconData, 0, weather.iconData.length);
-                    pb.setVisibility(View.GONE);
-                    imgWeather.setImageBitmap(image);
-                }
-            } else {
-                pb.setVisibility(View.GONE);
-                txtTemperature.setTextSize(16);
-                txtTemperature.setText(R.string.connection_error);
-            }
         }
     }
 

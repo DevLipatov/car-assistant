@@ -83,6 +83,8 @@ public class AllStatsActivity extends AppCompatActivity implements LoaderManager
             //TODO move to SQL utils class
             //TODO use constants
             return dbHelper.query("SELECT rowid _id, fueling, oil_filled, date FROM " + DbHelper.getTableName(Stats.class));
+
+            //https://developer.android.com/training/monitoring-device-state/connectivity-monitoring.html?hl=ru
         }
     }
 }
