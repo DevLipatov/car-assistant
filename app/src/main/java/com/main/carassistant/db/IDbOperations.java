@@ -4,7 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import java.util.List;
 
-public interface IDbOperations2 {
+public interface IDbOperations {
 
     Cursor query(String sql, String... args);
 
