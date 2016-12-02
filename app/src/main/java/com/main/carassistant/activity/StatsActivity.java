@@ -23,18 +23,17 @@ import java.util.Locale;
 
 public class StatsActivity extends AppCompatActivity {
 
-    EditText editMileage;
-    EditText editFueling;
-    EditText editOilFilled;
-    EditText editCurrentFuel;
-    EditText editComment;
-    DbHelper dbHelper;
+    private EditText editMileage;
+    private EditText editFueling;
+    private EditText editOilFilled;
+    private EditText editCurrentFuel;
+    private EditText editComment;
+    private DbHelper dbHelper;
+    private ContentValues contentValues = new ContentValues();
     Toolbar toolbar;
 
-    ContentValues contentValues = new ContentValues();
-
     @Override
-    protected void onCreate( Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.stats_layout);
 
@@ -50,7 +49,6 @@ public class StatsActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-
         dbHelper = DbHelper.getHelper(getApplicationContext(), "CarAssistant.db", 4);
     }
 
@@ -59,12 +57,10 @@ public class StatsActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             finish();
         }
-
         return super.onOptionsItemSelected(item);
     }
 
     public void onAddNewStats (View view) {
-
         String m = editMileage.getText().toString();
         String f = editFueling.getText().toString();
         String c = editCurrentFuel.getText().toString();
@@ -97,7 +93,7 @@ public class StatsActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(Long id) {
                     //TODO production - remove id from toast
-                    Toast.makeText(getApplicationContext(), "Data in database  " + id, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Data in database: " + id + " fields", Toast.LENGTH_SHORT).show();
                 }
             });
             finish();

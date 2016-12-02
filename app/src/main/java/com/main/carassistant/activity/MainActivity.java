@@ -21,7 +21,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.main.carassistant.R;
 import com.main.carassistant.adapters.SamplePagerAdapter;
 import com.main.carassistant.db.DbHelper;
@@ -38,16 +37,16 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    TextView txtTemperature;
-    ImageView imgWeather;
+    private TextView txtTemperature;
+    private ImageView imgWeather;
     JsonWeatherTask jsonWeatherTask;
-    DbHelper dbHelper;
-    ViewPager viewPager;
+    private DbHelper dbHelper;
+    private ViewPager viewPager;
     Toolbar toolbar;
     NavigationView navigationView;
-    SamplePagerAdapter samplePagerAdapter;
-    View page;
-    DrawerLayout drawerLayout;
+    private SamplePagerAdapter samplePagerAdapter;
+    private View page;
+    private DrawerLayout drawerLayout;
 
 //    private ThreadManager threadManager = new ThreadManager(Executors.newFixedThreadPool(ThreadManager.COUNT_CORE));
 
@@ -79,26 +78,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // TODO --to App
         dbHelper = DbHelper.getHelper(getApplicationContext(), "CarAssistant.db", 4);
 
-        //TODO ask about inflater declaration there
-        LayoutInflater inflater = LayoutInflater.from(this);
-        //pages for ViewPager
-        List<View> pages = new ArrayList<>();
-        
-        page = inflater.inflate(R.layout.pager_adapter_page, null);
-        //TODO ask about TextView declaration there
-        TextView textView = (TextView) page.findViewById(R.id.text_view);
-        textView.setText("Страница 1");
-        pages.add(page);
-
-        page = inflater.inflate(R.layout.pager_adapter_page, null);
-        textView = (TextView) page.findViewById(R.id.text_view);
-        textView.setText("Страница 2");
-        pages.add(page);
-
-        samplePagerAdapter = new SamplePagerAdapter(pages);
-        viewPager.setAdapter(samplePagerAdapter);
-        viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
-        viewPager.setCurrentItem(0);
+        setStats();
     }
 
     @Override
@@ -121,13 +101,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_business_card) {
             intent = new Intent(getApplicationContext(), BusinessCardActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_test_layout) {
-            intent = new Intent(getApplicationContext(), TestActivity.class);
-            startActivity(intent);
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout != null&&drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     private class JsonWeatherTask extends AsyncTask<String, Void, Weather> {
@@ -180,24 +166,37 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    public void onQuery (View view) {
-        statsQuery(new ResultCallback<ContentValues>() {
-            @Override
-            public void onSuccess(ContentValues result) {
-                if (result != null) {
-                    Toast.makeText(getApplicationContext(), result.getAsString("Fuel_consumption_after_last"), Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "No data to calculate", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
-
-    public void onClick(View view) {
+    public void onMapClick(View view) {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_VIEW);
         intent.setData(Uri.parse("geo:55.754283,37.62002"));
         startActivity(intent);
+    }
+
+    private void setStats() {
+        statsQuery(new ResultCallback<ContentValues>() {
+            @Override
+            public void onSuccess(ContentValues result) {
+                final LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
+                //pages for ViewPager
+                final List<View> pages = new ArrayList<>();
+
+                page = inflater.inflate(R.layout.pager_adapter_page, null);
+                TextView textView = (TextView) page.findViewById(R.id.text_view);
+                textView.setText(result.getAsString("Fuel_consumption_after_last"));
+                pages.add(page);
+
+                page = inflater.inflate(R.layout.pager_adapter_page, null);
+                textView = (TextView) page.findViewById(R.id.text_view);
+                textView.setText(result.getAsString("Total_consumption"));
+                pages.add(page);
+
+                samplePagerAdapter = new SamplePagerAdapter(pages);
+                viewPager.setAdapter(samplePagerAdapter);
+                viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+                viewPager.setCurrentItem(0);
+            }
+        });
     }
 
     private void statsQuery(final ResultCallback<ContentValues> callback) {

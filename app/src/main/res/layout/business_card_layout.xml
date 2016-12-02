@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:text="Save"
         android:id="@+id/btnSaveCard"
-        android:onClick="onClick"/>
+        android:onClick="onSaveClick"/>
 
     <ImageView
         android:layout_width="match_parent"

@@ -25,7 +25,6 @@ public class CarStats {
     }
 
     private CarStats() {
-
     }
 
     public static class Builder {

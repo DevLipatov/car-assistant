@@ -17,9 +17,9 @@ import com.main.carassistant.model.Stats;
 
 public class AllStatsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    ListView listView;
-    DbHelper dbHelper;
-    SimpleCursorAdapter simpleCursorAdapter;
+    private ListView listView;
+    private DbHelper dbHelper;
+    private SimpleCursorAdapter simpleCursorAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,7 +41,6 @@ public class AllStatsActivity extends AppCompatActivity implements LoaderManager
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-
         getSupportLoaderManager().initLoader(0, null, this);
         getSupportLoaderManager().getLoader(0).forceLoad();
     }
@@ -51,7 +50,6 @@ public class AllStatsActivity extends AppCompatActivity implements LoaderManager
         if (item.getItemId() == android.R.id.home) {
             finish();
         }
-
         return super.onOptionsItemSelected(item);
     }
 

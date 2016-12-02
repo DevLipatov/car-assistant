@@ -2,6 +2,8 @@ package com.main.carassistant.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -12,9 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.main.carassistant.R;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -27,12 +27,12 @@ import java.util.Locale;
 public class BusinessCardActivity extends AppCompatActivity {
 
     private Button btnBusinessCard;
-    ImageView imgBusinessCard;
+    private ImageView imgBusinessCard;
     private Toolbar toolbar;
     private Bitmap bitMapImg;
     private Boolean success;
     private File filename;
-    String photo;
+    private String nn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +52,9 @@ public class BusinessCardActivity extends AppCompatActivity {
         btnBusinessCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                nn = getFileName().toString();
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                photo = getFilePath() + "/1.jpg";
-//                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.parse("file://" + photo));
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.parse("file://" + nn));
                 startActivityForResult(intent, 0);
             }
         });
@@ -65,7 +65,6 @@ public class BusinessCardActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             finish();
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -75,24 +74,27 @@ public class BusinessCardActivity extends AppCompatActivity {
 
         //TODO save full size photo
 
-        if (data != null) {
-            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-            bitMapImg = bitmap;
-            btnBusinessCard.setVisibility(View.GONE);
-            imgBusinessCard.setImageBitmap(bitmap);
-            imgBusinessCard.setScaleType(ImageView.ScaleType.FIT_XY);
-        }
+//        if (data != null) {
+//            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+//            bitMapImg = bitmap;
+//            btnBusinessCard.setVisibility(View.GONE);
+//            imgBusinessCard.setImageBitmap(bitmap);
+//            imgBusinessCard.setScaleType(ImageView.ScaleType.FIT_XY);
+//        }
+        Bitmap myBitmap = BitmapFactory.decodeFile(nn);
+        imgBusinessCard.setImageBitmap(myBitmap);
     }
 
-    public void onClick(View view) throws IOException {
+    public void onSaveClick(View view) throws IOException {
         if (isExternalStorageWritable()) {
-            File dir = getFilePath();
-            //Creating file name with date
-            Date date = Calendar.getInstance().getTime();
-            DateFormat formatter = new SimpleDateFormat("dd_MM_yyyy_HH_mm", Locale.US);
-            String today = formatter.format(date);
+//            File dir = getFilePath();
+//            //Creating file name with date
+//            Date date = Calendar.getInstance().getTime();
+//            DateFormat formatter = new SimpleDateFormat("dd_MM_yyyy_HH_mm", Locale.US);
+//            String today = formatter.format(date);
+//
+//            filename = new File(dir, "/" + today + ".jpg");
 
-            filename = new File(dir, "/" + today + ".jpg");
             FileOutputStream out = new FileOutputStream(filename);
             bitMapImg.compress(Bitmap.CompressFormat.JPEG, 90, out);
             out.flush();
@@ -111,6 +113,17 @@ public class BusinessCardActivity extends AppCompatActivity {
     //Checks if external storage is available for read and write
     private boolean isExternalStorageWritable() {
         return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
+    }
+
+
+    private File getFileName() {
+        File dir = getFilePath();
+        //Creating file name with date
+        Date date = Calendar.getInstance().getTime();
+        DateFormat formatter = new SimpleDateFormat("dd_MM_yyyy_HH_mm", Locale.US);
+        String today = formatter.format(date);
+        filename = new File(dir, "/" + today + ".jpg");
+        return filename;
     }
 
     private File getFilePath() {

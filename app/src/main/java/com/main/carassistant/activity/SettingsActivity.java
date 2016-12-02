@@ -11,7 +11,7 @@ import com.main.carassistant.model.Stats;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    DbHelper dbHelper;
+    private DbHelper dbHelper;
     Toolbar toolbar;
 
     @Override
@@ -25,7 +25,6 @@ public class SettingsActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-
         dbHelper = DbHelper.getHelper(getApplicationContext(), "CarAssistant.db", 4);
     }
 
@@ -34,11 +33,10 @@ public class SettingsActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             finish();
         }
-
         return super.onOptionsItemSelected(item);
     }
 
-    public void onResetStats (View view) {
+    public void onResetStats(View view) {
         dbHelper.delete(Stats.class, null, null);
     }
 }

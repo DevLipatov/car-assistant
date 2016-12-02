@@ -4,7 +4,6 @@ import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-
 import java.util.List;
 
 public class SamplePagerAdapter extends PagerAdapter {
