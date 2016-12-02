@@ -28,8 +28,8 @@ public class AllStatsActivity extends AppCompatActivity implements LoaderManager
 
         dbHelper = DbHelper.getHelper(this, "CarAssistant.db", 4);
 
-        String[] from = new String[] {Stats.FUELING, Stats.OIL_FILLED, Stats.DATE };
-        int[] to = new int[] { R.id.txtFuelingItem, R.id.txtOilFilledItem, R.id.txtDateItem };
+        String[] from = new String[]{Stats.FUELING, Stats.OIL_FILLED, Stats.DATE};
+        int[] to = new int[]{R.id.txtFuelingItem, R.id.txtOilFilledItem, R.id.txtDateItem};
 
         simpleCursorAdapter = new SimpleCursorAdapter(this, R.layout.all_stats_item_layout, null, from, to, 0);
         listView = (ListView) findViewById(R.id.statsList);
@@ -80,6 +80,8 @@ public class AllStatsActivity extends AppCompatActivity implements LoaderManager
         @Override
         public Cursor loadInBackground() {
             //TODO ask about _id field in my database
+            //TODO move to SQL utils class
+            //TODO use constants
             return dbHelper.query("SELECT rowid _id, fueling, oil_filled, date FROM " + DbHelper.getTableName(Stats.class));
         }
     }

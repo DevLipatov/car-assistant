@@ -9,21 +9,21 @@ public class App extends Application{
     @Override
     public void onCreate() {
         super.onCreate();
-//        dbHelper = new DbHelper(getApplicationContext(), "CarAssistant.db", 1);
+        dbHelper = new DbHelper(getApplicationContext(), "CarAssistant.db", 1);
     }
 
-//    @Override
-//    public Object getSystemService(String name) {
-//        if(name.equals("my_db")) {
-//            return dbHelper;
-//        }
-//        return super.getSystemService(name);
-//    }
+    @Override
+    public Object getSystemService(String name) {
+        if(name.equals("my_db")) {
+            return dbHelper;
+        }
+        return super.getSystemService(name);
+    }
 //
-//    public DbHelper getDbHelper() {
-//        if (dbHelper == null) {
-//            dbHelper = new DbHelper(getApplicationContext(), "CarAssistant.db", 1);
-//        }
-//        return dbHelper;
-//    }
+    public DbHelper getDbHelper() {
+        if (dbHelper == null) {
+            dbHelper = new DbHelper(getApplicationContext(), "CarAssistant.db", 1);
+        }
+        return dbHelper;
+    }
 }

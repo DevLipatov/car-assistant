@@ -29,7 +29,6 @@ public class StatsActivity extends AppCompatActivity {
     private EditText editCurrentFuel;
     private EditText editComment;
     private DbHelper dbHelper;
-    private ContentValues contentValues = new ContentValues();
     Toolbar toolbar;
 
     @Override
@@ -81,7 +80,7 @@ public class StatsActivity extends AppCompatActivity {
             Date date = Calendar.getInstance().getTime();
             DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy   HH:mm", Locale.US);
             String today = formatter.format(date);
-
+            ContentValues contentValues = new ContentValues();
             contentValues.put(Stats.MILEAGE, Integer.valueOf(m));
             contentValues.put(Stats.FUELING, Integer.valueOf(f));
             contentValues.put(Stats.CURRENT_FUEL, Integer.valueOf(c));
@@ -89,7 +88,7 @@ public class StatsActivity extends AppCompatActivity {
             contentValues.put(Stats.COMMENT, editComment.getText().toString());
             contentValues.put(Stats.DATE, today);
 
-            insertOperation(new ResultCallback<Long>() {
+            insertOperation(contentValues, new ResultCallback<Long>() {
                 @Override
                 public void onSuccess(Long id) {
                     //TODO production - remove id from toast
@@ -135,11 +134,13 @@ public class StatsActivity extends AppCompatActivity {
         }
     }
 
-    private void insertOperation(final ResultCallback<Long> callback) {
+    private void insertOperation(final ContentValues contentValues, final ResultCallback<Long> callback) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 //get total fueling for fuel consumption
+                //TODO move to another method.
+                //TODO method insertOperation should do only inserting
                 final Cursor cursor = dbHelper.query("SELECT total_fueling FROM " + DbHelper.getTableName(Stats.class));
                 if (cursor.getCount()>0) {
                     cursor.moveToLast();

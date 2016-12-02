@@ -3,12 +3,14 @@ package com.main.carassistant.activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.BitmapRegionDecoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -82,9 +84,15 @@ public class BusinessCardActivity extends AppCompatActivity {
 //            imgBusinessCard.setScaleType(ImageView.ScaleType.FIT_XY);
 //        }
         Bitmap myBitmap = BitmapFactory.decodeFile(nn);
+        //TODO scale image.
         imgBusinessCard.setImageBitmap(myBitmap);
+
+        //TODO use that if you want show image by region in hight resolution
+        BitmapRegionDecoder bitmapRegionDecoder;
+
     }
 
+    //TODO UI thread
     public void onSaveClick(View view) throws IOException {
         if (isExternalStorageWritable()) {
 //            File dir = getFilePath();

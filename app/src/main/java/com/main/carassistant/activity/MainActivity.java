@@ -21,6 +21,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.main.carassistant.App;
 import com.main.carassistant.R;
 import com.main.carassistant.adapters.SamplePagerAdapter;
 import com.main.carassistant.db.DbHelper;
@@ -77,6 +79,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // TODO --to App
         dbHelper = DbHelper.getHelper(getApplicationContext(), "CarAssistant.db", 4);
+        dbHelper = (DbHelper) getSystemService("my_db");
+        dbHelper = ((App) getApplication()).getDbHelper();
 
         setStats();
     }
@@ -204,10 +208,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void run() {
                 ContentValues lastRowValues = new ContentValues();
-                ContentValues contentValues = new ContentValues();
+                final ContentValues contentValues = new ContentValues();
                 Cursor cursor = dbHelper.query("SELECT mileage, fueling, current_fuel, oil_filled, total_fueling  FROM " + DbHelper.getTableName(Stats.class));
-                if (cursor.getCount()>1) {
+                if (cursor.getCount() > 1) {
                     cursor.moveToLast();
+                    CursorUtils.getInt(cursor, Stats.MILEAGE);
                     lastRowValues.put(Stats.MILEAGE, cursor.getInt(cursor.getColumnIndex(Stats.MILEAGE)));
                     lastRowValues.put(Stats.FUELING, cursor.getInt(cursor.getColumnIndex(Stats.FUELING)));
 //                    lastRowValues.put(Stats.OIL_FILLED, cursor.getInt(cursor.getColumnIndex(Stats.OIL_FILLED)));
@@ -235,5 +240,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 callback.onSuccess(contentValues);
             }
         }).run();
+
     }
+
+
 }
