@@ -86,6 +86,8 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
         }
     }
 
+
+
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         for (final Class<?> clazz : Contract.MODELS) {
