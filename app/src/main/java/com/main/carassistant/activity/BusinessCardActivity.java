@@ -81,7 +81,7 @@ public class BusinessCardActivity extends AppCompatActivity {
 //            imgBusinessCard.setImageBitmap(bitmap);
 //            imgBusinessCard.setScaleType(ImageView.ScaleType.FIT_XY);
 //        }
-        Bitmap myBitmap = BitmapFactory.decodeFile(nn);
+        Bitmap myBitmap = BitmapFactory.decodeFile("file:/" + nn);
         imgBusinessCard.setImageBitmap(myBitmap);
     }
 

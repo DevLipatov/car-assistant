@@ -11,13 +11,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import com.main.carassistant.App;
 import com.main.carassistant.R;
 import com.main.carassistant.db.DbHelper;
 import com.main.carassistant.model.Stats;
 
 public class AllStatsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private ListView listView;
     private DbHelper dbHelper;
     private SimpleCursorAdapter simpleCursorAdapter;
 
@@ -26,13 +26,12 @@ public class AllStatsActivity extends AppCompatActivity implements LoaderManager
         super.onCreate(savedInstanceState);
         setContentView(R.layout.all_stats_layout);
 
-        dbHelper = DbHelper.getHelper(this, "CarAssistant.db", 4);
-
+        dbHelper = ((App) getApplication()).getDbHelper();
         String[] from = new String[] {Stats.FUELING, Stats.OIL_FILLED, Stats.DATE };
         int[] to = new int[] { R.id.txtFuelingItem, R.id.txtOilFilledItem, R.id.txtDateItem };
 
         simpleCursorAdapter = new SimpleCursorAdapter(this, R.layout.all_stats_item_layout, null, from, to, 0);
-        listView = (ListView) findViewById(R.id.statsList);
+        ListView listView = (ListView) findViewById(R.id.statsList);
         listView.setAdapter(simpleCursorAdapter);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
+import com.main.carassistant.Constants.Database;
 import com.main.carassistant.db.annotations.Table;
 import com.main.carassistant.db.annotations.type.dbInteger;
 import com.main.carassistant.db.annotations.type.dbLong;
@@ -18,21 +19,8 @@ import java.util.Locale;
 
 public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
 
-    private static final String SQL_TABLE_CREATE_TEMPLATE = "CREATE TABLE IF NOT EXISTS %s (%s)";
-    private static final String SQL_TABLE_CREATE_FIELD_TEMPLATE = "%s %s";
-    private static DbHelper instance = null;
-
-    //TODO move to App
-    private DbHelper(final Context context, final String name, final int version) {
+    public DbHelper(final Context context, final String name, final int version) {
         super(context, name, null, version);
-    }
-
-    public static DbHelper getHelper(final Context cont, final String nm, final int ver){
-        if (instance == null) {
-            instance = new DbHelper(cont, nm, ver);
-        }
-//        cont.getSystemService("my_db");
-        return instance;
     }
 
     @Nullable
@@ -81,13 +69,13 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
 
                     if (i < fields.length && type!= null) {
                         final String value = (String) field.get(null);
-                        builder.append(String.format(Locale.US ,SQL_TABLE_CREATE_FIELD_TEMPLATE, value, type));
+                        builder.append(String.format(Locale.US ,Database.SQL_TABLE_CREATE_FIELD_TEMPLATE, value, type));
                     }
 
                     ptype = type;
                 }
 
-                return String.format(Locale.US ,SQL_TABLE_CREATE_TEMPLATE, name, builder.toString());
+                return String.format(Locale.US ,Database.SQL_TABLE_CREATE_TEMPLATE, name, builder.toString());
 
             } catch (final Exception e) {
                 return null;

@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import com.main.carassistant.App;
 import com.main.carassistant.R;
 import com.main.carassistant.adapters.SamplePagerAdapter;
 import com.main.carassistant.db.DbHelper;
@@ -48,8 +49,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private View page;
     private DrawerLayout drawerLayout;
 
-//    private ThreadManager threadManager = new ThreadManager(Executors.newFixedThreadPool(ThreadManager.COUNT_CORE));
-
     @Override
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,23 +59,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         viewPager = (ViewPager) findViewById(R.id.viewPager);
+        dbHelper = ((App) getApplication()).getDbHelper();
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,0,0);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        navigationView.setItemIconTintList(null);
+        setNavigationView();
 
         //TODO add city selection
         String city = "Hrodna";
         jsonWeatherTask = new JsonWeatherTask();
         jsonWeatherTask.execute(city);
-
-        // TODO --to App
-        dbHelper = DbHelper.getHelper(getApplicationContext(), "CarAssistant.db", 4);
 
         setStats();
     }
@@ -199,6 +189,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
     }
 
+    private void setNavigationView() {
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,0,0);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setItemIconTintList(null);
+    }
+
     private void statsQuery(final ResultCallback<ContentValues> callback) {
         new Thread(new Runnable() {
             @Override
@@ -206,7 +207,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 ContentValues lastRowValues = new ContentValues();
                 ContentValues contentValues = new ContentValues();
                 Cursor cursor = dbHelper.query("SELECT mileage, fueling, current_fuel, oil_filled, total_fueling  FROM " + DbHelper.getTableName(Stats.class));
-                if (cursor.getCount()>1) {
+                if (cursor.getCount() > 1) {
                     cursor.moveToLast();
                     lastRowValues.put(Stats.MILEAGE, cursor.getInt(cursor.getColumnIndex(Stats.MILEAGE)));
                     lastRowValues.put(Stats.FUELING, cursor.getInt(cursor.getColumnIndex(Stats.FUELING)));

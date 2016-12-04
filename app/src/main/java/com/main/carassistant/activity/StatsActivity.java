@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+import com.main.carassistant.App;
 import com.main.carassistant.R;
 import com.main.carassistant.db.DbHelper;
 import com.main.carassistant.model.Stats;
@@ -49,7 +50,7 @@ public class StatsActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-        dbHelper = DbHelper.getHelper(getApplicationContext(), "CarAssistant.db", 4);
+        dbHelper = ((App) getApplication()).getDbHelper();
     }
 
     @Override
@@ -66,16 +67,7 @@ public class StatsActivity extends AppCompatActivity {
         String c = editCurrentFuel.getText().toString();
         String o = editOilFilled.getText().toString();
 
-        //TODO ask how to do better
-//        if (!editMileage.getText().toString().equals("")) {
-//            contentValues.put(Stats.MILEAGE, Integer.valueOf(m));
-//            if (!editFueling.getText().toString().equals("")) {
-//                contentValues.put(Stats.FUELING, Integer.valueOf(m));
-//                if ()
-//            }
-//        }
-
-        //check for empty fields
+        //check if fields is not empty
         if (!m.isEmpty() && !f.isEmpty() && !c.isEmpty() && !o.isEmpty()) {
 
             Date date = Calendar.getInstance().getTime();
@@ -93,68 +85,49 @@ public class StatsActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(Long id) {
                     //TODO production - remove id from toast
-                    Toast.makeText(getApplicationContext(), "Data in database: " + id + " fields", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Data in database: " + id + " field", Toast.LENGTH_SHORT).show();
                 }
             });
             finish();
         } else {
-            //creating dialog message
-            String dialogMessage = "Fill ";
-            int i = 0;
-            if (m.equals("")) {
-                dialogMessage += "Mileage ";
-                i++;
-            }
-            if (f.equals("")) {
-                if (i != 0) {
-                    dialogMessage += ", ";
-                }
-                dialogMessage += "Fueling ";
-                i++;
-            }
-            if (c.equals("")) {
-                if (i != 0) {
-                    dialogMessage += ", ";
-                }
-                dialogMessage += "Current fuel ";
-                i++;
-            }
-            if (o.equals("")) {
-                if (i != 0) {
-                    dialogMessage += ", ";
-                }
-                dialogMessage += "Oil filled ";
-                i++;
-            }
-            if (i > 1) {
-                dialogMessage += "fields.";
-            } else {
-                dialogMessage += "field.";
-            }
-            showErrorDialog(dialogMessage);
+            showErrorDialog(createErrorDialog(m, f, c, o));
         }
     }
 
-    private void insertOperation(final ResultCallback<Long> callback) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                //get total fueling for fuel consumption
-                final Cursor cursor = dbHelper.query("SELECT total_fueling FROM " + DbHelper.getTableName(Stats.class));
-                if (cursor.getCount()>0) {
-                    cursor.moveToLast();
-                    //update total fuel consumption
-                    Integer total = Integer.valueOf(editFueling.getText().toString()) + cursor.getInt(cursor.getColumnIndex(Stats.TOTAL_FUELING));
-                    cursor.close();
-                    contentValues.put(Stats.TOTAL_FUELING, total);
-                } else {
-                    contentValues.put(Stats.TOTAL_FUELING, 0);
-
-                }
-                long id = dbHelper.insert(Stats.class, contentValues);
-                callback.onSuccess(id);
+    private String createErrorDialog(String m, String f, String c, String o) {
+        String dialogMessage = "Fill ";
+        int i = 0;
+        if (m.equals("")) {
+            dialogMessage += "'Mileage' ";
+            i++;
+        }
+        if (f.equals("")) {
+            if (i != 0) {
+                dialogMessage += ", ";
             }
-        }).run();
+            dialogMessage += "'Fueling' ";
+            i++;
+        }
+        if (c.equals("")) {
+            if (i != 0) {
+                dialogMessage += ", ";
+            }
+            dialogMessage += "'Current fuel' ";
+            i++;
+        }
+        if (o.equals("")) {
+            if (i != 0) {
+                dialogMessage += ", ";
+            }
+            dialogMessage += "'Oil filled' ";
+            i++;
+        }
+        if (i > 1) {
+            dialogMessage += "fields.";
+        } else {
+            dialogMessage += "field.";
+        }
+        return dialogMessage;
     }
 
     private void showErrorDialog(final String dialogMessage) {
@@ -168,5 +141,30 @@ public class StatsActivity extends AppCompatActivity {
         });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    private void insertOperation(final ResultCallback<Long> callback) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                insertTotalFueling();
+                long id = dbHelper.insert(Stats.class, contentValues);
+                callback.onSuccess(id);
+            }
+        }).run();
+    }
+
+    private void insertTotalFueling() {
+        final Cursor cursor = dbHelper.query("SELECT total_fueling FROM " + DbHelper.getTableName(Stats.class));
+        if (cursor.getCount()>1) {
+            cursor.moveToLast();
+            //update total fuel consumption
+            Integer total = Integer.valueOf(editFueling.getText().toString()) + cursor.getInt(cursor.getColumnIndex(Stats.TOTAL_FUELING));
+            cursor.close();
+            contentValues.put(Stats.TOTAL_FUELING, total);
+        } else {
+            contentValues.put(Stats.TOTAL_FUELING, 0);
+
+        }
     }
 }

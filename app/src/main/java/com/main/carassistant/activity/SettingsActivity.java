@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import com.main.carassistant.App;
 import com.main.carassistant.R;
 import com.main.carassistant.db.DbHelper;
 import com.main.carassistant.model.Stats;
@@ -25,7 +26,7 @@ public class SettingsActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-        dbHelper = DbHelper.getHelper(getApplicationContext(), "CarAssistant.db", 4);
+        dbHelper = ((App) getApplication()).getDbHelper();
     }
 
     @Override
