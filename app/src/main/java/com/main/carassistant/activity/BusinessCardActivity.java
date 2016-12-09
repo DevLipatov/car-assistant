@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.main.carassistant.Constants.Formats;
 import com.main.carassistant.R;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -106,7 +108,6 @@ public class BusinessCardActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "File is Saved as  " + filename, Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(getApplicationContext(), "File is NOT Saved as  " + filename, Toast.LENGTH_SHORT).show();
-
         }
     }
 
@@ -120,14 +121,14 @@ public class BusinessCardActivity extends AppCompatActivity {
         File dir = getFilePath();
         //Creating file name with date
         Date date = Calendar.getInstance().getTime();
-        DateFormat formatter = new SimpleDateFormat("dd_MM_yyyy_HH_mm", Locale.US);
+        DateFormat formatter = new SimpleDateFormat(Formats.PHOTO_NAME_FORMAT, Locale.US);
         String today = formatter.format(date);
-        filename = new File(dir, "/" + today + ".jpg");
+        filename = new File(dir, "/" + today + Formats.PHOTO_FILE_FORMAT);
         return filename;
     }
 
     private File getFilePath() {
-        File path = new File(Environment.getExternalStorageDirectory() + "/CarAssistant/Cards");
+        File path = new File(Environment.getExternalStorageDirectory() + Formats.PHOTO_DIRECTORY_FORMAT);
         //Create directory if not exists
         if (!path.isDirectory()) {
             path.mkdirs();

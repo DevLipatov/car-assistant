@@ -21,12 +21,15 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.settings_layout);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        Spinner spinner = (Spinner) findViewById(R.id.spinner);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
         dbHelper = ((App) getApplication()).getDbHelper();
+
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item);
     }
 
     @Override

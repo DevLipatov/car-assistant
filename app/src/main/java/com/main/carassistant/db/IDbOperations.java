@@ -13,5 +13,4 @@ public interface IDbOperations {
     int bulkInsert(Class<?> table, List<ContentValues> values);
 
     int delete(Class<?> table, String sql, String... args);
-
 }

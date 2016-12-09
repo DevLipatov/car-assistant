@@ -27,8 +27,8 @@ public class AllStatsActivity extends AppCompatActivity implements LoaderManager
         setContentView(R.layout.all_stats_layout);
 
         dbHelper = ((App) getApplication()).getDbHelper();
-        String[] from = new String[] {Stats.FUELING, Stats.OIL_FILLED, Stats.DATE };
-        int[] to = new int[] { R.id.txtFuelingItem, R.id.txtOilFilledItem, R.id.txtDateItem };
+        String[] from = new String[]{Stats.FUELING, Stats.OIL_FILLED, Stats.DATE };
+        int[] to = new int[]{R.id.txtFuelingItem, R.id.txtOilFilledItem, R.id.txtDateItem };
 
         simpleCursorAdapter = new SimpleCursorAdapter(this, R.layout.all_stats_item_layout, null, from, to, 0);
         ListView listView = (ListView) findViewById(R.id.statsList);
@@ -78,7 +78,6 @@ public class AllStatsActivity extends AppCompatActivity implements LoaderManager
 
         @Override
         public Cursor loadInBackground() {
-            //TODO ask about _id field in my database
             return dbHelper.query("SELECT rowid _id, fueling, oil_filled, date FROM " + DbHelper.getTableName(Stats.class));
         }
     }

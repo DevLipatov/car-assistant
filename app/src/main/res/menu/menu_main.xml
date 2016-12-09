@@ -20,9 +20,9 @@
             android:title="Take business card"/>
 
         <item
-            android:id="@+id/nav_test_layout"
+            android:id="@+id/nav_add_cost"
             android:icon="@drawable/ic_action_android"
-            android:title="Test layout"/>
+            android:title="Add new cost"/>
     </group>
 
     <item android:title="Communicate">

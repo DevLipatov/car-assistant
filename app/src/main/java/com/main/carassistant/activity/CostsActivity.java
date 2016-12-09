@@ -1,49 +1,52 @@
 package com.main.carassistant.activity;
 
+import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateUtils;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
+
 import com.main.carassistant.App;
-import com.main.carassistant.Constants.Formats;
 import com.main.carassistant.R;
 import com.main.carassistant.db.DbHelper;
+import com.main.carassistant.model.Costs;
 import com.main.carassistant.model.Stats;
 import com.main.carassistant.threads.ResultCallback;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
-public class StatsActivity extends AppCompatActivity {
+public class CostsActivity extends AppCompatActivity{
 
-    private EditText editMileage;
-    private EditText editFueling;
-    private EditText editOilFilled;
-    private EditText editCurrentFuel;
+    private EditText editDate;
+    private EditText editCost;
+    private Spinner spinnerCost;
     private EditText editComment;
     private DbHelper dbHelper;
     private ContentValues contentValues = new ContentValues();
+    private Calendar dateAndTime=Calendar.getInstance();
     Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.stats_layout);
+        setContentView(R.layout.costs_layout);
 
-        editMileage = (EditText) findViewById(R.id.editMileage);
-        editFueling = (EditText) findViewById(R.id.editFueling);
-        editOilFilled = (EditText) findViewById(R.id.editOilFilled);
-        editCurrentFuel = (EditText) findViewById(R.id.editCurrentFuel);
+        spinnerCost = (Spinner) findViewById(R.id.spinnerCategory);
+        editDate = (EditText) findViewById(R.id.editDate);
+        editCost = (EditText) findViewById(R.id.editCost);
         editComment = (EditText) findViewById(R.id.editComment);
+        dbHelper = ((App) getApplication()).getDbHelper();
+        String[] data = {"one", "two", "three"};
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -51,7 +54,13 @@ public class StatsActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-        dbHelper = ((App) getApplication()).getDbHelper();
+
+//        setInitialDateTime();
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCost.setAdapter(adapter);
+        spinnerCost.setSelection(0);
     }
 
     @Override
@@ -62,25 +71,41 @@ public class StatsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onAddNewStats (View view) {
-        String m = editMileage.getText().toString();
-        String f = editFueling.getText().toString();
-        String c = editCurrentFuel.getText().toString();
-        String o = editOilFilled.getText().toString();
+    public void setDate(View v) {
+        new DatePickerDialog(CostsActivity.this, listener,
+                dateAndTime.get(Calendar.YEAR),
+                dateAndTime.get(Calendar.MONTH),
+                dateAndTime.get(Calendar.DAY_OF_MONTH))
+                .show();
+    }
 
-        //check if fields is not empty
-        if (!m.isEmpty() && !f.isEmpty() && !c.isEmpty() && !o.isEmpty()) {
+    private void setInitialDateTime() {
 
-            Date date = Calendar.getInstance().getTime();
-            DateFormat formatter = new SimpleDateFormat(Formats.STATS_DAY_FORMAT, Locale.US);
-            String today = formatter.format(date);
+        editDate.setText(DateUtils.formatDateTime(this,
+                dateAndTime.getTimeInMillis(),
+                DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR));
+    }
 
-            contentValues.put(Stats.MILEAGE, Integer.valueOf(m));
-            contentValues.put(Stats.FUELING, Integer.valueOf(f));
-            contentValues.put(Stats.CURRENT_FUEL, Integer.valueOf(c));
-            contentValues.put(Stats.OIL_FILLED, Integer.valueOf(o));
-            contentValues.put(Stats.COMMENT, editComment.getText().toString());
-            contentValues.put(Stats.DATE, today);
+    DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            dateAndTime.set(Calendar.YEAR, year);
+            dateAndTime.set(Calendar.MONTH, monthOfYear);
+            dateAndTime.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            setInitialDateTime();
+        }
+    };
+
+    public void onAddNewCosts(View view) {
+        String category = spinnerCost.getSelectedItem().toString();
+        String cost = editCost.getText().toString();
+        String comment = editComment.getText().toString();
+
+        if (!category.isEmpty() && !cost.isEmpty() && !comment.isEmpty()) {
+
+            contentValues.put(Costs.DATE, spinnerCost.getSelectedItem().toString());
+            contentValues.put(Costs.CATEGORY, editCost.getText().toString());
+            contentValues.put(Costs.COST, Integer.valueOf(comment));
+            contentValues.put(Costs.COMMENT, editComment.getText().toString());
 
             insertOperation(new ResultCallback<Long>() {
                 @Override
@@ -91,36 +116,30 @@ public class StatsActivity extends AppCompatActivity {
             });
             finish();
         } else {
-            showErrorDialog(createErrorDialog(m, f, c, o));
+            showErrorDialog(createErrorDialog(category, cost, comment));
         }
     }
 
-    private String createErrorDialog(String m, String f, String c, String o) {
+    //TODO move to universal method
+    private String createErrorDialog(String category, String cost, String comment) {
         String dialogMessage = "Fill ";
         int i = 0;
-        if (m.equals("")) {
-            dialogMessage += "'Mileage' ";
+        if (category.equals("")) {
+            dialogMessage += "'Category' ";
             i++;
         }
-        if (f.equals("")) {
+        if (cost.equals("")) {
             if (i != 0) {
                 dialogMessage += ", ";
             }
-            dialogMessage += "'Fueling' ";
+            dialogMessage += "'Cost' ";
             i++;
         }
-        if (c.equals("")) {
+        if (comment.equals("")) {
             if (i != 0) {
                 dialogMessage += ", ";
             }
-            dialogMessage += "'Current fuel' ";
-            i++;
-        }
-        if (o.equals("")) {
-            if (i != 0) {
-                dialogMessage += ", ";
-            }
-            dialogMessage += "'Oil filled' ";
+            dialogMessage += "'Comment' ";
             i++;
         }
         if (i > 1) {
@@ -148,24 +167,9 @@ public class StatsActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                insertTotalFueling();
                 long id = dbHelper.insert(Stats.class, contentValues);
                 callback.onSuccess(id);
             }
         }).run();
-    }
-
-    private void insertTotalFueling() {
-        final Cursor cursor = dbHelper.query("SELECT total_fueling FROM " + DbHelper.getTableName(Stats.class));
-        if (cursor.getCount()>1) {
-            cursor.moveToLast();
-            //update total fuel consumption
-            Integer total = Integer.valueOf(editFueling.getText().toString()) + cursor.getInt(cursor.getColumnIndex(Stats.TOTAL_FUELING));
-            cursor.close();
-            contentValues.put(Stats.TOTAL_FUELING, total);
-        } else {
-            contentValues.put(Stats.TOTAL_FUELING, 0);
-
-        }
     }
 }

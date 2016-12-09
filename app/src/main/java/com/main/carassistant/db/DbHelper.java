@@ -63,6 +63,11 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
                         }
                     }
 
+//                    if (type == null) {
+//                        continue;
+//                    }
+//                    error if field in database is not annotated and skip if system add many wrong fields
+
                     if (ptype != null && type != null) {
                         builder.append(", ");
                     }
@@ -74,19 +79,14 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
 
                     ptype = type;
                 }
-
                 return String.format(Locale.US ,Database.SQL_TABLE_CREATE_TEMPLATE, name, builder.toString());
-
             } catch (final Exception e) {
                 return null;
             }
-
         } else {
             return null;
         }
     }
-
-
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {

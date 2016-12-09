@@ -12,7 +12,7 @@
         android:id="@+id/txtDateItem"
         android:text="nvkscbvksdkb"
         android:layout_margin="@dimen/main_app_margin"
-        android:textColor="@color/mainAppTextColor"
+        android:textColor="@color/inscriptioTextColor"
         android:textSize="24sp"/>
 
     <TextView
@@ -22,7 +22,7 @@
         android:text="vnjhvbs"
         android:layout_margin="@dimen/main_app_margin"
         android:textSize="24sp"
-        android:textColor="@color/mainAppTextColor"
+        android:textColor="@color/inscriptioTextColor"
         android:layout_toRightOf="@+id/txtDateItem"/>
 
     <TextView
@@ -31,7 +31,7 @@
         android:id="@+id/txtOilFilledItem"
         android:text="nvkscbvksdkb"
         android:layout_margin="@dimen/main_app_margin"
-        android:textColor="@color/mainAppTextColor"
+        android:textColor="@color/inscriptioTextColor"
         android:textSize="24sp"
         android:layout_toRightOf="@+id/txtFuelingItem"/>
 

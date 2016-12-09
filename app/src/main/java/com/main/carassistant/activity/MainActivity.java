@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.main.carassistant.App;
+import com.main.carassistant.Constants.SQL;
 import com.main.carassistant.R;
 import com.main.carassistant.adapters.SamplePagerAdapter;
 import com.main.carassistant.db.DbHelper;
@@ -90,6 +91,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(intent);
         } else if (id == R.id.nav_business_card) {
             intent = new Intent(getApplicationContext(), BusinessCardActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_add_cost) {
+            intent = new Intent(getApplicationContext(), CostsActivity.class);
             startActivity(intent);
         }
 
@@ -206,7 +210,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void run() {
                 ContentValues lastRowValues = new ContentValues();
                 ContentValues contentValues = new ContentValues();
-                Cursor cursor = dbHelper.query("SELECT mileage, fueling, current_fuel, oil_filled, total_fueling  FROM " + DbHelper.getTableName(Stats.class));
+                Cursor cursor = dbHelper.query(SQL.QUERY_FOR_CONSUMPTION + DbHelper.getTableName(Stats.class));
                 if (cursor.getCount() > 1) {
                     cursor.moveToLast();
                     lastRowValues.put(Stats.MILEAGE, cursor.getInt(cursor.getColumnIndex(Stats.MILEAGE)));

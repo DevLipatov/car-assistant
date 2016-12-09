@@ -29,6 +29,7 @@
         <activity android:name=".activity.AllStatsActivity"/>
         <activity android:name=".activity.SettingsActivity"/>
         <activity android:name=".activity.BusinessCardActivity"/>
+        <activity android:name=".activity.CostsActivity"/>
 
         <provider
             android:authorities=".MyContentProvider"

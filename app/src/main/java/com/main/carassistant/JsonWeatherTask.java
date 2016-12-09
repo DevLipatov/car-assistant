@@ -2,13 +2,10 @@ package com.main.carassistant;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.view.View;
-
 import com.main.carassistant.http.ConnectionChecker;
 import com.main.carassistant.http.WeatherHttpClient;
 import com.main.carassistant.model.Weather;
 import com.main.carassistant.parsing.weather.JsonWeatherParser;
-
 import org.json.JSONException;
 
 public class JsonWeatherTask<T> extends AsyncTask<String, Void, T> {
@@ -32,7 +29,6 @@ public class JsonWeatherTask<T> extends AsyncTask<String, Void, T> {
     protected void onPreExecute() {
         super.onPreExecute();
         mCallback.onStartRequest();
-
     }
 
     @Override

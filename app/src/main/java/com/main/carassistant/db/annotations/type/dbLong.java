@@ -10,5 +10,4 @@ import java.lang.annotation.Target;
 public @interface dbLong {
 
     String value() default "BIGINT";
-
 }

@@ -15,7 +15,7 @@
 
     <style name="app_inscriptio_style">
         <item name="android:textSize">22dp</item>
-        <item name="android:textColor">@color/mainAppTextColor</item>
+        <item name="android:textColor">@color/inscriptioTextColor</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_margin">@dimen/main_app_margin</item>
         <item name="android:textAlignment">center</item>

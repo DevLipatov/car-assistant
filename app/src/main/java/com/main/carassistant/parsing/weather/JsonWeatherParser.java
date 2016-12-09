@@ -16,7 +16,7 @@ public class JsonWeatherParser {
         //Our json
         JSONObject jsonObject = new JSONObject(s);
 
-        //Get temepature
+        //Get temperature
         JSONObject mainJsonObject = jsonObject.getJSONObject("main");
         mTemp = mainJsonObject.getInt("temp");
         weather.setTemp(mTemp);

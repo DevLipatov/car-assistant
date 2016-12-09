@@ -3,7 +3,9 @@
     <color name="colorPrimary">#1E2748</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="mainAppTextColor">#1C1C1C</color>
+    <color name="mainAppTextColor">#FFFFFF</color>
+    <color name="inscriptioTextColor">#1C1C1C</color>
+    <color name="navigationViewColor">#6E7B8A</color>
     <color name="errorFieldColor">#C82626</color>
     <color name="menuIconColor">#EC801B</color>
     <color name="colorMenuTextPrimary">#FFFFFF</color>

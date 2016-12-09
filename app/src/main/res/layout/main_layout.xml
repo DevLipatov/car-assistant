@@ -13,7 +13,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#6E7B8A">
+        android:background="#FFFFFF">
 
         <include
             android:id="@+id/toolbar"
@@ -122,7 +122,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:menu="@menu/menu_main"
-        android:background="#6E7B8A"
+        android:background="@color/navigationViewColor"
         app:theme="@style/menu_text_appearance"/>
 
 </android.support.v4.widget.DrawerLayout>
