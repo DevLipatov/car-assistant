@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">CarAssistant</string>
     <string name="connection_error">Connect to Internet</string>
-    <string name="current_mileage">Current mileage</string>
-    <string name="fueling">Fueling</string>
-    <string name="current_fuel">Current fuel</string>
-    <string name="oil_filled">Oil filled</string>
-    <string name="comment">Comment</string>
-    <string name="add_new_stats">Add new stats</string>
-    <string name="application_name">Car Assistant</string>
+    <string name="edit_label_current_mileage">Current mileage:</string>
+    <string name="edit_label_fueling">Fueling:</string>
+    <string name="edit_label_current_fuel">Current fuel:</string>
+    <string name="edit_label_oil_filled">Oil filled:</string>
+    <string name="edit_label_comment">Comment:</string>
+    <string name="button_label_add_new_stats">Add new stats</string>
+    <string name="application_name">CarAssistant</string>
 </resources>

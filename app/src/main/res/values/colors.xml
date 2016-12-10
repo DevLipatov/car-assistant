@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="appBackground">#1D2230</color>
+    <color name="toolbarBackground">#737C93</color>
+    <color name="buttonBackground">#737C93</color>
+    <color name="navViewBackground">#737C93</color>
+    <color name="editTextBackground">#5E6578</color>
+    <color name="primaryText">#FFFFFF</color>
+    <color name="secondaryText">#999DA8</color>
+    <color name="nav_icons">#999DA8</color>
+    <color name="colorAccent">#F5A126</color>
+    <color name="stroke">#7F89A3</color>
+    <color name="navigationViewColor">#6E7B8A</color>
+    <color name="cursorColor">#DE895E</color>
+
     <color name="colorPrimary">#1E2748</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="mainAppTextColor">#FFFFFF</color>
-    <color name="inscriptioTextColor">#1C1C1C</color>
-    <color name="navigationViewColor">#6E7B8A</color>
-    <color name="errorFieldColor">#C82626</color>
-    <color name="menuIconColor">#EC801B</color>
     <color name="colorMenuTextPrimary">#FFFFFF</color>
 </resources>

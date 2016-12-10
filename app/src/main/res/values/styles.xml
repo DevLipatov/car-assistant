@@ -14,26 +14,26 @@
     </style>
 
     <style name="app_inscriptio_style">
-        <item name="android:textSize">22dp</item>
-        <item name="android:textColor">@color/inscriptioTextColor</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:textColor">@color/secondaryText</item>
         <item name="android:layout_margin">@dimen/main_app_margin</item>
-        <item name="android:textAlignment">center</item>
     </style>
 
     <style name="app_edit_text_style">
-        <item name="android:textAlignment">center</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">40dp</item>
         <item name="android:layout_margin">@dimen/main_app_margin</item>
-        <item name="android:background">@drawable/edit_text_style</item>
-        <item name="android:textColor">@color/mainAppTextColor</item>
+        <item name="android:background">@drawable/edit_text</item>
+        <item name="android:textColor">@color/primaryText</item>
+        <item name="android:paddingLeft">@dimen/edit_cursor_padding</item>
+        <item name="android:paddingRight">@dimen/edit_cursor_padding</item>
+        <item name="android:textCursorDrawable">@drawable/color_cursor</item>
     </style>
 
     <style name="app_table_name_style">
         <item name="android:textAlignment">center</item>
         <item name="android:layout_margin">@dimen/main_app_margin</item>
-        <item name="android:textColor">@color/mainAppTextColor</item>
+        <item name="android:textColor">@color/primaryText</item>
         <item name="android:textSize">24sp</item>
     </style>
 

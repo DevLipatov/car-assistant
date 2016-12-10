@@ -2,15 +2,13 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="150dp"
-    android:background="@drawable/edit_text_style">
+    android:layout_height="150dp">
 
     <TextView
         android:id="@+id/text_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:background="@drawable/edit_text_style"
-        android:textColor="@color/mainAppTextColor"
-        android:textSize="30sp"/>
+        android:textColor="@color/colorAccent"
+        android:textSize="50sp"/>
 </RelativeLayout>

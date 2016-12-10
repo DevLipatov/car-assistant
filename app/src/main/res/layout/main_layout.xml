@@ -13,7 +13,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFFFFF">
+        android:background="@color/appBackground">
 
         <include
             android:id="@+id/toolbar"
@@ -27,7 +27,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:background="@drawable/edit_text_style"
                 android:orientation="vertical"
                 android:layout_weight="1"
                 android:layout_marginRight="4dp"
@@ -40,7 +39,7 @@
                     android:text="Weather now"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:textColor="@color/mainAppTextColor"
+                    android:textColor="@color/primaryText"
                     android:gravity="center_horizontal"/>
 
                 <RelativeLayout
@@ -63,7 +62,7 @@
                     android:id="@+id/txtTemperature"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/mainAppTextColor"
+                    android:textColor="@color/primaryText"
                     android:textSize="20sp"
                     android:textStyle="bold"/>
             </LinearLayout>
@@ -72,7 +71,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_weight="1"
-                android:background="@drawable/edit_text_style"
                 android:layout_marginLeft="4dp"
                 android:orientation="vertical"
                 android:gravity="center">
@@ -86,7 +84,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="5 USD"
-                    android:textColor="@color/mainAppTextColor"
+                    android:textColor="@color/primaryText"
                     android:textSize="18sp"/>
             </LinearLayout>
         </LinearLayout>
@@ -122,7 +120,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:menu="@menu/menu_main"
-        android:background="@color/navigationViewColor"
+        android:background="@color/navViewBackground"
         app:theme="@style/menu_text_appearance"/>
 
 </android.support.v4.widget.DrawerLayout>

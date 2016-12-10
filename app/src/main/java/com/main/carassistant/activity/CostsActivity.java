@@ -15,14 +15,12 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import com.main.carassistant.App;
 import com.main.carassistant.R;
 import com.main.carassistant.db.DbHelper;
 import com.main.carassistant.model.Costs;
 import com.main.carassistant.model.Stats;
 import com.main.carassistant.threads.ResultCallback;
-
 import java.util.Calendar;
 
 public class CostsActivity extends AppCompatActivity{
