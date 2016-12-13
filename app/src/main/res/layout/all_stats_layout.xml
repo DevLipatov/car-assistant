@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="@color/appBackground">
 
     <include
         android:id="@+id/toolbar"
@@ -13,7 +13,6 @@
     <android.support.percent.PercentRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/edit_text"
         android:layout_margin="@dimen/main_app_margin">
 
         <TextView
@@ -45,6 +44,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/statsList"
-        android:layout_margin="@dimen/main_app_margin"
-        />
+        android:layout_margin="@dimen/main_app_margin"/>
 </LinearLayout>

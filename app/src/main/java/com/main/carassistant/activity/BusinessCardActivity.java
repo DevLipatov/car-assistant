@@ -15,7 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.main.carassistant.Constants.Formats;
+import com.main.carassistant.Constants.FormatsConst;
 import com.main.carassistant.R;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -121,14 +121,14 @@ public class BusinessCardActivity extends AppCompatActivity {
         File dir = getFilePath();
         //Creating file name with date
         Date date = Calendar.getInstance().getTime();
-        DateFormat formatter = new SimpleDateFormat(Formats.PHOTO_NAME_FORMAT, Locale.US);
+        DateFormat formatter = new SimpleDateFormat(FormatsConst.PHOTO_NAME_FORMAT, Locale.US);
         String today = formatter.format(date);
-        filename = new File(dir, "/" + today + Formats.PHOTO_FILE_FORMAT);
+        filename = new File(dir, "/" + today + FormatsConst.PHOTO_FILE_FORMAT);
         return filename;
     }
 
     private File getFilePath() {
-        File path = new File(Environment.getExternalStorageDirectory() + Formats.PHOTO_DIRECTORY_FORMAT);
+        File path = new File(Environment.getExternalStorageDirectory() + FormatsConst.PHOTO_DIRECTORY_FORMAT);
         //Create directory if not exists
         if (!path.isDirectory()) {
             path.mkdirs();

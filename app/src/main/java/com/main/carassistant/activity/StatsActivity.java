@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.main.carassistant.App;
-import com.main.carassistant.Constants.Formats;
+import com.main.carassistant.Constants.FormatsConst;
 import com.main.carassistant.R;
 import com.main.carassistant.db.DbHelper;
 import com.main.carassistant.model.Stats;
@@ -72,7 +72,7 @@ public class StatsActivity extends AppCompatActivity {
         if (!m.isEmpty() && !f.isEmpty() && !c.isEmpty() && !o.isEmpty()) {
 
             Date date = Calendar.getInstance().getTime();
-            DateFormat formatter = new SimpleDateFormat(Formats.STATS_DAY_FORMAT, Locale.US);
+            DateFormat formatter = new SimpleDateFormat(FormatsConst.STATS_DAY_FORMAT, Locale.US);
             String today = formatter.format(date);
 
             contentValues.put(Stats.MILEAGE, Integer.valueOf(m));

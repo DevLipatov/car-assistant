@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
-import com.main.carassistant.Constants.Database;
+import com.main.carassistant.Constants.DatabaseConst;
 import com.main.carassistant.db.annotations.Table;
 import com.main.carassistant.db.annotations.type.dbInteger;
 import com.main.carassistant.db.annotations.type.dbLong;
@@ -74,12 +74,12 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
 
                     if (i < fields.length && type!= null) {
                         final String value = (String) field.get(null);
-                        builder.append(String.format(Locale.US ,Database.SQL_TABLE_CREATE_FIELD_TEMPLATE, value, type));
+                        builder.append(String.format(Locale.US , DatabaseConst.SQL_TABLE_CREATE_FIELD_TEMPLATE, value, type));
                     }
 
                     ptype = type;
                 }
-                return String.format(Locale.US ,Database.SQL_TABLE_CREATE_TEMPLATE, name, builder.toString());
+                return String.format(Locale.US , DatabaseConst.SQL_TABLE_CREATE_TEMPLATE, name, builder.toString());
             } catch (final Exception e) {
                 return null;
             }

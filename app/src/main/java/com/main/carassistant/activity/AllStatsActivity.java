@@ -11,7 +11,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+
 import com.main.carassistant.App;
+import com.main.carassistant.Constants.SqlConst;
 import com.main.carassistant.R;
 import com.main.carassistant.db.DbHelper;
 import com.main.carassistant.model.Stats;
@@ -78,7 +80,7 @@ public class AllStatsActivity extends AppCompatActivity implements LoaderManager
 
         @Override
         public Cursor loadInBackground() {
-            return dbHelper.query("SELECT rowid _id, fueling, oil_filled, date FROM " + DbHelper.getTableName(Stats.class));
+            return dbHelper.query(SqlConst.QUERY_FOR_STATS_LIST + DbHelper.getTableName(Stats.class));
         }
     }
 }

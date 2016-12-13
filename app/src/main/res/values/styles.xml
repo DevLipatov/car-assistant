@@ -33,8 +33,14 @@
     <style name="app_table_name_style">
         <item name="android:textAlignment">center</item>
         <item name="android:layout_margin">@dimen/main_app_margin</item>
+        <item name="android:textColor">@color/secondaryText</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="app_list_item_style">
+        <item name="android:layout_margin">@dimen/main_app_margin</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/primaryText</item>
-        <item name="android:textSize">24sp</item>
     </style>
 
 </resources>

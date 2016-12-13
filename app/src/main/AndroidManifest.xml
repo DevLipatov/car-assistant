@@ -30,7 +30,7 @@
         <activity android:name=".activity.SettingsActivity"/>
         <activity android:name=".activity.BusinessCardActivity"/>
         <activity android:name=".activity.CostsActivity"/>
-        <activity android:name=".activity.StatsTabActivity"/>
+        <activity android:name=".activity.AllCostsActivity"/>
 
         <provider
             android:authorities=".MyContentProvider"

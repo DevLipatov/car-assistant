@@ -22,7 +22,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.main.carassistant.App;
-import com.main.carassistant.Constants.SQL;
+import com.main.carassistant.Constants.SqlConst;
 import com.main.carassistant.R;
 import com.main.carassistant.adapters.SamplePagerAdapter;
 import com.main.carassistant.db.DbHelper;
@@ -83,8 +83,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_photos) {
             intent = new Intent(getApplicationContext(), PhotosActivity.class);
             startActivity(intent);
-        }else if (id == R.id.nav_search_stats) {
+        } else if (id == R.id.nav_search_stats) {
             intent = new Intent(getApplicationContext(), AllStatsActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_search_costs) {
+            intent = new Intent(getApplicationContext(), AllCostsActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_settings) {
             intent = new Intent(getApplicationContext(), SettingsActivity.class);
@@ -210,7 +213,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void run() {
                 ContentValues lastRowValues = new ContentValues();
                 ContentValues contentValues = new ContentValues();
-                Cursor cursor = dbHelper.query(SQL.QUERY_FOR_CONSUMPTION + DbHelper.getTableName(Stats.class));
+                Cursor cursor = dbHelper.query(SqlConst.QUERY_FOR_CONSUMPTION + DbHelper.getTableName(Stats.class));
                 if (cursor.getCount() > 1) {
                     cursor.moveToLast();
                     lastRowValues.put(Stats.MILEAGE, cursor.getInt(cursor.getColumnIndex(Stats.MILEAGE)));

@@ -19,5 +19,4 @@ public class Costs implements BaseColumns{
 
     @dbString
     public static final String COMMENT = "comment";
-
 }
