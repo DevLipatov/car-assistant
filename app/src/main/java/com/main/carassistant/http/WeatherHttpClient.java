@@ -9,17 +9,12 @@ import java.net.URL;
 
 public class WeatherHttpClient {
 
-    private static String BASE_URL = "http://api.openweathermap.org/data/2.5/weather?q=";
-    private static String APIKEY = "&APPID=c3859f38427daf4b538322c8c539736c";
-    private static String PARAMS = "&units=metric";
-    private static String IMG_URL = "http://openweathermap.org/img/w/";
-
-    public String getWeatherData(String cityID) {
-        HttpURLConnection httpURLConnection = null ;
+    public String getData(String dataUrl) {
+        HttpURLConnection httpURLConnection = null;
         String response = null;
 
         try {
-            URL url = new URL(BASE_URL + cityID + PARAMS + APIKEY);
+            URL url = new URL(dataUrl);
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setRequestMethod("GET");
             httpURLConnection.connect();
@@ -34,11 +29,9 @@ public class WeatherHttpClient {
             response = stringBuilder.toString();
 
             inputStream.close();
-        }
-        catch(Throwable t) {
+        } catch (Throwable t) {
             t.printStackTrace();
-        }
-        finally {
+        } finally {
             if (httpURLConnection != null) {
                 httpURLConnection.disconnect();
             }
@@ -46,12 +39,12 @@ public class WeatherHttpClient {
         return response;
     }
 
-    public byte[] getImage (String imgCode) {
+    public byte[] getImage(String imgUrl) {
 
-        HttpURLConnection httpURLConnection = null ;
+        HttpURLConnection httpURLConnection = null;
 
         try {
-            URL url = new URL(IMG_URL + imgCode + ".png");
+            URL url = new URL(imgUrl);
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setRequestMethod("GET");
             httpURLConnection.connect();
@@ -60,18 +53,16 @@ public class WeatherHttpClient {
             byte[] buffer = new byte[inputStream.available()];
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
-            while ( inputStream.read(buffer) != -1) {
+            while (inputStream.read(buffer) != -1) {
                 byteArrayOutputStream.write(buffer);
             }
 
             inputStream.close();
 
             return byteArrayOutputStream.toByteArray();
-        }
-        catch(Throwable t) {
+        } catch (Throwable t) {
             t.printStackTrace();
-        }
-        finally {
+        } finally {
             if (httpURLConnection != null) {
                 httpURLConnection.disconnect();
             }

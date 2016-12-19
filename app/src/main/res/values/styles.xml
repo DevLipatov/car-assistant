@@ -8,6 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="ToolbarTitle" parent="TextAppearance.AppCompat.Title">
+        <item name="android:textSize">20sp</item>
+    </style>
+
     <style name="menu_text_appearance">
         <item name="android:textColor">@color/colorMenuTextPrimary</item>
         <item name="android:textSize">17sp</item>

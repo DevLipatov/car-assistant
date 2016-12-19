@@ -4,11 +4,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v4.util.LruCache;
 import android.widget.ImageView;
+
 import com.main.carassistant.http.HttpClient;
 import com.main.carassistant.threads.OnResultCallback;
 import com.main.carassistant.threads.Operation;
 import com.main.carassistant.threads.ProgressCallback;
 import com.main.carassistant.threads.ThreadManager;
+
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
 import java.util.concurrent.Executors;
@@ -23,7 +25,7 @@ public class Pollock {
     private BitmapOperation bitmapOperation = new BitmapOperation();
 
     private Pollock() {
-        this.lruCache = new LruCache<String, Bitmap>(Math.min((int) (Runtime.getRuntime().maxMemory()/4), MAX_MEMORY_FOR_IMAGES)) {
+        this.lruCache = new LruCache<String, Bitmap>(Math.min((int) (Runtime.getRuntime().maxMemory() / 4), MAX_MEMORY_FOR_IMAGES)) {
 
 //            @Override
 //            protected int sizeOf(final String key, final Bitmap value) {

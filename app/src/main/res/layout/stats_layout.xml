@@ -1,133 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/appBackground">
+    android:background="@color/appBackground"
+    android:orientation="vertical">
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/toolbar"/>
+        layout="@layout/toolbar" />
 
     <LinearLayout
+        android:id="@+id/line1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/main_app_margin">
+        android:layout_below="@+id/toolbar"
+        android:layout_marginTop="@dimen/main_app_margin"
+        android:layout_marginLeft="@dimen/main_app_margin"
+        android:layout_marginRight="@dimen/main_app_margin">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/edit_label_current_mileage"
-            android:layout_weight="1"
             android:id="@+id/txtMileage"
-            style="@style/app_inscriptio_style"/>
-
-        <TextView
+            style="@style/app_inscriptio_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/edit_label_fueling"
             android:layout_weight="1"
+            android:text="@string/edit_label_current_mileage" />
+
+        <TextView
             android:id="@+id/txtFueling"
-            style="@style/app_inscriptio_style"/>
+            style="@style/app_inscriptio_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/edit_label_fueling" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/line2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/line1"
+        android:layout_marginLeft="@dimen/main_app_margin"
+        android:layout_marginRight="@dimen/main_app_margin">
 
         <EditText
-            android:layout_weight="1"
-            android:inputType="numberSigned"
             android:id="@+id/editMileage"
             style="@style/app_edit_text_style"
+            android:layout_weight="1"
             android:imeOptions="actionNext"
-            android:nextFocusRight="@+id/editFueling"/>
+            android:inputType="numberSigned"
+            android:nextFocusRight="@+id/editFueling" />
 
         <EditText
-            android:layout_weight="1"
-            android:inputType="numberSigned"
             android:id="@+id/editFueling"
             style="@style/app_edit_text_style"
+            android:layout_weight="1"
             android:imeOptions="actionNext"
-            android:nextFocusRight="@+id/editCurrentFuel"/>
+            android:inputType="numberSigned"
+            android:nextFocusRight="@+id/editCurrentFuel" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/line3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/line2">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/edit_label_current_fuel"
-            android:layout_weight="1"
             android:id="@+id/txtCurrentFuel"
-            style="@style/app_inscriptio_style"/>
-
-        <TextView
+            style="@style/app_inscriptio_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/edit_label_oil_filled"
             android:layout_weight="1"
+            android:text="@string/edit_label_current_fuel" />
+
+        <TextView
             android:id="@+id/txtOilFilled"
-            style="@style/app_inscriptio_style"/>
+            style="@style/app_inscriptio_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/edit_label_oil_filled" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/line4"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/line3">
 
         <EditText
-            android:layout_weight="1"
-            android:inputType="numberSigned"
             android:id="@+id/editCurrentFuel"
+            style="@style/app_edit_text_style"
+            android:layout_weight="1"
             android:imeOptions="actionNext"
-            android:nextFocusRight="@+id/editOilFilled"
-            style="@style/app_edit_text_style"/>
+            android:inputType="numberSigned"
+            android:nextFocusRight="@+id/editOilFilled" />
 
         <EditText
-            android:layout_weight="1"
-            android:inputType="numberSigned"
             android:id="@+id/editOilFilled"
+            style="@style/app_edit_text_style"
+            android:layout_weight="1"
             android:imeOptions="actionDone"
-            style="@style/app_edit_text_style"/>
+            android:inputType="numberSigned" />
 
     </LinearLayout>
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/lineComment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/edit_label_comment"
-        style="@style/app_inscriptio_style"/>
+        android:layout_height="match_parent"
+        android:layout_above="@+id/lineButton"
+        android:layout_below="@+id/line4"
+        android:orientation="vertical">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:id="@+id/editComment"
-        android:inputType="textLongMessage"
-        android:imeOptions="actionDone"
-        style="@style/app_edit_text_style"
-        android:lines="5"/>
+        <TextView
+            style="@style/app_inscriptio_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_label_comment" />
+
+        <EditText
+            android:id="@+id/editComment"
+            style="@style/app_edit_text_style"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:imeOptions="actionDone"
+            android:inputType="textLongMessage"
+            android:lines="5" />
+
+    </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/lineButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:gravity="center"
-        android:paddingTop="@dimen/main_app_margin">
+        android:paddingTop="@dimen/main_app_margin"
+        android:layout_marginBottom="@dimen/main_app_margin">
 
         <Button
+            android:id="@+id/button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/button_label_add_new_stats"
-            android:textSize="18sp"
             android:layout_margin="@dimen/main_app_margin"
-            android:onClick="onAddNewStats"
             android:background="@color/toolbarBackground"
-            android:id="@+id/button" />
+            android:onClick="onAddNewStats"
+            android:text="@string/button_label_add_new_stats"
+            android:textSize="18sp" />
 
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>

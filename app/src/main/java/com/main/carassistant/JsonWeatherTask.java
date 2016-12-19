@@ -36,7 +36,7 @@ public class JsonWeatherTask<T> extends AsyncTask<String, Void, T> {
         Weather weather = new Weather();
         if (ConnectionChecker.checkConnection(mContext)) {
             WeatherHttpClient weatherHttpClient = new WeatherHttpClient();
-            String stringWeatherJson = weatherHttpClient.getWeatherData(params[0]);
+            String stringWeatherJson = weatherHttpClient.getData(params[0]);
 
             try {
                 //parse weather data
