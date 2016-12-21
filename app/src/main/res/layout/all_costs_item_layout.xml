@@ -8,14 +8,14 @@
     android:background="@color/appBackground">
 
     <TextView
-        app:layout_widthPercent="40%"
+        app:layout_widthPercent="30%"
         android:layout_height="wrap_content"
         android:id="@+id/txtDateItem"
         android:text="nvkscbvksdkb"
         style="@style/app_list_item_style"/>
 
     <TextView
-        app:layout_widthPercent="30%"
+        app:layout_widthPercent="20%"
         android:layout_height="wrap_content"
         android:id="@+id/txtCostItem"
         android:text="vnjhvbs"
@@ -23,11 +23,13 @@
         android:layout_toRightOf="@+id/txtDateItem"/>
 
     <TextView
-        app:layout_widthPercent="30%"
+        app:layout_widthPercent="50%"
         android:layout_height="wrap_content"
         android:id="@+id/txtCommentItem"
         android:text="nvkscbvksdkb"
         style="@style/app_list_item_style"
-        android:layout_toRightOf="@+id/txtCostItem"/>
+        android:layout_toRightOf="@+id/txtCostItem"
+        android:scrollHorizontally="true"
+        android:singleLine="true"/>
 
 </android.support.percent.PercentRelativeLayout>

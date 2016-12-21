@@ -66,7 +66,9 @@
         android:id="@+id/line3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/line2">
+        android:layout_below="@+id/line2"
+        android:layout_marginLeft="@dimen/main_app_margin"
+        android:layout_marginRight="@dimen/main_app_margin">
 
         <TextView
             android:id="@+id/txtCurrentFuel"
@@ -90,7 +92,9 @@
         android:id="@+id/line4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/line3">
+        android:layout_below="@+id/line3"
+        android:layout_marginLeft="@dimen/main_app_margin"
+        android:layout_marginRight="@dimen/main_app_margin">
 
         <EditText
             android:id="@+id/editCurrentFuel"
@@ -115,7 +119,9 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/lineButton"
         android:layout_below="@+id/line4"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginLeft="@dimen/main_app_margin"
+        android:layout_marginRight="@dimen/main_app_margin">
 
         <TextView
             style="@style/app_inscriptio_style"
@@ -141,7 +147,9 @@
         android:layout_alignParentBottom="true"
         android:gravity="center"
         android:paddingTop="@dimen/main_app_margin"
-        android:layout_marginBottom="@dimen/main_app_margin">
+        android:layout_marginBottom="@dimen/main_app_margin"
+        android:layout_marginLeft="@dimen/main_app_margin"
+        android:layout_marginRight="@dimen/main_app_margin">
 
         <Button
             android:id="@+id/button"

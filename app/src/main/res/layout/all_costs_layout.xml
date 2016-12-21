@@ -21,11 +21,12 @@
             style="@style/app_edit_text_style"
             android:id="@+id/spinnerCategory"/>
 
-        <Spinner
+        <Button
             app:layout_widthPercent="40%"
             android:id="@+id/spinnerSort"
             android:layout_toRightOf="@+id/spinnerCategory"
-            style="@style/app_edit_text_style"/>
+            style="@style/app_edit_text_style"
+            android:onClick="onSpinner"/>
 
     </android.support.percent.PercentRelativeLayout>
 
@@ -44,7 +45,7 @@
             android:text="Date"/>
 
         <TextView
-            app:layout_widthPercent="30%"
+            app:layout_widthPercent="20%"
             android:layout_height="wrap_content"
             style="@style/app_table_name_style"
             android:id="@+id/txtFuelingItem"
@@ -52,7 +53,7 @@
             android:layout_toRightOf="@+id/txtDateItem"/>
 
         <TextView
-            app:layout_widthPercent="40%"
+            app:layout_widthPercent="50%"
             android:layout_height="wrap_content"
             style="@style/app_table_name_style"
             android:id="@+id/txtOilFilledItem"
