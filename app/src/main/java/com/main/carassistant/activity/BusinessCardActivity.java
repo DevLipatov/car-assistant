@@ -39,7 +39,7 @@ public class BusinessCardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.business_card_layout);
+        setContentView(R.layout.activity_business_card);
 
         btnBusinessCard = (Button) findViewById(R.id.btnTakeBusinessCard);
         imgBusinessCard = (ImageView) findViewById(R.id.imgBusinessCard);

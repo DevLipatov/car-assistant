@@ -26,7 +26,7 @@ public class AllStatsActivity extends AppCompatActivity implements LoaderManager
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.all_stats_layout);
+        setContentView(R.layout.activity_all_stats);
 
         dbHelper = ((App) getApplication()).getDbHelper();
         String[] from = new String[]{Stats.FUELING, Stats.OIL_FILLED, Stats.DATE };

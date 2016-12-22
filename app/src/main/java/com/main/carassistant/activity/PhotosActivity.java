@@ -32,7 +32,7 @@ public class PhotosActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.photos_layout);
+        setContentView(R.layout.activity_photos);
 
         listView = (ListView) findViewById(R.id.list);
 

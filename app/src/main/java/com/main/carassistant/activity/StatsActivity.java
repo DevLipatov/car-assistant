@@ -37,7 +37,7 @@ public class StatsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.stats_layout);
+        setContentView(R.layout.activity_stats);
 
         editMileage = (EditText) findViewById(R.id.editMileage);
         editFueling = (EditText) findViewById(R.id.editFueling);

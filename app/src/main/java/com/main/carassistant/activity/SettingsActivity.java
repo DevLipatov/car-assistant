@@ -18,7 +18,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.settings_layout);
+        setContentView(R.layout.activity_settings);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        Spinner spinner = (Spinner) findViewById(R.id.spinner);

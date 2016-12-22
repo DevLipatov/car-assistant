@@ -36,7 +36,7 @@ public class AllCostsActivity extends AppCompatActivity implements LoaderManager
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.all_costs_layout);
+        setContentView(R.layout.activity_all_costs);
 
         spinnerCategory = (Spinner) findViewById(R.id.spinnerCategory);
         txtTotalCost = (TextView) findViewById(R.id.txtTotalCost);

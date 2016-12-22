@@ -38,7 +38,7 @@ public class CostsActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.costs_layout);
+        setContentView(R.layout.activity_costs);
 
         spinnerCategory = (Spinner) findViewById(R.id.spinnerCategory);
         editDate = (EditText) findViewById(R.id.editDate);
