@@ -47,4 +47,10 @@
         <item name="android:textColor">@color/primaryText</item>
     </style>
 
+    <style name="app_button_style">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/toolbarBackground</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
 </resources>

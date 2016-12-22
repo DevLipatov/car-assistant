@@ -1,34 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="@color/appBackground"
+    android:orientation="vertical">
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/toolbar"/>
+        layout="@layout/toolbar" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnTakeBusinessCard"
-        android:textSize="18sp"
-        android:text="Take photo"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Save"
-        android:id="@+id/btnSaveCard"
-        android:onClick="onSaveClick"/>
-
-    <ImageView
+    <LinearLayout
+        android:id="@+id/linePhotoName"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/imgBusinessCard"
-        android:scaleType="fitXY"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginTop="@dimen/main_app_margin"
+        android:orientation="horizontal">
 
+        <TextView
+            style="@style/app_inscriptio_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name: " />
 
-</LinearLayout>
+        <EditText
+            android:id="@+id/editPhotoName"
+            style="@style/app_edit_text_style"
+            android:layout_width="match_parent" />
+    </LinearLayout>
+
+    <android.support.percent.PercentRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnSaveCard"
+        android:layout_below="@+id/linePhotoName">
+
+        <android.support.percent.PercentRelativeLayout
+            android:id="@+id/linePhoto"
+            android:layout_width="match_parent"
+            app:layout_heightPercent="70%">
+
+            <ImageView
+                android:id="@+id/imgBusinessCard"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_margin="@dimen/main_app_margin"
+                android:scaleType="fitXY"
+                app:layout_widthPercent="50%" />
+
+        </android.support.percent.PercentRelativeLayout>
+
+        <EditText
+            android:id="@+id/editPhotoComment"
+            style="@style/app_edit_text_style"
+            android:layout_below="@+id/linePhoto"
+            app:layout_heightPercent="30%" />
+
+    </android.support.percent.PercentRelativeLayout>
+
+    <Button
+        android:id="@+id/btnSaveCard"
+        style="@style/app_button_style"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/main_app_margin"
+        android:onClick="onSaveClick"
+        android:text="Save card" />
+
+    <Button
+        android:id="@+id/btnTakeBusinessCard"
+        style="@style/app_button_style"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_centerInParent="true"
+        android:layout_margin="@dimen/main_app_margin"
+        android:text="Take business card"
+        android:textSize="18sp" />
+
+</RelativeLayout>

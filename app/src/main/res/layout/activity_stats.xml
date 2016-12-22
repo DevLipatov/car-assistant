@@ -154,12 +154,10 @@
         <Button
             android:id="@+id/button"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_margin="@dimen/main_app_margin"
-            android:background="@color/toolbarBackground"
             android:onClick="onAddNewStats"
             android:text="@string/button_label_add_new_stats"
-            android:textSize="18sp" />
+            style="@style/app_button_style" />
 
     </LinearLayout>
 </RelativeLayout>

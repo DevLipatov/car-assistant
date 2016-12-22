@@ -1,5 +1,6 @@
 package com.main.carassistant.activity;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,14 +10,19 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Layout;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.main.carassistant.App;
 import com.main.carassistant.Constants.FormatsConst;
 import com.main.carassistant.R;
+import com.main.carassistant.db.DbHelper;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -30,6 +36,9 @@ public class BusinessCardActivity extends AppCompatActivity {
 
     private Button btnBusinessCard;
     private ImageView imgBusinessCard;
+    private Button btnSaveBusinessCard;
+    private EditText editCardName;
+    private EditText editCardComment;
     private Toolbar toolbar;
     private Bitmap bitMapImg;
     private Boolean success;
@@ -43,6 +52,9 @@ public class BusinessCardActivity extends AppCompatActivity {
 
         btnBusinessCard = (Button) findViewById(R.id.btnTakeBusinessCard);
         imgBusinessCard = (ImageView) findViewById(R.id.imgBusinessCard);
+        btnSaveBusinessCard = (Button) findViewById(R.id.btnSaveCard);
+        btnSaveBusinessCard = (Button) findViewById(R.id.btnSaveCard);
+        Layout layout = (Layout) findViewById(R.id.linePhoto);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -134,5 +146,11 @@ public class BusinessCardActivity extends AppCompatActivity {
             path.mkdirs();
         }
         return path;
+    }
+
+    public void onAddNewCard(View view) {
+        ContentValues contentValues = new ContentValues();
+        DbHelper dbHelper = ((App) getApplication()).getDbHelper();
+
     }
 }
