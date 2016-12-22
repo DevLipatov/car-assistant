@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
@@ -20,6 +19,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.main.carassistant.App;
 import com.main.carassistant.Constants.WeatherConst;
 import com.main.carassistant.R;
@@ -27,9 +28,11 @@ import com.main.carassistant.adapters.SamplePagerAdapter;
 import com.main.carassistant.db.ConsumptionGetter;
 import com.main.carassistant.db.DbHelper;
 import com.main.carassistant.design.ZoomOutPageTransformer;
+import com.main.carassistant.http.WeatherHttpClient;
 import com.main.carassistant.model.Weather;
 import com.main.carassistant.parsing.weather.WeatherClient;
 import com.main.carassistant.threads.ResultCallback;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawerLayout;
     private android.os.Handler handler;
     private String city;
+    private static final String VERSION_URL = "https://carassistant-153318.appspot.com/version";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,10 +142,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void onMapClick(View view) {
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse("geo:55.754283,37.62002"));
-        startActivity(intent);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                WeatherHttpClient weatherHttpClient = new WeatherHttpClient();
+                final String version = weatherHttpClient.getData(VERSION_URL);
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), version, Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        }).start();
+
+//        Intent intent = new Intent();
+//        intent.setAction(Intent.ACTION_VIEW);
+//        intent.setData(Uri.parse("geo:55.754283,37.62002"));
+//        startActivity(intent);
     }
 
     private void setStats() {

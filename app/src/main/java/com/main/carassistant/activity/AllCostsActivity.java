@@ -17,7 +17,6 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import com.main.carassistant.App;
 import com.main.carassistant.Constants.SqlConst;
 import com.main.carassistant.R;
