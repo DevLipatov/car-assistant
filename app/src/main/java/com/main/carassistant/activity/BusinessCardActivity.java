@@ -7,25 +7,23 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Layout;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.main.carassistant.App;
 import com.main.carassistant.Constants.FormatsConst;
 import com.main.carassistant.R;
 import com.main.carassistant.db.DbHelper;
-
+import com.main.carassistant.model.BusinessCard;
+import com.main.carassistant.threads.ResultCallback;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -40,10 +38,8 @@ public class BusinessCardActivity extends AppCompatActivity {
     private EditText editCardName;
     private EditText editCardComment;
     private Toolbar toolbar;
-    private Bitmap bitMapImg;
-    private Boolean success;
     private File filename;
-    private String nn;
+    private String pathName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +50,8 @@ public class BusinessCardActivity extends AppCompatActivity {
         imgBusinessCard = (ImageView) findViewById(R.id.imgBusinessCard);
         btnSaveBusinessCard = (Button) findViewById(R.id.btnSaveCard);
         btnSaveBusinessCard = (Button) findViewById(R.id.btnSaveCard);
-        Layout layout = (Layout) findViewById(R.id.linePhoto);
+        editCardName = (EditText) findViewById(R.id.editPhotoName);
+        editCardComment = (EditText) findViewById(R.id.editPhotoComment);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -63,12 +60,14 @@ public class BusinessCardActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
+        imgBusinessCard.setVisibility(View.GONE);
+        editCardComment.setVisibility(View.GONE);
         btnBusinessCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                nn = getFileName().toString();
+                pathName = getFileName().toString();
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.parse("file://" + nn));
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.parse("file://" + pathName));
                 startActivityForResult(intent, 0);
             }
         });
@@ -86,41 +85,14 @@ public class BusinessCardActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        //TODO save full size photo
+        btnBusinessCard.setVisibility(View.GONE);
+        editCardComment.setVisibility(View.VISIBLE);
+        imgBusinessCard.setVisibility(View.VISIBLE);
+        Bitmap myBitmap = BitmapFactory.decodeFile(pathName);
+        Bitmap scaledBitmap = Bitmap.createScaledBitmap(myBitmap, 120, 120, false);
+        imgBusinessCard.setImageBitmap(scaledBitmap);
 
-//        if (data != null) {
-//            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-//            bitMapImg = bitmap;
-//            btnBusinessCard.setVisibility(View.GONE);
-//            imgBusinessCard.setImageBitmap(bitmap);
-//            imgBusinessCard.setScaleType(ImageView.ScaleType.FIT_XY);
-//        }
-        Bitmap myBitmap = BitmapFactory.decodeFile("file:/" + nn);
-        imgBusinessCard.setImageBitmap(myBitmap);
-    }
-
-    public void onSaveClick(View view) throws IOException {
-        if (isExternalStorageWritable()) {
-//            File dir = getFilePath();
-//            //Creating file name with date
-//            Date date = Calendar.getInstance().getTime();
-//            DateFormat formatter = new SimpleDateFormat("dd_MM_yyyy_HH_mm", Locale.US);
-//            String today = formatter.format(date);
-//
-//            filename = new File(dir, "/" + today + ".jpg");
-
-            FileOutputStream out = new FileOutputStream(filename);
-            bitMapImg.compress(Bitmap.CompressFormat.JPEG, 90, out);
-            out.flush();
-            out.close();
-            success = true;
-            MediaStore.Images.Media.insertImage(getContentResolver(), filename.getAbsolutePath(), filename.getName(), filename.getName());
-        }
-        if (success) {
-            Toast.makeText(getApplicationContext(), "File is Saved as  " + filename, Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(getApplicationContext(), "File is NOT Saved as  " + filename, Toast.LENGTH_SHORT).show();
-        }
+//        MediaStore.Images.Media.insertImage(getContentResolver(), filename.getAbsolutePath(), filename.getName(), filename.getName());
     }
 
     //Checks if external storage is available for read and write
@@ -128,7 +100,7 @@ public class BusinessCardActivity extends AppCompatActivity {
         return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
     }
 
-
+    //photo file name part
     private File getFileName() {
         File dir = getFilePath();
         //Creating file name with date
@@ -139,6 +111,7 @@ public class BusinessCardActivity extends AppCompatActivity {
         return filename;
     }
 
+    //photo file directory part
     private File getFilePath() {
         File path = new File(Environment.getExternalStorageDirectory() + FormatsConst.PHOTO_DIRECTORY_FORMAT);
         //Create directory if not exists
@@ -148,9 +121,52 @@ public class BusinessCardActivity extends AppCompatActivity {
         return path;
     }
 
+    //save photo data to database
     public void onAddNewCard(View view) {
-        ContentValues contentValues = new ContentValues();
-        DbHelper dbHelper = ((App) getApplication()).getDbHelper();
+        final ContentValues contentValues = new ContentValues();
+        final DbHelper dbHelper = ((App) getApplication()).getDbHelper();
+        contentValues.put(BusinessCard.PATH_NAME, pathName);
+        contentValues.put(BusinessCard.NAME, editCardName.toString());
+        contentValues.put(BusinessCard.COMMENT, editCardComment.toString());
 
+        if (isExternalStorageWritable()) {
+            saveCard(MainActivity.handler, contentValues, dbHelper, new ResultCallback<Long>() {
+                @Override
+                public void onSuccess(final Long result) {
+                    if (result > 0) {
+                        MainActivity.handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }
+            });
+        } else {
+            MainActivity.handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), "Unable to save card", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        finish();
+    }
+
+    private void saveCard(final Handler handler, final ContentValues contentValues,
+                          final DbHelper dbHelper, final ResultCallback<Long> callback) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final long id = dbHelper.insert(BusinessCard.class, contentValues);
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        callback.onSuccess(id);
+                    }
+                });
+            }
+        }).start();
     }
 }

@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private SamplePagerAdapter samplePagerAdapter;
     private View page;
     private DrawerLayout drawerLayout;
-    private android.os.Handler handler;
+    public static android.os.Handler handler;
     private String city;
     private NotificationManager notificationManager;
     private static final String VERSION_URL = "https://carassistant-153318.appspot.com/version";
