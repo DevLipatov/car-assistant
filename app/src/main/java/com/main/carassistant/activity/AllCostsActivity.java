@@ -18,7 +18,7 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import com.main.carassistant.App;
-import com.main.carassistant.Constants.SqlConst;
+import com.main.carassistant.constants.SqlConst;
 import com.main.carassistant.R;
 import com.main.carassistant.db.DbHelper;
 import com.main.carassistant.model.Costs;

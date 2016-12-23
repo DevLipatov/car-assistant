@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
-import com.main.carassistant.Constants.DatabaseConst;
+import com.main.carassistant.constants.DatabaseConst;
 import com.main.carassistant.db.annotations.Table;
 import com.main.carassistant.db.annotations.type.dbInteger;
 import com.main.carassistant.db.annotations.type.dbLong;

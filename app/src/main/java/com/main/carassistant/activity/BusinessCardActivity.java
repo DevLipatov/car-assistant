@@ -18,7 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 import com.main.carassistant.App;
-import com.main.carassistant.Constants.FormatsConst;
+import com.main.carassistant.constants.FormatsConst;
 import com.main.carassistant.R;
 import com.main.carassistant.db.DbHelper;
 import com.main.carassistant.model.BusinessCard;

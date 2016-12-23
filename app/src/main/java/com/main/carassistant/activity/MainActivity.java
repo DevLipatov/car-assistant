@@ -2,6 +2,7 @@ package com.main.carassistant.activity;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -20,7 +21,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.main.carassistant.App;
-import com.main.carassistant.Constants.WeatherConst;
+import com.main.carassistant.constants.WeatherConst;
 import com.main.carassistant.R;
 import com.main.carassistant.adapters.SamplePagerAdapter;
 import com.main.carassistant.db.ConsumptionGetter;
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawerLayout;
     public static android.os.Handler handler;
     private String city;
+    SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,11 +72,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         city = "Hrodna";
 
         setStats();
-        if (ConnectionChecker.checkConnection(getApplicationContext())) {
-            setWeather();
-        } else {
-            txtTemperature.setText(R.string.connection_error);
-        }
+
+        setWeather();
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        preferences = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("TEMP" ,txtTemperature.getText().toString());
+        editor.commit();
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        preferences = getPreferences(MODE_PRIVATE);
+        txtTemperature.setText(preferences.getString("TEMP", ""));
     }
 
     @Override
@@ -121,24 +137,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void setWeather() {
 
         String weatherUrl = WeatherConst.BASE_URL + city + WeatherConst.PARAMS + WeatherConst.APIKEY;
-        WeatherClient.getWeather(weatherUrl, handler, new ResultCallback<Weather>() {
-            @Override
-            public void onSuccess(Weather result) {
-                if (result.getTemp() != null) {
-                    String temp = Integer.toString(result.getTemp()) + "°C";
-                    txtTemperature.setText(temp);
-                    //set image if exists
-                    if (result.iconData != null && result.iconData.length > 0) {
-                        Bitmap image = BitmapFactory.decodeByteArray(result.iconData, 0, result.iconData.length);
-                        pb.setVisibility(View.GONE);
-                        imgWeather.setImageBitmap(image);
+        if (ConnectionChecker.checkConnection(getApplicationContext())) {
+            WeatherClient.getWeather(weatherUrl, handler, new ResultCallback<Weather>() {
+                @Override
+                public void onSuccess(Weather result) {
+                    if (result.getTemp() != null) {
+                        String temp = Integer.toString(result.getTemp()) + "°C";
+                        txtTemperature.setText(temp);
+                        //set image if exists
+                        if (result.iconData != null && result.iconData.length > 0) {
+                            Bitmap image = BitmapFactory.decodeByteArray(result.iconData, 0, result.iconData.length);
+                            pb.setVisibility(View.GONE);
+                            imgWeather.setImageBitmap(image);
+                        }
                     }
-                } else {
-                    txtTemperature.setTextSize(16);
-                    txtTemperature.setText(R.string.connection_error);
                 }
-            }
-        });
+            });
+        } else {
+            pb.setVisibility(View.GONE);
+            txtTemperature.setTextSize(16);
+            txtTemperature.setText(R.string.connection_error);
+        }
     }
 
     private void setStats() {

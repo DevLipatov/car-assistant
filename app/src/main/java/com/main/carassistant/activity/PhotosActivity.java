@@ -11,7 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import com.main.carassistant.App;
-import com.main.carassistant.Pollock.Pollock;
+import com.main.carassistant.pollock.Pollock;
 import com.main.carassistant.R;
 import com.main.carassistant.db.DbHelper;
 import com.main.carassistant.model.BusinessCard;

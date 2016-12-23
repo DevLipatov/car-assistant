@@ -1,7 +1,7 @@
 package com.main.carassistant;
 
 import android.app.Application;
-import com.main.carassistant.Constants.DatabaseConst;
+import com.main.carassistant.constants.DatabaseConst;
 import com.main.carassistant.db.DbHelper;
 
 public class App extends Application{

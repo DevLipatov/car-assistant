@@ -1,7 +1,7 @@
 package com.main.carassistant.parsing.weather;
 
 import android.os.Handler;
-import com.main.carassistant.Constants.WeatherConst;
+import com.main.carassistant.constants.WeatherConst;
 import com.main.carassistant.http.OwnHttpClient;
 import com.main.carassistant.model.Weather;
 import com.main.carassistant.threads.ResultCallback;

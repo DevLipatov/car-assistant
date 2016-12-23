@@ -1,4 +1,4 @@
-package com.main.carassistant.Constants;
+package com.main.carassistant.constants;
 
 public class SqlConst {
     public static final String QUERY_FOR_CONSUMPTION = "SELECT mileage, fueling, current_fuel, oil_filled, total_fueling  FROM ";

@@ -14,7 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import com.main.carassistant.App;
 import com.main.carassistant.BuildConfig;
-import com.main.carassistant.Constants.UrlConst;
+import com.main.carassistant.constants.UrlConst;
 import com.main.carassistant.R;
 import com.main.carassistant.db.DbHelper;
 import com.main.carassistant.http.OwnHttpClient;

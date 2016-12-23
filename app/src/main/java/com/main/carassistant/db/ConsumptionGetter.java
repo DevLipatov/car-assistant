@@ -3,7 +3,7 @@ package com.main.carassistant.db;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Handler;
-import com.main.carassistant.Constants.SqlConst;
+import com.main.carassistant.constants.SqlConst;
 import com.main.carassistant.model.Stats;
 import com.main.carassistant.threads.ResultCallback;
 
