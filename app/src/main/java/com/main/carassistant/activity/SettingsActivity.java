@@ -3,6 +3,7 @@ package com.main.carassistant.activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
@@ -12,12 +13,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
+
 import com.main.carassistant.App;
 import com.main.carassistant.BuildConfig;
 import com.main.carassistant.constants.UrlConst;
 import com.main.carassistant.R;
 import com.main.carassistant.db.DbHelper;
 import com.main.carassistant.http.OwnHttpClient;
+import com.main.carassistant.model.Cathegory;
 import com.main.carassistant.model.Stats;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -26,6 +31,7 @@ public class SettingsActivity extends AppCompatActivity {
     Toolbar toolbar;
     private Handler handler;
     private NotificationManager notificationManager;
+    private EditText editCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +39,7 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        editCategory = (EditText) findViewById(R.id.editCategory);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -105,5 +112,22 @@ public class SettingsActivity extends AppCompatActivity {
 
         Notification notification = builder.build();
         notificationManager.notify(127, notification);
+    }
+
+    public void onAddNewCategory(View view) {
+        final ContentValues contentValues = new ContentValues();
+        contentValues.put(Cathegory.name, editCategory.getText().toString());
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                dbHelper.insert(Cathegory.class, contentValues);
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }).start();
     }
 }

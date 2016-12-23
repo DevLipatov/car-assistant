@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setWeather();
     }
 
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -89,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onRestoreInstanceState(savedInstanceState);
         preferences = getPreferences(MODE_PRIVATE);
         txtTemperature.setText(preferences.getString("TEMP", ""));
+        setStats();
     }
 
     @Override

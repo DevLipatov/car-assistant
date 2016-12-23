@@ -27,4 +27,18 @@
         android:text="@string/check_version"
         android:textSize="18sp" />
 
+    <Button
+        style="@style/app_button_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/main_app_margin"
+        android:onClick="onAddNewCategory"
+        android:text="@string/new_category"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/editCategory"
+        style="@style/app_edit_text_style"
+        android:layout_width="match_parent" />
+
 </LinearLayout>

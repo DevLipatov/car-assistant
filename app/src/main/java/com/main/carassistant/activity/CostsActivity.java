@@ -3,7 +3,9 @@ package com.main.carassistant.activity;
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +20,7 @@ import android.widget.Toast;
 import com.main.carassistant.App;
 import com.main.carassistant.R;
 import com.main.carassistant.db.DbHelper;
+import com.main.carassistant.model.Cathegory;
 import com.main.carassistant.model.Costs;
 import com.main.carassistant.threads.ResultCallback;
 import java.util.Calendar;
@@ -31,6 +34,7 @@ public class CostsActivity extends AppCompatActivity {
     private DbHelper dbHelper;
     private ContentValues contentValues = new ContentValues();
     private Calendar calendar = Calendar.getInstance();
+    private Handler handler;
     Toolbar toolbar;
 
     @Override
@@ -43,7 +47,20 @@ public class CostsActivity extends AppCompatActivity {
         editCost = (EditText) findViewById(R.id.editCost);
         editComment = (EditText) findViewById(R.id.editComment);
         dbHelper = ((App) getApplication()).getDbHelper();
-        String[] data = {"one", "two", "three"};
+        handler = new Handler();
+
+        //TODO add category from database
+        final String[] data = {"All", "one", "two"};
+//        getCategory(new ResultCallback<Cursor>() {
+//            @Override
+//            public void onSuccess(Cursor result) {
+//                if (result != null) {
+//                    while (!result.isAfterLast()) {
+//                        data[data.length + 1] = result.getString(result.getColumnIndex(Cathegory.name));
+//                    }
+//                }
+//            }
+//        });
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -175,5 +192,20 @@ public class CostsActivity extends AppCompatActivity {
                 callback.onSuccess(id);
             }
         }).run();
+    }
+
+    private void getCategory(final ResultCallback<Cursor> callback) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final Cursor cursor = dbHelper.query("SELECT cathegory FROM " + DbHelper.getTableName(Cathegory.class));
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        callback.onSuccess(cursor);
+                    }
+                });
+            }
+        }).start();
     }
 }
