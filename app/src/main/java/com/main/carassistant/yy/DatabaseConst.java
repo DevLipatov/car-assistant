@@ -1,4 +1,4 @@
-package com.main.carassistant.Constants;
+package com.main.carassistant.yy;
 
 public class DatabaseConst {
     public static final String DATABASE_NAME = "CarAssistant.db";
