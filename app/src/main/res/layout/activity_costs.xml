@@ -1,32 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/appBackground">
+    android:background="@color/appBackground"
+    android:orientation="vertical">
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/toolbar"/>
+        layout="@layout/toolbar" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
+            style="@style/app_inscriptio_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Date: "
-            style="@style/app_inscriptio_style"/>
+            android:text="@string/date" />
 
         <EditText
-            android:layout_width="200dp"
             android:id="@+id/editDate"
             style="@style/app_edit_text_style"
-            android:onClick="setDate"
+            android:layout_width="200dp"
             android:clickable="false"
-            android:textIsSelectable="false"/>
+            android:onClick="setDate"
+            android:textIsSelectable="false" />
 
     </LinearLayout>
 
@@ -35,17 +34,16 @@
         android:layout_height="wrap_content">
 
         <TextView
+            style="@style/app_inscriptio_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Category: "
-            style="@style/app_inscriptio_style"/>
+            android:text="@string/category" />
 
         <Spinner
-            android:layout_width="200dp"
             android:id="@+id/spinnerCategory"
             style="@style/app_edit_text_style"
-            android:spinnerMode="dialog">
-        </Spinner>
+            android:layout_width="200dp"
+            android:spinnerMode="dialog" />
     </LinearLayout>
 
     <LinearLayout
@@ -53,17 +51,17 @@
         android:layout_height="wrap_content">
 
         <TextView
+            style="@style/app_inscriptio_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cost^ "
-            style="@style/app_inscriptio_style"/>
+            android:text="@string/cost" />
 
         <EditText
-            android:layout_width="150dp"
             android:id="@+id/editCost"
             style="@style/app_edit_text_style"
-            android:inputType="numberSigned"
-            android:imeOptions="actionDone"/>
+            android:layout_width="150dp"
+            android:imeOptions="actionDone"
+            android:inputType="numberSigned" />
 
     </LinearLayout>
 
@@ -73,28 +71,29 @@
         android:orientation="vertical">
 
         <TextView
+            style="@style/app_inscriptio_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/edit_label_comment"
             android:layout_gravity="center"
-            style="@style/app_inscriptio_style"/>
+            android:text="@string/edit_label_comment" />
 
         <EditText
+            android:id="@+id/editComment"
+            style="@style/app_edit_text_style"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:id="@+id/editComment"
-            android:imeOptions="actionDone"
-            style="@style/app_edit_text_style"/>
+            android:imeOptions="actionDone" />
 
     </LinearLayout>
 
     <Button
-        android:layout_width="wrap_content"
+        style="@style/app_button_style"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add new costs"
-        android:textSize="18sp"
-        android:layout_margin="@dimen/main_app_margin"
         android:layout_gravity="center"
-        android:onClick="onAddNewCosts"/>
+        android:layout_margin="@dimen/main_app_margin"
+        android:onClick="onAddNewCosts"
+        android:text="@string/add_new_costs"
+        android:textSize="18sp" />
 
 </LinearLayout>

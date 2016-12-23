@@ -15,16 +15,14 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import com.main.carassistant.App;
 import com.main.carassistant.R;
 import com.main.carassistant.db.DbHelper;
 import com.main.carassistant.model.Costs;
 import com.main.carassistant.threads.ResultCallback;
-
 import java.util.Calendar;
 
-public class CostsActivity extends AppCompatActivity{
+public class CostsActivity extends AppCompatActivity {
 
     private EditText editDate;
     private EditText editCost;
@@ -32,7 +30,7 @@ public class CostsActivity extends AppCompatActivity{
     private EditText editComment;
     private DbHelper dbHelper;
     private ContentValues contentValues = new ContentValues();
-    private Calendar calendar =Calendar.getInstance();
+    private Calendar calendar = Calendar.getInstance();
     Toolbar toolbar;
 
     @Override

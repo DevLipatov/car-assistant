@@ -1,10 +1,6 @@
 package com.main.carassistant.activity;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -23,20 +19,17 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.main.carassistant.App;
-import com.main.carassistant.BuildConfig;
 import com.main.carassistant.Constants.WeatherConst;
 import com.main.carassistant.R;
 import com.main.carassistant.adapters.SamplePagerAdapter;
 import com.main.carassistant.db.ConsumptionGetter;
 import com.main.carassistant.db.DbHelper;
 import com.main.carassistant.design.ZoomOutPageTransformer;
-import com.main.carassistant.http.OwnHttpClient;
+import com.main.carassistant.http.ConnectionChecker;
 import com.main.carassistant.model.Weather;
 import com.main.carassistant.parsing.weather.WeatherClient;
 import com.main.carassistant.threads.ResultCallback;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,9 +47,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawerLayout;
     public static android.os.Handler handler;
     private String city;
-    private NotificationManager notificationManager;
-    private static final String VERSION_URL = "https://carassistant-153318.appspot.com/version";
-    private final int NOTIFICATION_ID = 127;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,9 +70,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         city = "Hrodna";
 
         setStats();
-        setWeather();
-
-        checkVersion();
+        if (ConnectionChecker.checkConnection(getApplicationContext())) {
+            setWeather();
+        } else {
+            txtTemperature.setText(R.string.connection_error);
+        }
     }
 
     @Override
@@ -149,15 +141,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
     }
 
-    public void onMapClick(View view) {
-
-
-//        Intent intent = new Intent();
-//        intent.setAction(Intent.ACTION_VIEW);
-//        intent.setData(Uri.parse("geo:55.754283,37.62002"));
-//        startActivity(intent);
-    }
-
     private void setStats() {
         ConsumptionGetter.statsQuery(dbHelper, handler, new ResultCallback<ContentValues>() {
             @Override
@@ -166,6 +149,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 //pages for ViewPager
                 final List<View> pages = new ArrayList<>();
 
+                //TODO move to strings
                 page = inflater.inflate(R.layout.pager_adapter_page, null);
                 TextView textConsumption = (TextView) page.findViewById(R.id.tvConsumption);
                 TextView textLabel = (TextView) page.findViewById(R.id.tvLabel);
@@ -198,59 +182,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
     }
-
-    public void checkVersion() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                OwnHttpClient ownHttpClient = new OwnHttpClient();
-                final String version = ownHttpClient.getData(VERSION_URL);
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Integer curVersion = BuildConfig.VERSION_CODE;
-                        if (!version.isEmpty()&& curVersion < Integer.valueOf(version)) {
-                            notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
-                            Notification.Builder builder = new Notification.Builder(getApplicationContext());
-//                            Intent intent = new Intent(getApplicationContext(), UpdateActivity.class);
-//                            PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-                            builder
-//                                    setContentIntent(pendingIntent)
-                                    .setSmallIcon(R.drawable.ic_action_android)
-                                    .setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.ic_action_android))
-                                    .setTicker("Your app is up to date")
-                                    .setWhen(System.currentTimeMillis())
-                                    .setAutoCancel(true)
-                                    .setContentTitle("Your app is up to date.")
-                                    .setContentText("Current version is "
-                                            + String.valueOf(curVersion) + ". Actual version is " + version);
-
-                            Notification notification = builder.build();
-                            notification.defaults = Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE | Notification.DEFAULT_LIGHTS;
-                            notificationManager.notify(NOTIFICATION_ID, notification);
-                        }
-                    }
-                });
-            }
-        }).start();
-
-
-        notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
-        Notification.Builder builder = new Notification.Builder(getApplicationContext());
-        Intent intent = new Intent(getApplicationContext(), UpdateActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-        builder.setContentIntent(pendingIntent)
-                .setSmallIcon(R.drawable.ic_action_android)
-                .setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.ic_action_android))
-                .setTicker("Your app is up to date")
-                .setWhen(System.currentTimeMillis())
-                .setAutoCancel(true)
-                .setContentTitle("Update your app")
-                .setContentText("Click for update your app to latest version");
-
-        Notification notification = builder.build();
-        notificationManager.notify(NOTIFICATION_ID, notification);
-    }
-
-
 }

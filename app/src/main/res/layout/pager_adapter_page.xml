@@ -1,37 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="200dp">
 
     <TextView
+        android:id="@+id/tvLabel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tvLabel"
-        android:textSize="20sp"
-        android:textColor="@color/secondaryText"
-        android:gravity="center"
         android:layout_alignParentTop="true"
-        android:layout_margin="@dimen/main_app_margin"/>
+        android:layout_margin="@dimen/main_app_margin"
+        android:gravity="center"
+        android:textColor="@color/secondaryText"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/tvConsumption"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvLabel"
-        android:textColor="@color/colorAccent"
-        android:textSize="50sp"
+        android:layout_centerInParent="true"
         android:gravity="center"
-        android:layout_centerInParent="true"/>
+        android:textColor="@color/colorAccent"
+        android:textSize="50sp" />
 
     <TextView
+        android:id="@+id/tvNote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_below="@+id/tvConsumption"
         android:gravity="center"
-        android:text="Swipe to change"
-        android:textSize="14sp"
+        android:text="@string/swipe_to_change"
         android:textColor="@color/secondaryText"
-        android:id="@+id/tvNote"
-        android:layout_alignParentBottom="true"/>
+        android:textSize="14sp" />
 </RelativeLayout>

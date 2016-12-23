@@ -42,7 +42,8 @@ public class AllCostsActivity extends AppCompatActivity implements LoaderManager
         txtTotalCost = (TextView) findViewById(R.id.txtTotalCost);
         dbHelper = ((App) getApplication()).getDbHelper();
         handler = new Handler();
-        String[] data = {"one", "two", "three"};
+        //TODO get from database
+        String[] data = {"All", "one", "two", "three"};
         String[] from = new String[]{Costs.DATE, Costs.COST, Costs.COMMENT};
         int[] to = new int[]{R.id.txtDateItem, R.id.txtCostItem, R.id.txtCommentItem};
 
@@ -59,7 +60,7 @@ public class AllCostsActivity extends AppCompatActivity implements LoaderManager
         getSupportLoaderManager().initLoader(0, null, this);
         getSupportLoaderManager().getLoader(0).forceLoad();
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, data);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategory.setAdapter(adapter);
         spinnerCategory.setSelection(0);
@@ -93,7 +94,6 @@ public class AllCostsActivity extends AppCompatActivity implements LoaderManager
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
     }
@@ -108,7 +108,7 @@ public class AllCostsActivity extends AppCompatActivity implements LoaderManager
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new MyCursorLoader(this, dbHelper, filt);
+        return new MyCursorLoader(this, dbHelper, null);
     }
 
     @Override
@@ -135,15 +135,11 @@ public class AllCostsActivity extends AppCompatActivity implements LoaderManager
 
         @Override
         public Cursor loadInBackground() {
-//            if (filter == "one") {
-//                return dbHelper.query(SqlConst.QUERY_FOR_COSTS_LIST + DbHelper.getTableName(Costs.class));
-//            } else {
-//                return dbHelper.query("SELECT * FROM " + DbHelper.getTableName(Costs.class) + " WHERE " + Costs.CATEGORY + " = " + filter);
-//            }
             return dbHelper.query(SqlConst.QUERY_FOR_COSTS_LIST + DbHelper.getTableName(Costs.class));
         }
     }
 
+    //TODO add category cost
     private void setTotalCost(final DbHelper dbHelper, final Handler handler, final ResultCallback<Cursor> callback) {
         new Thread(new Runnable() {
             @Override

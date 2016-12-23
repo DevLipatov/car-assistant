@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.main.carassistant.App;
 import com.main.carassistant.Constants.FormatsConst;
+import com.main.carassistant.Constants.SqlConst;
 import com.main.carassistant.R;
 import com.main.carassistant.db.DbHelper;
 import com.main.carassistant.model.Stats;
@@ -62,7 +63,7 @@ public class StatsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onAddNewStats (View view) {
+    public void onAddNewStats(View view) {
         String m = editMileage.getText().toString();
         String f = editFueling.getText().toString();
         String c = editCurrentFuel.getText().toString();
@@ -156,8 +157,8 @@ public class StatsActivity extends AppCompatActivity {
     }
 
     private void insertTotalFueling() {
-        final Cursor cursor = dbHelper.query("SELECT total_fueling FROM " + DbHelper.getTableName(Stats.class));
-        if (cursor.getCount()>1) {
+        final Cursor cursor = dbHelper.query(SqlConst.QUERY_FOR_TOTAL_FUELING + DbHelper.getTableName(Stats.class));
+        if (cursor.getCount() > 1) {
             cursor.moveToLast();
             //update total fuel consumption
             Integer total = Integer.valueOf(editFueling.getText().toString()) + cursor.getInt(cursor.getColumnIndex(Stats.TOTAL_FUELING));
@@ -165,7 +166,6 @@ public class StatsActivity extends AppCompatActivity {
             contentValues.put(Stats.TOTAL_FUELING, total);
         } else {
             contentValues.put(Stats.TOTAL_FUELING, 0);
-
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.main.carassistant.db;
 
 import com.main.carassistant.model.BusinessCard;
+import com.main.carassistant.model.Cathegory;
 import com.main.carassistant.model.Costs;
 import com.main.carassistant.model.Stats;
 
@@ -10,6 +11,7 @@ public final class Contract {
             {
                     Stats.class,
                     BusinessCard.class,
-                    Costs.class
+                    Costs.class,
+                    Cathegory.class
             };
 }

@@ -14,9 +14,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
-        android:layout_marginTop="@dimen/main_app_margin"
         android:layout_marginLeft="@dimen/main_app_margin"
-        android:layout_marginRight="@dimen/main_app_margin">
+        android:layout_marginRight="@dimen/main_app_margin"
+        android:layout_marginTop="@dimen/main_app_margin">
 
         <TextView
             android:id="@+id/txtMileage"
@@ -119,9 +119,9 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/lineButton"
         android:layout_below="@+id/line4"
-        android:orientation="vertical"
         android:layout_marginLeft="@dimen/main_app_margin"
-        android:layout_marginRight="@dimen/main_app_margin">
+        android:layout_marginRight="@dimen/main_app_margin"
+        android:orientation="vertical">
 
         <TextView
             style="@style/app_inscriptio_style"
@@ -145,19 +145,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:paddingTop="@dimen/main_app_margin"
         android:layout_marginBottom="@dimen/main_app_margin"
         android:layout_marginLeft="@dimen/main_app_margin"
-        android:layout_marginRight="@dimen/main_app_margin">
+        android:layout_marginRight="@dimen/main_app_margin"
+        android:gravity="center"
+        android:paddingTop="@dimen/main_app_margin">
 
         <Button
             android:id="@+id/button"
+            style="@style/app_button_style"
             android:layout_width="match_parent"
             android:layout_margin="@dimen/main_app_margin"
             android:onClick="onAddNewStats"
-            android:text="@string/button_label_add_new_stats"
-            style="@style/app_button_style" />
+            android:text="@string/button_label_add_new_stats" />
 
     </LinearLayout>
 </RelativeLayout>

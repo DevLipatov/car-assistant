@@ -34,11 +34,9 @@ public class BusinessCardActivity extends AppCompatActivity {
 
     private Button btnBusinessCard;
     private ImageView imgBusinessCard;
-    private Button btnSaveBusinessCard;
     private EditText editCardName;
     private EditText editCardComment;
     private Toolbar toolbar;
-    private File filename;
     private String pathName;
 
     @Override
@@ -48,8 +46,6 @@ public class BusinessCardActivity extends AppCompatActivity {
 
         btnBusinessCard = (Button) findViewById(R.id.btnTakeBusinessCard);
         imgBusinessCard = (ImageView) findViewById(R.id.imgBusinessCard);
-        btnSaveBusinessCard = (Button) findViewById(R.id.btnSaveCard);
-        btnSaveBusinessCard = (Button) findViewById(R.id.btnSaveCard);
         editCardName = (EditText) findViewById(R.id.editPhotoName);
         editCardComment = (EditText) findViewById(R.id.editPhotoComment);
 
@@ -107,7 +103,7 @@ public class BusinessCardActivity extends AppCompatActivity {
         Date date = Calendar.getInstance().getTime();
         DateFormat formatter = new SimpleDateFormat(FormatsConst.PHOTO_NAME_FORMAT, Locale.US);
         String today = formatter.format(date);
-        filename = new File(dir, "/" + today + FormatsConst.PHOTO_FILE_FORMAT);
+        File filename = new File(dir, "/" + today + FormatsConst.PHOTO_FILE_FORMAT);
         return filename;
     }
 

@@ -2,7 +2,6 @@ package com.main.carassistant.activity;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
-
 import com.main.carassistant.R;
 
 public class PrefActivity extends PreferenceActivity {
@@ -11,6 +10,5 @@ public class PrefActivity extends PreferenceActivity {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.pref);
     }
-
 
 }

@@ -1,31 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
 
     <TextView
-        app:layout_widthPercent="40%"
-        android:layout_height="wrap_content"
         android:id="@+id/txtDateItem"
-        android:text="nvkscbvksdkb"
-        style="@style/app_list_item_style"/>
+        style="@style/app_list_item_style"
+        android:layout_height="wrap_content"
+        app:layout_widthPercent="40%" />
 
     <TextView
-        app:layout_widthPercent="30%"
-        android:layout_height="wrap_content"
         android:id="@+id/txtFuelingItem"
+        style="@style/app_list_item_style"
+        android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/txtDateItem"
-        android:text="vnjhvbs"
-        style="@style/app_list_item_style"/>
+        app:layout_widthPercent="30%" />
 
     <TextView
-        app:layout_widthPercent="30%"
-        android:layout_height="wrap_content"
         android:id="@+id/txtOilFilledItem"
-        android:text="nvkscbvksdkb"
+        style="@style/app_list_item_style"
+        android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/txtFuelingItem"
-        style="@style/app_list_item_style"/>
+        app:layout_widthPercent="30%" />
 
 </android.support.percent.PercentRelativeLayout>

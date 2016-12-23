@@ -1,97 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/appBackground">
+    android:background="@color/appBackground"
+    android:orientation="vertical">
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/toolbar"/>
+        layout="@layout/toolbar" />
 
     <android.support.percent.PercentRelativeLayout
+        android:id="@+id/loutSettings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/loutSettings"
         android:layout_below="@+id/toolbar">
 
         <Spinner
-            app:layout_widthPercent="60%"
+            android:id="@+id/spinnerCategory"
             style="@style/app_edit_text_style"
-            android:id="@+id/spinnerCategory"/>
+            app:layout_widthPercent="60%" />
 
         <Button
-            app:layout_widthPercent="40%"
             android:id="@+id/spinnerSort"
-            android:layout_toRightOf="@+id/spinnerCategory"
             style="@style/app_edit_text_style"
-            android:onClick="onSpinner"/>
+            android:layout_toRightOf="@+id/spinnerCategory"
+            android:onClick="onSpinner"
+            app:layout_widthPercent="40%" />
 
     </android.support.percent.PercentRelativeLayout>
 
     <android.support.percent.PercentRelativeLayout
+        android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/main_app_margin"
         android:layout_below="@+id/loutSettings"
-        android:id="@+id/header">
+        android:layout_margin="@dimen/main_app_margin">
 
         <TextView
-            app:layout_widthPercent="30%"
-            android:layout_height="wrap_content"
-            style="@style/app_table_name_style"
             android:id="@+id/txtDateItem"
-            android:text="Date"/>
+            style="@style/app_table_name_style"
+            android:layout_height="wrap_content"
+            android:text="@string/date"
+            app:layout_widthPercent="30%" />
 
         <TextView
-            app:layout_widthPercent="20%"
-            android:layout_height="wrap_content"
-            style="@style/app_table_name_style"
             android:id="@+id/txtFuelingItem"
-            android:text="Cost"
-            android:layout_toRightOf="@+id/txtDateItem"/>
+            style="@style/app_table_name_style"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/txtDateItem"
+            android:text="@string/cost"
+            app:layout_widthPercent="20%" />
 
         <TextView
-            app:layout_widthPercent="50%"
-            android:layout_height="wrap_content"
-            style="@style/app_table_name_style"
             android:id="@+id/txtOilFilledItem"
-            android:text="Comment"
-            android:layout_toRightOf="@+id/txtFuelingItem"/>
+            style="@style/app_table_name_style"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/txtFuelingItem"
+            android:text="@string/comment"
+            app:layout_widthPercent="50%" />
 
     </android.support.percent.PercentRelativeLayout>
 
     <ListView
+        android:id="@+id/costsList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/costsList"
-        android:layout_margin="@dimen/main_app_margin"
+        android:layout_above="@+id/loutTotals"
         android:layout_below="@+id/header"
-        android:layout_above="@+id/loutTotals"/>
+        android:layout_margin="@dimen/main_app_margin" />
 
     <LinearLayout
+        android:id="@+id/loutTotals"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_margin="@dimen/main_app_margin"
-        android:id="@+id/loutTotals">
+        android:layout_margin="@dimen/main_app_margin">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/txtTotalCostLabel"
-            android:text="Total cost: "
             style="@style/app_inscriptio_style"
-            android:textColor="@color/primaryText"/>
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/total_cost"
+            android:textColor="@color/primaryText" />
+
+        <TextView
             android:id="@+id/txtTotalCost"
-            android:text="texttext"
             style="@style/app_inscriptio_style"
-            android:textColor="@color/primaryText"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primaryText" />
     </LinearLayout>
 
 </RelativeLayout>

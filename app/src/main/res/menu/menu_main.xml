@@ -5,35 +5,35 @@
         <item
             android:id="@+id/nav_add_stats"
             android:icon="@drawable/ic_maps_local_gas_station"
-            android:title="Add car stats" />
+            android:title="@string/add_car_stats" />
         <item
             android:id="@+id/nav_add_cost"
             android:icon="@drawable/ic_maps_local_atm"
-            android:title="Add new cost"/>
+            android:title="@string/add_new_cost" />
         <item
             android:id="@+id/nav_search_stats"
             android:icon="@mipmap/ic_launcher"
-            android:title="Search car stats"/>
+            android:title="@string/search_car_stats" />
         <item
             android:id="@+id/nav_search_costs"
             android:icon="@mipmap/ic_launcher"
-            android:title="Search car costs"/>
+            android:title="@string/search_car_costs" />
         <item
             android:id="@+id/nav_photos"
             android:icon="@drawable/ic_action_perm_media"
-            android:title="Search photo"/>
+            android:title="@string/search_business_cards" />
         <item
             android:id="@+id/nav_business_card"
             android:icon="@drawable/ic_image_photo_camera"
-            android:title="Take business card"/>
+            android:title="@string/take_business_card" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="@string/communicate">
         <menu>
             <item
                 android:id="@+id/nav_settings"
                 android:icon="@mipmap/ic_launcher"
-                android:title="Settings"/>
+                android:title="@string/settings" />
         </menu>
     </item>
 </menu>

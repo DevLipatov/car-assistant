@@ -10,6 +10,7 @@ import org.json.JSONException;
 public class WeatherClient {
 
     static Weather weather = new Weather();
+
     public static void getWeather(final String dataUrl, final Handler handler, final ResultCallback<Weather> callback) {
         new Thread(new Runnable() {
             @Override

@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="@color/appBackground"
+    android:orientation="vertical">
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/toolbar"/>
-
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        layout="@layout/toolbar" />
 
     <Button
+        style="@style/app_button_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Reset stats"
-        android:textSize="18sp"
         android:layout_margin="@dimen/main_app_margin"
-        android:onClick="onResetStats"/>
+        android:onClick="onResetStats"
+        android:text="@string/reset_stats"
+        android:textSize="18sp" />
+
+    <Button
+        style="@style/app_button_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/main_app_margin"
+        android:onClick="checkVersion"
+        android:text="@string/check_version"
+        android:textSize="18sp" />
 
 </LinearLayout>

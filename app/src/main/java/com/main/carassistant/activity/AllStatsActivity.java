@@ -11,7 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-
 import com.main.carassistant.App;
 import com.main.carassistant.Constants.SqlConst;
 import com.main.carassistant.R;
@@ -29,8 +28,8 @@ public class AllStatsActivity extends AppCompatActivity implements LoaderManager
         setContentView(R.layout.activity_all_stats);
 
         dbHelper = ((App) getApplication()).getDbHelper();
-        String[] from = new String[]{Stats.FUELING, Stats.OIL_FILLED, Stats.DATE };
-        int[] to = new int[]{R.id.txtFuelingItem, R.id.txtOilFilledItem, R.id.txtDateItem };
+        String[] from = new String[]{Stats.FUELING, Stats.OIL_FILLED, Stats.DATE};
+        int[] to = new int[]{R.id.txtFuelingItem, R.id.txtOilFilledItem, R.id.txtDateItem};
 
         simpleCursorAdapter = new SimpleCursorAdapter(this, R.layout.all_stats_item_layout, null, from, to, 0);
         ListView listView = (ListView) findViewById(R.id.statsList);

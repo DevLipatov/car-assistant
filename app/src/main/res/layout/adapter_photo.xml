@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="200dip"
-    android:layout_margin="@dimen/main_app_margin">
+    android:layout_margin="@dimen/main_app_margin"
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop" />
 
     <TextView
         android:id="@android:id/text1"
         android:layout_width="match_parent"
         android:layout_height="42dp"
+        android:layout_gravity="bottom"
+        android:background="#14ffffff"
+        android:padding="8dip"
         android:textColor="@android:color/white"
         android:textSize="18sp"
-        android:textStyle="bold"
-        android:padding="8dip"
-        android:background="#14ffffff"
-        android:layout_gravity="bottom"/>
+        android:textStyle="bold" />
 
 </FrameLayout>

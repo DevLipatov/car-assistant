@@ -20,14 +20,14 @@
             android:layout_height="wrap_content"
             style="@style/app_table_name_style"
             android:id="@+id/txtDateItem"
-            android:text="Date"/>
+            android:text="@string/date"/>
 
         <TextView
             app:layout_widthPercent="30%"
             android:layout_height="wrap_content"
             style="@style/app_table_name_style"
             android:id="@+id/txtFuelingItem"
-            android:text="Fueling"
+            android:text="@string/fueling"
             android:layout_toRightOf="@+id/txtDateItem"/>
 
         <TextView
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             style="@style/app_table_name_style"
             android:id="@+id/txtOilFilledItem"
-            android:text="OilFilled"
+            android:text="@string/oilfilled"
             android:layout_toRightOf="@+id/txtFuelingItem"/>
 
     </android.support.percent.PercentRelativeLayout>

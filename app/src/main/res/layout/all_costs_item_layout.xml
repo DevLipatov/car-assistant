@@ -1,35 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.percent.PercentRelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/appBackground">
+    android:background="@color/appBackground"
+    android:orientation="horizontal">
 
     <TextView
-        app:layout_widthPercent="30%"
-        android:layout_height="wrap_content"
         android:id="@+id/txtDateItem"
-        android:text="nvkscbvksdkb"
-        style="@style/app_list_item_style"/>
+        style="@style/app_list_item_style"
+        android:layout_height="wrap_content"
+        app:layout_widthPercent="30%" />
 
     <TextView
-        app:layout_widthPercent="20%"
-        android:layout_height="wrap_content"
         android:id="@+id/txtCostItem"
-        android:text="vnjhvbs"
         style="@style/app_list_item_style"
-        android:layout_toRightOf="@+id/txtDateItem"/>
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/txtDateItem"
+        app:layout_widthPercent="20%" />
 
     <TextView
-        app:layout_widthPercent="50%"
-        android:layout_height="wrap_content"
         android:id="@+id/txtCommentItem"
-        android:text="nvkscbvksdkb"
         style="@style/app_list_item_style"
+        android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/txtCostItem"
         android:scrollHorizontally="true"
-        android:singleLine="true"/>
+        android:singleLine="true"
+        app:layout_widthPercent="50%" />
 
 </android.support.percent.PercentRelativeLayout>

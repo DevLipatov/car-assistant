@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 
-public class MyContentProvider extends ContentProvider{
+public class MyContentProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
         return false;

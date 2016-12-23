@@ -35,7 +35,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:text="Weather now"
+                    android:text="@string/weather_now"
                     android:textColor="@color/primaryText"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -81,7 +81,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="5 USD"
+                    android:text="@string/_5_usd"
                     android:textColor="@color/primaryText"
                     android:textSize="18sp" />
             </LinearLayout>
@@ -94,23 +94,6 @@
             android:layout_marginLeft="@dimen/main_app_margin"
             android:layout_marginRight="@dimen/main_app_margin" />
 
-        //TODO to Strings
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/main_app_margin"
-            android:onClick="onQuery"
-            android:text="Query"
-            android:textSize="18sp" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/main_app_margin"
-            android:onClick="onMapClick"
-            android:text="Map"
-            android:textSize="18sp" />
     </LinearLayout>
 
     <android.support.design.widget.NavigationView
