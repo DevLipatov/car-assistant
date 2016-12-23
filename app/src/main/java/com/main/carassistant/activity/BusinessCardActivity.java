@@ -96,7 +96,7 @@ public class BusinessCardActivity extends AppCompatActivity {
         return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
     }
 
-    //photo file name part
+    //photo full file name
     private File getFileName() {
         File dir = getFilePath();
         //Creating file name with date

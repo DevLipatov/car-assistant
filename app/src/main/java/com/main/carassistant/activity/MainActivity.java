@@ -72,9 +72,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         city = "Hrodna";
 
         setStats();
-
         setWeather();
-
     }
 
     @Override
@@ -173,14 +171,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 TextView textConsumption = (TextView) page.findViewById(R.id.tvConsumption);
                 TextView textLabel = (TextView) page.findViewById(R.id.tvLabel);
                 textConsumption.setText(result.getAsString("Fuel_consumption_after_last"));
-                textLabel.setText("Fuel consumption after last fueling");
+                textLabel.setText(R.string.fuel_consumption_after_last);
                 pages.add(page);
 
                 page = inflater.inflate(R.layout.pager_adapter_page, null);
                 textConsumption = (TextView) page.findViewById(R.id.tvConsumption);
                 textLabel = (TextView) page.findViewById(R.id.tvLabel);
                 textConsumption.setText(result.getAsString("Total_consumption"));
-                textLabel.setText("Total fuel consumption");
+                textLabel.setText(R.string.total_fuel_consumption);
                 pages.add(page);
 
                 samplePagerAdapter = new SamplePagerAdapter(pages);

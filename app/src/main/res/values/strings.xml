@@ -35,4 +35,5 @@
     <string name="search_business_cards">Search business cards</string>
     <string name="communicate">Communicate</string>
     <string name="settings">Settings</string>
+    <string name="total_fuel_consumption">Total fuel consumption</string>
 </resources>
