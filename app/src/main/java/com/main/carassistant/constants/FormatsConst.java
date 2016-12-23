@@ -1,4 +1,4 @@
-package com.main.carassistant.yy;
+package com.main.carassistant.constants;
 
 public class FormatsConst {
     public static final String PHOTO_NAME_FORMAT = "dd_MM_yyyy_HH_mm";

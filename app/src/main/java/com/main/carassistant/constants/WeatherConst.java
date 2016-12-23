@@ -1,4 +1,4 @@
-package com.main.carassistant.yy;
+package com.main.carassistant.constants;
 
 public class WeatherConst {
     public static final String BASE_URL = "http://api.openweathermap.org/data/2.5/weather?q=";
