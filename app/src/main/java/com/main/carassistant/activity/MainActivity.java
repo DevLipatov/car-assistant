@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -21,9 +22,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.main.carassistant.App;
-import com.main.carassistant.constants.WeatherConst;
 import com.main.carassistant.R;
 import com.main.carassistant.adapters.SamplePagerAdapter;
+import com.main.carassistant.constants.WeatherConst;
 import com.main.carassistant.db.ConsumptionGetter;
 import com.main.carassistant.db.DbHelper;
 import com.main.carassistant.design.ZoomOutPageTransformer;
@@ -48,13 +49,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawerLayout;
     public static android.os.Handler handler;
     private String city;
+    private String value;
     SharedPreferences preferences;
+    public SharedPreferences sp;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        sp = PreferenceManager.getDefaultSharedPreferences(this);
         txtTemperature = (TextView) findViewById(R.id.txtTemperature);
         imgWeather = (ImageView) findViewById(R.id.imgWeather);
         pb = (ProgressBar) findViewById(R.id.pbWeather);
@@ -68,29 +73,38 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         pb.setVisibility(View.VISIBLE);
         setNavigationView();
 
+        preferences = getPreferences(MODE_PRIVATE);
         //TODO add city selection
         city = "Hrodna";
 
+        setMeasurementValue();
         setStats();
         setWeather();
     }
 
+    @Override
+    protected void onResume() {
+        setMeasurementValue();
+        setStats();
+        super.onResume();
+    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+
+        editor = preferences.edit();
+        editor.putString("TEMP", txtTemperature.getText().toString());
+        editor.apply();
         super.onSaveInstanceState(outState);
-        preferences = getPreferences(MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("TEMP" ,txtTemperature.getText().toString());
-        editor.commit();
+
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
         preferences = getPreferences(MODE_PRIVATE);
         txtTemperature.setText(preferences.getString("TEMP", ""));
         setStats();
+        super.onRestoreInstanceState(savedInstanceState);
     }
 
     @Override
@@ -118,6 +132,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(intent);
         } else if (id == R.id.nav_add_cost) {
             intent = new Intent(getApplicationContext(), CostsActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_settings2) {
+            intent = new Intent(getApplicationContext(), PrefActivity.class);
             startActivity(intent);
         }
 
@@ -160,6 +177,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    private void setMeasurementValue () {
+        Boolean measurement = sp.getBoolean("measurement", false);
+        editor = preferences.edit();
+
+        if (measurement) {
+            editor.putString("measurement", " l/km");
+//            value = " l/km";
+        } else {
+            editor.putString("measurement", " l/ml");
+
+//            value = " l/ml";
+        }
+        editor.apply();
+
+    }
+
     private void setStats() {
         ConsumptionGetter.statsQuery(dbHelper, handler, new ResultCallback<ContentValues>() {
             @Override
@@ -168,18 +201,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 //pages for ViewPager
                 final List<View> pages = new ArrayList<>();
 
+                setMeasurementValue();
                 //TODO move to strings
                 page = inflater.inflate(R.layout.pager_adapter_page, null);
                 TextView textConsumption = (TextView) page.findViewById(R.id.tvConsumption);
                 TextView textLabel = (TextView) page.findViewById(R.id.tvLabel);
-                textConsumption.setText(result.getAsString("Fuel_consumption_after_last"));
+//                textConsumption.setText(getString(R.string.measurement_blank, result.getAsString("Fuel_consumption_after_last"), value));
+                textConsumption.setText(result.getAsString("Fuel_consumption_after_last") + preferences.getString("measurement", ""));
                 textLabel.setText(R.string.fuel_consumption_after_last);
                 pages.add(page);
 
                 page = inflater.inflate(R.layout.pager_adapter_page, null);
                 textConsumption = (TextView) page.findViewById(R.id.tvConsumption);
                 textLabel = (TextView) page.findViewById(R.id.tvLabel);
-                textConsumption.setText(result.getAsString("Total_consumption"));
+//                textConsumption.setText(getString(R.string.measurement_blank, result.getAsString("Total_consumption"), value));
+
+                textConsumption.setText(result.getAsString("Total_consumption") + preferences.getString("measurement", ""));
                 textLabel.setText(R.string.total_fuel_consumption);
                 pages.add(page);
 

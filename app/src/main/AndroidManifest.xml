@@ -28,6 +28,7 @@
         <activity android:name=".activity.PhotosActivity"/>
         <activity android:name=".activity.AllStatsActivity"/>
         <activity android:name=".activity.SettingsActivity"/>
+        <activity android:name=".activity.PrefActivity"/>
         <activity android:name=".activity.BusinessCardActivity"/>
         <activity android:name=".activity.CostsActivity"/>
         <activity android:name=".activity.AllCostsActivity"/>

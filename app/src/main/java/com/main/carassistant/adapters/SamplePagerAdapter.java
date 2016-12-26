@@ -22,6 +22,12 @@ public class SamplePagerAdapter extends PagerAdapter {
     }
 
     @Override
+    public void destroyItem(View collection, int position, Object object) {
+        ((ViewPager) collection).removeView((View) collection);
+
+    }
+
+    @Override
     public int getCount() {
         return pages.size();
     }
