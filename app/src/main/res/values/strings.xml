@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">CarAssistant</string>
     <string name="connection_error">Connect to Internet</string>
+    <string name="mileage_error">Your car mileage is lower then previous. Check if your data is correct</string>
     <string name="edit_label_current_mileage">Current mileage:</string>
     <string name="edit_label_fueling">Fueling:</string>
     <string name="edit_label_current_fuel">Current fuel:</string>
@@ -38,4 +39,6 @@
     <string name="total_fuel_consumption">Total fuel consumption</string>
     <string name="new_category">New category</string>
     <string name="measurement_blank">%1$s %2$s</string>
+    <string name="settings_beta">Settings(Beta)</string>
+    <string name="courses_in_next_versions">Courses in next versions</string>
 </resources>

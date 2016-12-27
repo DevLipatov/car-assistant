@@ -2,10 +2,8 @@ package com.main.carassistant.activity;
 
 import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,8 +16,8 @@ import android.widget.Toast;
 
 import com.main.carassistant.App;
 import com.main.carassistant.BuildConfig;
-import com.main.carassistant.constants.UrlConst;
 import com.main.carassistant.R;
+import com.main.carassistant.constants.UrlConst;
 import com.main.carassistant.db.DbHelper;
 import com.main.carassistant.http.OwnHttpClient;
 import com.main.carassistant.model.Cathegory;
@@ -96,18 +94,17 @@ public class SettingsActivity extends AppCompatActivity {
             }
         }).start();
 
-
         notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
         Notification.Builder builder = new Notification.Builder(getApplicationContext());
-        Intent intent = new Intent(getApplicationContext(), UpdateActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-        builder.setContentIntent(pendingIntent)
-                .setSmallIcon(R.drawable.ic_action_android)
+//        Intent intent = new Intent(getApplicationContext(), UpdateActivity.class);
+//        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        builder .setSmallIcon(R.drawable.ic_action_android)
                 .setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.ic_action_android))
                 .setTicker("Your app is up to date")
                 .setWhen(System.currentTimeMillis())
                 .setAutoCancel(true)
                 .setContentTitle("Update your app")
+//        setContentIntent(pendingIntent)
                 .setContentText("Click for update your app to latest version");
 
         Notification notification = builder.build();

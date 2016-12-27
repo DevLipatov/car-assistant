@@ -3,7 +3,6 @@ package com.main.carassistant.activity;
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
@@ -19,8 +18,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import com.main.carassistant.App;
 import com.main.carassistant.R;
+import com.main.carassistant.constants.DataConst;
 import com.main.carassistant.db.DbHelper;
-import com.main.carassistant.model.Cathegory;
 import com.main.carassistant.model.Costs;
 import com.main.carassistant.threads.ResultCallback;
 import java.util.Calendar;
@@ -49,19 +48,6 @@ public class CostsActivity extends AppCompatActivity {
         dbHelper = ((App) getApplication()).getDbHelper();
         handler = new Handler();
 
-        //TODO add category from database
-        final String[] data = {"All", "one", "two"};
-//        getCategory(new ResultCallback<Cursor>() {
-//            @Override
-//            public void onSuccess(Cursor result) {
-//                if (result != null) {
-//                    while (!result.isAfterLast()) {
-//                        data[data.length + 1] = result.getString(result.getColumnIndex(Cathegory.name));
-//                    }
-//                }
-//            }
-//        });
-
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -71,7 +57,8 @@ public class CostsActivity extends AppCompatActivity {
 
 //        setInitialDateTime();
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, data);
+        //TODO add category ad/selection from db
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, DataConst.CATEGORY);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategory.setAdapter(adapter);
         spinnerCategory.setSelection(0);
@@ -188,21 +175,11 @@ public class CostsActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                long id = dbHelper.insert(Costs.class, contentValues);
-                callback.onSuccess(id);
-            }
-        }).run();
-    }
-
-    private void getCategory(final ResultCallback<Cursor> callback) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final Cursor cursor = dbHelper.query("SELECT cathegory FROM " + DbHelper.getTableName(Cathegory.class));
+                final long id = dbHelper.insert(Costs.class, contentValues);
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        callback.onSuccess(cursor);
+                        callback.onSuccess(id);
                     }
                 });
             }

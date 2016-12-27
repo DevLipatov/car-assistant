@@ -10,14 +10,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
-
 import com.main.carassistant.App;
 import com.main.carassistant.R;
 import com.main.carassistant.db.DbHelper;
 import com.main.carassistant.model.BusinessCard;
 import com.main.carassistant.pollock.Pollock;
 import com.main.carassistant.threads.ResultCallback;
-
 import java.util.ArrayList;
 
 public class PhotosActivity extends AppCompatActivity {
@@ -69,7 +67,7 @@ public class PhotosActivity extends AppCompatActivity {
         listView.setAdapter(stringArrayAdapter);
     }
 
-    private void getImageUrls (final ResultCallback<Cursor> resultCallback) {
+    private void getImageUrls(final ResultCallback<Cursor> resultCallback) {
         new Thread(new Runnable() {
             @Override
             public void run() {

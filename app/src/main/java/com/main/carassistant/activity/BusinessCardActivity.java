@@ -36,7 +36,6 @@ public class BusinessCardActivity extends AppCompatActivity {
     private ImageView imgBusinessCard;
     private EditText editCardName;
     private EditText editCardComment;
-    private Toolbar toolbar;
     private String pathName;
 
     @Override
@@ -49,7 +48,7 @@ public class BusinessCardActivity extends AppCompatActivity {
         editCardName = (EditText) findViewById(R.id.editPhotoName);
         editCardComment = (EditText) findViewById(R.id.editPhotoComment);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

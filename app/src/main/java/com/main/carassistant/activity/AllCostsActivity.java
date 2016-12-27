@@ -18,6 +18,7 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import com.main.carassistant.App;
+import com.main.carassistant.constants.DataConst;
 import com.main.carassistant.constants.SqlConst;
 import com.main.carassistant.R;
 import com.main.carassistant.db.DbHelper;
@@ -31,7 +32,6 @@ public class AllCostsActivity extends AppCompatActivity implements LoaderManager
     private Spinner spinnerCategory;
     private Handler handler;
     TextView txtTotalCost;
-    private String filt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +42,6 @@ public class AllCostsActivity extends AppCompatActivity implements LoaderManager
         txtTotalCost = (TextView) findViewById(R.id.txtTotalCost);
         dbHelper = ((App) getApplication()).getDbHelper();
         handler = new Handler();
-        //TODO get from database
-        String[] data = {"All", "one", "two", "three"};
         String[] from = new String[]{Costs.DATE, Costs.COST, Costs.COMMENT};
         int[] to = new int[]{R.id.txtDateItem, R.id.txtCostItem, R.id.txtCommentItem};
 
@@ -60,7 +58,7 @@ public class AllCostsActivity extends AppCompatActivity implements LoaderManager
         getSupportLoaderManager().initLoader(0, null, this);
         getSupportLoaderManager().getLoader(0).forceLoad();
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, data);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, DataConst.CATEGORY);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategory.setAdapter(adapter);
         spinnerCategory.setSelection(0);
@@ -114,7 +112,6 @@ public class AllCostsActivity extends AppCompatActivity implements LoaderManager
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         simpleCursorAdapter.changeCursor(cursor);
-
     }
 
     @Override
@@ -157,19 +154,6 @@ public class AllCostsActivity extends AppCompatActivity implements LoaderManager
                 });
             }
         }).start();
-    }
-
-
-    public void onSpinner(View view) {
-        String quer = SqlConst.QUERY_FOR_COSTS_LIST + DbHelper.getTableName(Costs.class) + " WHERE " + Costs.CATEGORY + " = 'two'";
-
-        selectFiltered(dbHelper, quer, handler, new ResultCallback<Cursor>() {
-            @Override
-            public void onSuccess(Cursor result) {
-                simpleCursorAdapter.changeCursor(result);
-                simpleCursorAdapter.notifyDataSetChanged();
-            }
-        });
     }
 
     private void selectFiltered(final DbHelper dbHelper, final String query, final Handler handler, final ResultCallback<Cursor> callback) {

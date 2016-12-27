@@ -28,52 +28,51 @@
                     style="@style/app_inscriptio_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/date" />
+
+                <TextView
+                    style="@style/app_inscriptio_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/category" />
+
+                <TextView
+                    style="@style/app_inscriptio_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/cost" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <EditText
                     android:id="@+id/editDate"
                     style="@style/app_edit_text_style"
                     android:layout_width="200dp"
+                    android:layout_weight="1"
                     android:clickable="false"
                     android:onClick="setDate"
                     android:textIsSelectable="false" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    style="@style/app_inscriptio_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/category" />
 
                 <Spinner
                     android:id="@+id/spinnerCategory"
                     style="@style/app_edit_text_style"
                     android:layout_width="200dp"
+                    android:layout_weight="1"
                     android:spinnerMode="dialog" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    style="@style/app_inscriptio_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/cost" />
 
                 <EditText
                     android:id="@+id/editCost"
                     style="@style/app_edit_text_style"
                     android:layout_width="150dp"
+                    android:layout_weight="1"
                     android:imeOptions="actionDone"
                     android:inputType="numberSigned" />
-
             </LinearLayout>
 
             <LinearLayout
@@ -110,5 +109,4 @@
         android:onClick="onAddNewCosts"
         android:text="@string/add_new_costs"
         android:textSize="18sp" />
-
 </RelativeLayout>

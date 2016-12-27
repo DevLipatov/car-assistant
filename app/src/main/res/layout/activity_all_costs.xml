@@ -19,14 +19,7 @@
         <Spinner
             android:id="@+id/spinnerCategory"
             style="@style/app_edit_text_style"
-            app:layout_widthPercent="60%" />
-
-        <Button
-            android:id="@+id/spinnerSort"
-            style="@style/app_edit_text_style"
-            android:layout_toRightOf="@+id/spinnerCategory"
-            android:onClick="onSpinner"
-            app:layout_widthPercent="40%" />
+            app:layout_widthPercent="50%" />
 
     </android.support.percent.PercentRelativeLayout>
 

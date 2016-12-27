@@ -28,6 +28,7 @@
             android:id="@+id/editPhotoName"
             style="@style/app_edit_text_style"
             android:layout_width="match_parent" />
+
     </LinearLayout>
 
     <android.support.percent.PercentRelativeLayout

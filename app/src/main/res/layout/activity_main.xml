@@ -4,97 +4,102 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/appBackground"
     android:fitsSystemWindows="true">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/appBackground"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/toolbar" />
-
-        <LinearLayout
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/main_app_margin">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginRight="4dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/main_app_margin">
 
-                <TextView
-                    android:id="@+id/txtWeather"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:text="@string/weather_now"
-                    android:textColor="@color/primaryText"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-                <RelativeLayout
-                    android:layout_width="80dp"
-                    android:layout_height="80dp">
+                    <TextView
+                        android:id="@+id/txtWeather"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="@string/weather_now"
+                        android:textColor="@color/primaryText"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <RelativeLayout
+                        android:layout_width="80dp"
+                        android:layout_height="80dp">
+
+                        <ImageView
+                            android:id="@+id/imgWeather"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+
+                        <ProgressBar
+                            android:id="@+id/pbWeather"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:visibility="invisible" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/txtTemperature"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/primaryText"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/imgWeather"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@android:drawable/btn_star_big_on" />
 
-                    <ProgressBar
-                        android:id="@+id/pbWeather"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:visibility="invisible" />
-                </RelativeLayout>
-
-                <TextView
-                    android:id="@+id/txtTemperature"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/primaryText"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/courses_in_next_versions"
+                        android:textColor="@color/primaryText"
+                        android:textSize="18sp" />
+                </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewPager"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginLeft="4dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:layout_height="200dp"
+                android:layout_marginLeft="@dimen/main_app_margin"
+                android:layout_marginRight="@dimen/main_app_margin" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@android:drawable/btn_star_big_on" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/_5_usd"
-                    android:textColor="@color/primaryText"
-                    android:textSize="18sp" />
-            </LinearLayout>
         </LinearLayout>
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/viewPager"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginLeft="@dimen/main_app_margin"
-            android:layout_marginRight="@dimen/main_app_margin" />
-
-    </LinearLayout>
+    </ScrollView>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"

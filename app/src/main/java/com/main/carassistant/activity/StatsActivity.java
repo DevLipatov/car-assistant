@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -12,9 +13,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.main.carassistant.App;
+import com.main.carassistant.R;
 import com.main.carassistant.constants.FormatsConst;
 import com.main.carassistant.constants.SqlConst;
-import com.main.carassistant.R;
 import com.main.carassistant.db.DbHelper;
 import com.main.carassistant.model.Stats;
 import com.main.carassistant.threads.ResultCallback;
@@ -33,6 +34,7 @@ public class StatsActivity extends AppCompatActivity {
     private EditText editComment;
     private DbHelper dbHelper;
     private ContentValues contentValues = new ContentValues();
+    private Handler handler;
     Toolbar toolbar;
 
     @Override
@@ -40,6 +42,7 @@ public class StatsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
 
+        handler = new Handler();
         editMileage = (EditText) findViewById(R.id.editMileage);
         editFueling = (EditText) findViewById(R.id.editFueling);
         editOilFilled = (EditText) findViewById(R.id.editOilFilled);
@@ -64,7 +67,7 @@ public class StatsActivity extends AppCompatActivity {
     }
 
     public void onAddNewStats(View view) {
-        String m = editMileage.getText().toString();
+        final String m = editMileage.getText().toString();
         String f = editFueling.getText().toString();
         String c = editCurrentFuel.getText().toString();
         String o = editOilFilled.getText().toString();
@@ -150,10 +153,15 @@ public class StatsActivity extends AppCompatActivity {
             @Override
             public void run() {
                 insertTotalFueling();
-                long id = dbHelper.insert(Stats.class, contentValues);
-                callback.onSuccess(id);
+                final long id = dbHelper.insert(Stats.class, contentValues);
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        callback.onSuccess(id);
+                    }
+                });
             }
-        }).run();
+        }).start();
     }
 
     private void insertTotalFueling() {
@@ -167,5 +175,23 @@ public class StatsActivity extends AppCompatActivity {
         } else {
             contentValues.put(Stats.TOTAL_FUELING, 0);
         }
+    }
+
+    //TODO add mileage check
+    private void checkMileage(final ResultCallback<Integer> callback) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Cursor cursor = dbHelper.query(SqlConst.QUERY_FOR_MILEAGE + DbHelper.getTableName(Stats.class));
+                cursor.moveToLast();
+                final Integer mileage = cursor.getInt(cursor.getColumnIndex(Stats.MILEAGE));
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        callback.onSuccess(mileage);
+                    }
+                });
+            }
+        }).start();
     }
 }

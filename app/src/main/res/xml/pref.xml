@@ -2,7 +2,7 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
     <CheckBoxPreference
-        android:key="miles"
+        android:key="measurement"
         android:summary="Use miles"
         android:title="Measurement">
     </CheckBoxPreference>
@@ -11,10 +11,4 @@
         android:summary="Address for notifications"
         android:title="Address">
     </EditTextPreference>
-
-    <ListPreference
-        android:key="category"
-        android:summary="Car costs categories"
-        android:title="Category">
-    </ListPreference>
 </PreferenceScreen>

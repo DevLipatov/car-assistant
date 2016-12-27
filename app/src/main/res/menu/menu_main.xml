@@ -32,13 +32,12 @@
         <menu>
             <item
                 android:id="@+id/nav_settings"
-                android:icon="@mipmap/ic_launcher"
-                android:title="@string/settings" />
-
+                android:icon="@drawable/ic_action_settings"
+                android:title="@string/settings_beta" />
             <item
                 android:id="@+id/nav_settings2"
-                android:icon="@mipmap/ic_launcher"
-                android:title="Set2" />
+                android:icon="@drawable/ic_action_settings"
+                android:title="@string/settings" />
         </menu>
     </item>
 </menu>
